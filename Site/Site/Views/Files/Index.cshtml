@@ -86,7 +86,7 @@
                                     <script type="text/javascript">$("#div1").hide();</script>
                                     <div class="waves-effect waves-light btn" onclick="SvClick()" style="margin-left:0.5rem">Save</div>
                                     <div class="waves-effect waves-light btn" onclick="BClseClick()" style="margin-right:0.5rem; float:right">X</div>
-                                    <textarea id="etext" )></textarea>
+                                    <textarea id="etext"></textarea>
                                 </div>
                                 <script type="text/javascript">
                                     $.ajax({
@@ -192,18 +192,6 @@
 
                                     // Вешаем сортировку на таблицу:
                                     sortTable(document.getElementById("sr"), sortAsc, sortDesc);
-                                </script>
-                                <script type="text/javascript">
-                                    var pressTimer
-                                    $("p").mouseup(function () {
-                                        clearTimeout(pressTimer)
-                                        // Clear timeout
-                                        return false;
-                                    }).mousedown(function () {
-                                        // Set timeout
-                                        pressTimer = window.setTimeout(function () { alarm("111") }, 1000)
-                                        return false;
-                                    });
                                 </script>
                             </div>
                         </div>
