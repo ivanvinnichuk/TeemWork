@@ -3,5 +3,199 @@
     ViewBag.Title = "Index";
 }
 
-<h2>File system 2</h2>
+<!DOCTYPE html>
 
+<html>
+<head runat="server">
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="~/stylematerial.css" type="text/css" />
+    <title>FileManager</title>
+</head>
+<body>
+    <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="/Content/jsmaterial.js"></script>
+    <script type="text/javascript" src="/Content/sortTable.v2.1.min.js"></script>
+    <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.4.2.js"></script>
+    <script type="text/javascript" src="/Content/autoresize.jquery.min.js"></script>
+
+    <header>
+        <%--<div class="container">
+            <a class="button-collapse top-nav waves-effect waves-light circle hide-on-large-only" data-activates="nav-mobile" href="#">
+                <i class="mdi-navigation-menu"></i>
+            </a>
+        </div> --%>
+        <div
+            <%--id="nav-mobile"--%> class="side-nav fixed grey">
+            <a href="/Home/Index" class="waves-effect waves-light btn container input-field">General</a>
+            <a href="/Home/Settings" class="waves-effect waves-light btn container input-field">Settings</a>
+            <a href="/Home/Cron" class="waves-effect waves-light btn container input-field">Cron</a>
+            <a href="/Home/FileManager" class="waves-effect waves-light btn container input-field">File Manager</a>
+            <a href="/Home/Index" class="waves-effect waves-light btn container input-field">Page4</a>
+        </div>
+    </header>
+    <main>
+        <script runat="server">
+            String where = "";
+            String from11="11111111";
+            int func = 0;
+        </script>
+
+        <div class="row">
+            <div class="section grid-example col s12 m12 l10 red lighten-2" style="float:right"><span class="flow-text">File Manager</span></div>
+            <div class="section col s12 m12 l10" style="float:right">
+                <div>
+                    <div class="waves-effect waves-light btn" onclick="BNFldrClick" style="margin-left:0.5rem">New File</div>
+                    <div class="waves-effect waves-light btn" onclick="BNFlClick">New Folder</div>
+                    <div class="waves-effect waves-light btn" onclick="BCutClick">Cut</div>
+                    <div class="waves-effect waves-light btn" onclick="BCpyClick">Copy</div>
+                    <div class="waves-effect waves-light btn" onclick="BPstClick">Paste</div>
+                    <div class="waves-effect waves-light btn" onclick="BDelClick">Delete</div>
+                    <div class="waves-effect waves-light btn" onclick="BClsClick" style="margin-right:0.5rem; float:right">Close</div>
+                </div>
+                <div style="margin-top:1rem; border:2px solid #0d47a1">
+                    <a class="btn-floating btn waves-effect waves-light red" style="margin-left:0.5rem">/</a>
+                    <a class="btn-floating btn waves-effect waves-light red">+</a>
+                    <div style="border:2px solid #0d47a1">
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input type="text" class="validate">
+                                <label for="search">Search</label>
+                            </div>
+                            <div class="input-field col s12">
+                                <table id="sr" class="striped highlight responsive-table" onclick="clickEvent(event)">
+                                    <thead>
+                                        <tr>
+                                            <th data-field="id">Name</th>
+                                            <th>Mode</th>
+                                            <th>LastWriteTime</th>
+                                            <th data-field="name">Fullname</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr></tr>
+                                    </tbody>
+                                </table>
+                                <div id="div1">
+                                    <script type="text/javascript">$("#div1").hide();</script>
+                                    <div class="waves-effect waves-light btn" onclick="SvClick()" style="margin-left:0.5rem">Save</div>
+                                    <div class="waves-effect waves-light btn" onclick="BClseClick()" style="margin-right:0.5rem; float:right">X</div>
+                                    <textarea id="etext" )></textarea>
+                                </div>
+                                <script type="text/javascript">
+                                    $.ajax({
+                                        url: "../../c.txt",
+                                        dataType: "text",
+                                        async: true,
+                                        success: function (msg) {
+                                            test = msg;
+                                            obj = JSON.parse(test);
+                                            window.onload = function () {
+                                                var table = document.getElementById("sr");
+                                                for (i = 0; obj[i]; i++) {
+                                                    var row = table.insertRow(table.rows.lenght);
+                                                    var cell0 = row.insertCell(0);
+                                                    var cell1 = row.insertCell(1);
+                                                    var cell2 = row.insertCell(2);
+                                                    var cell3 = row.insertCell(3);
+                                                    var cell4 = row.insertCell(4);
+                                                    cell0.innerHTML = '<input type="checkbox" id="' + i.toString() + '"/><label for="' + i.toString() + '"></label>';
+                                                    cell1.innerHTML = obj[i].Name;
+                                                    cell2.innerHTML = obj[i].Mode;
+                                                    cell3.innerHTML = Date(parseInt(obj[i].LastWriteTime.replace('/Date(', '')));
+                                                    cell4.innerHTML = obj[i].FullName;
+                                                }
+                                            }
+                                        }
+                                    });
+                                </script>
+                                <script type="text/javascript">
+                                    function clickEvent(event) {
+                                        var target;
+                                        if (!event) {
+                                            var event = window.event;
+                                        }
+                                        if (event.target) {
+                                            target = event.target;
+                                        } else if (event.srcElement) {
+                                            target = event.srcElement;
+                                        }
+                                        if (target) {
+                                            if (target.nodeType == 3) {
+                                                target = target.parentNode;
+                                            }
+                                            if (target.tagName.toLowerCase() == "td") {
+                                                var row = target.parentNode;
+                                                var td;
+                                                var str = row.getElementsByTagName("td").item(4).innerHTML;
+                                                if ((str.search(".txt") != -1) || (str.search(".bat") != -1) || (str.search(".html") != -1)) {
+                                                    $("#sr").hide();
+                                                    $("#div1").show();
+                                                    var div1 = document.getElementById('div1');
+                                                    $.ajax({
+
+                                                        url: "../../qwe.txt",
+                                                        success: function (data) {
+                                                            $("#etext").html(data);
+                                                        }
+                                                    });
+                                                }
+                                                else
+                                                    alert(str);
+                                                jQuery(function () {
+                                                    jQuery('#etext').autoResize();
+                                                });
+                                                //document.getElementById("<%= from11 %>");
+                                                //alert(<% =from11 %>);
+                                            }
+                                        }
+                                    }
+                                    function BClseClick() {
+                                        var string = $('textarea[id=etext]').val();
+                                        $.ajax({
+                                            type: 'GET',
+                                            url: '@Url.Action("RewriteToFile", "Texts")',
+                                            data: { str: string },
+                                            success: function () {
+                                                alert('Done');
+                                            }
+                                        });
+                                    }
+                                    function BClseClick() {
+                                        $("#sr").show();
+                                        $("#div1").hide();
+                                    }
+                                </script>
+                                <script type="text/javascript">
+                                    var sortAsc = document.createElement("SPAN"),
+                                        sortDesc = document.createElement("SPAN");
+
+                                    // Значки сортировки для заголовка таблицы:
+                                    sortAsc.innerHTML = "&#9660;";
+                                    sortDesc.innerHTML = "&#9650;";
+
+                                    // Вешаем сортировку на таблицу:
+                                    sortTable(document.getElementById("sr"), sortAsc, sortDesc);
+                                </script>
+                                <script type="text/javascript">
+                                    var pressTimer
+                                    $("p").mouseup(function () {
+                                        clearTimeout(pressTimer)
+                                        // Clear timeout
+                                        return false;
+                                    }).mousedown(function () {
+                                        // Set timeout
+                                        pressTimer = window.setTimeout(function () { alarm("111") }, 1000)
+                                        return false;
+                                    });
+                                </script>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
