@@ -37,13 +37,13 @@
             <div class="section grid-example col s12 m12 l10 red lighten-2" style="float:right"><span class="flow-text">File Manager</span></div>
             <div class="section col s12 m12 l10" style="float:right">
                 <div>
-                    <div class="waves-effect waves-light btn" onclick="BNFldrClick" style="margin-left:0.5rem">New File</div>
-                    <div class="waves-effect waves-light btn" onclick="BNFlClick">New Folder</div>
-                    <div class="waves-effect waves-light btn" onclick="BCutClick">Cut</div>
-                    <div class="waves-effect waves-light btn" onclick="BCpyClick">Copy</div>
-                    <div class="waves-effect waves-light btn" onclick="BPstClick">Paste</div>
-                    <div class="waves-effect waves-light btn" onclick="BDelClick">Delete</div>
-                    <div class="waves-effect waves-light btn" onclick="BClsClick" style="margin-right:0.5rem; float:right">Close</div>
+                    <div class="waves-effect waves-light btn" onclick="BNFldrClick()" style="margin-left:0.5rem">New File</div>
+                    <div class="waves-effect waves-light btn" onclick="BNFlClick()">New Folder</div>
+                    <div class="waves-effect waves-light btn" onclick="BCutClick()">Cut</div>
+                    <div class="waves-effect waves-light btn" onclick="BCpyClick()">Copy</div>
+                    <div class="waves-effect waves-light btn" onclick="BPstClick()">Paste</div>
+                    <div class="waves-effect waves-light btn" onclick="BDelClick()">Delete</div>
+                    <div class="waves-effect waves-light btn" onclick="BClsClick()" style="margin-right:0.5rem; float:right">Close</div>
                 </div>
                 <div style="margin-top:1rem; border:2px solid #0d47a1">
                     <a class="btn-floating btn waves-effect waves-light red" style="margin-left:0.5rem" onclick="changedir()">/</a>
@@ -69,7 +69,7 @@
                                     </tbody>
                                 </table>
                                 <table id="sr1" class="striped highlight responsive-table" onclick="clickEvent(event)">
-                                    <script type="text/javascript">$("#sr1").hide();</script>
+                                    <script type="text/javascript">$("#sr1").hide(); var n = 0;</script>
                                     <thead>
                                         <tr>
                                             <th data-field="id">Name</th>
@@ -86,8 +86,9 @@
                                     <script type="text/javascript">$("#div1").hide();</script>
                                     <div class="waves-effect waves-light btn" onclick="SvClick()" style="margin-left:0.5rem">Save</div>
                                     <div class="waves-effect waves-light btn" onclick="BClseClick()" style="margin-right:0.5rem; float:right">X</div>
-                                    <textarea id="etext" )></textarea>
+                                    <textarea id="etext"></textarea>
                                 </div>
+
                                 <script type="text/javascript">
                                     $.ajax({
                                         url: "../../c.txt",
@@ -155,7 +156,7 @@
                                                             alert('Done');
                                                         }
                                                     });
-                                                    alert(st);
+                                                    //alert(st);
                                                 }
                                                     
                                                 jQuery(function () {
@@ -181,6 +182,40 @@
                                         $("#sr").show();
                                         $("#div1").hide();
                                     }
+                                    function openmanager() {
+                                        $("#sr").hide();
+                                        $("#sr1").show();
+                                        n++;
+                                    }
+                                    function changedir() {
+                                        if (n != 0)
+                                            if (n % 2 == 0) {
+                                            $("#sr").hide();
+                                            $("#sr1").show();
+                                            n--;
+                                        }
+                                        else {
+                                            $("#sr1").hide();
+                                            $("#sr").show();
+                                            n++;
+                                        }
+                                        else return;                                        
+                                    }
+                                    function BClsClick() {
+                                        if (n != 0)
+                                            if (n % 2 == 0) {
+                                                $("#sr").hide();
+                                                $("#sr1").show();
+                                                n=0;
+                                            }
+                                            else {
+                                                $("#sr1").hide();
+                                                $("#sr").show();
+                                                n=0;
+                                            }
+                                        else return;
+                                    }
+
                                 </script>
                                 <script type="text/javascript">
                                     var sortAsc = document.createElement("SPAN"),
@@ -192,18 +227,6 @@
 
                                     // Вешаем сортировку на таблицу:
                                     sortTable(document.getElementById("sr"), sortAsc, sortDesc);
-                                </script>
-                                <script type="text/javascript">
-                                    var pressTimer
-                                    $("p").mouseup(function () {
-                                        clearTimeout(pressTimer)
-                                        // Clear timeout
-                                        return false;
-                                    }).mousedown(function () {
-                                        // Set timeout
-                                        pressTimer = window.setTimeout(function () { alarm("111") }, 1000)
-                                        return false;
-                                    });
                                 </script>
                             </div>
                         </div>
