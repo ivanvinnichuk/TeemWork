@@ -56,10 +56,10 @@
                                 <label for="search">Search</label>
                             </div>
                             <div class="input-field col s12">
-                                <table id="sr" class="striped highlight responsive-table" onclick="clickEvent(event)">
+                                <table id="sr" class="striped highlight responsive-table sr" onclick="clickEvent(event)">
                                     <thead>
                                         <tr>
-                                            <th></th>
+                                            <th>123</th>
                                             <th data-field="id">Name</th>
                                             <th>Mode</th>
                                             <th>LastWriteTime</th>
@@ -70,7 +70,7 @@
                                         <tr></tr>
                                     </tbody>
                                 </table>
-                                <table id="sr1" class="striped highlight responsive-table" onclick="clickEvent(event)">
+                                <table id="sr1" class="striped highlight responsive-table sr" onclick="clickEvent(event)">
                                     <script type="text/javascript">$("#sr1").hide(); var n = 0;</script>
                                     <thead>
                                         <tr>
@@ -93,6 +93,7 @@
                                 </div>
 
                                 <script type="text/javascript">
+                                    function ld(idt) {                                    
                                     $.ajax({
                                         url: "../../c.txt",
                                         dataType: "text",
@@ -100,8 +101,8 @@
                                         success: function (msg) {
                                             test = msg;
                                             obj = JSON.parse(test);
-                                            window.onload = function () {
-                                                var table = document.getElementById("sr");
+                                            window.onload = function qwe() {
+                                                var table = document.getElementById(idt);
                                                 for (i = 0; obj[i]; i++) {
                                                     var row = table.insertRow(table.rows.lenght);
                                                     var cell0 = row.insertCell(0);
@@ -114,10 +115,13 @@
                                                     cell2.innerHTML = obj[i].Mode;
                                                     cell3.innerHTML = Date(parseInt(obj[i].LastWriteTime.replace('/Date(', '')));
                                                     cell4.innerHTML = obj[i].FullName;
-                                                }
+                                                }                                                
                                             }
                                         }
                                     });
+                                    }
+                                    ld("sr");
+                                    qwe("sr1");
                                 </script>
                                 <script type="text/javascript">
                                     function clickEvent(event) {
@@ -186,9 +190,12 @@
                                         $("#div1").hide();
                                     }
                                     function openmanager() {
-                                        $("#sr").hide();
-                                        $("#sr1").show();
-                                        n++;
+                                        if (n == 0) {
+                                            ld("sr1");
+                                            $("#sr").hide();
+                                            $("#sr1").show();
+                                            n++;                                            
+                                        }
                                     }
                                     function changedir() {
                                         if (n != 0)
@@ -201,8 +208,7 @@
                                             $("#sr1").hide();
                                             $("#sr").show();
                                             n++;
-                                        }
-                                        else return;                                        
+                                        }                                      
                                     }
                                     function BClsClick() {
                                         if (n != 0)
@@ -216,7 +222,6 @@
                                                 $("#sr").show();
                                                 n=0;
                                             }
-                                        else return;
                                     }
 
                                 </script>
