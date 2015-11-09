@@ -24,8 +24,8 @@ namespace Site.Controllers
             string str1 = "@Url.Content(\"~/ScriptPowerShell\")";
             var shell = PowerShell.Create();
             shell.Commands.AddScript("@Url.Content(\"~/Scripts/PrintDirectory.ps1\") -Path " + str + "-pathToStore"+str1);
-
-            return File(str1,"application/json");
+            var result = shell.Invoke();
+            return File(str,"application/json");
         }
 
         
