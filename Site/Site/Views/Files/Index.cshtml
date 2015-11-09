@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Index";
 }
 
@@ -8,26 +7,24 @@
 <html>
 <head runat="server">
     <meta name="viewport" content="width=device-width" />
-    <link rel="stylesheet" href="~/stylematerial.css" type="text/css" />
+    <link rel="stylesheet" href="/Content/stylematerial.css" type="text/css" />
     <title>FileManager</title>
 </head>
 <body>
     <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script type="text/javascript" src="/Content/jsmaterial.js"></script>
-    <script type="text/javascript" src="/Content/sortTable.v2.1.min.js"></script>
+    <script type="text/javascript" src="/Scripts/jsmaterial.js"></script>
     <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.4.2.js"></script>
-    <script type="text/javascript" src="/Content/autoresize.jquery.min.js"></script>
+    <script type="text/javascript" src="/Scripts/autoresize.jquery.min.js"></script>
 
     <header>
-        <%--<div class="container">
+        <!--<div class="container">
             <a class="button-collapse top-nav waves-effect waves-light circle hide-on-large-only" data-activates="nav-mobile" href="#">
                 <i class="mdi-navigation-menu"></i>
             </a>
-        </div> --%>
-        <div
-            <%--id="nav-mobile"--%> class="side-nav fixed grey">
+        </div> -->
+        <div @* id="nav-mobile" *@ class="side-nav fixed grey">
             <a href="/Home/Index" class="waves-effect waves-light btn container input-field">General</a>
             <a href="/Home/Settings" class="waves-effect waves-light btn container input-field">Settings</a>
             <a href="/Home/Cron" class="waves-effect waves-light btn container input-field">Cron</a>
