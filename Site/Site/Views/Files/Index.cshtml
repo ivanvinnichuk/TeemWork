@@ -78,8 +78,7 @@
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <table id="sr1" class="striped highlight responsive-table sr" onclick="clickEvent(event)">
-                                    <script type="text/javascript">$("#sr1").hide(); var n = 0;</script>
+                                    <table id="sr1" class="striped highlight responsive-table sr" onclick="clickEvent(event)">                                    
                                     <thead>
                                         <tr>
                                             <th></th>
@@ -95,6 +94,7 @@
                                         </tr>
                                     </tbody>
                                 </table>
+                                <script type="text/javascript">$("#sr1").hide(); var n = 0;</script>
                                 <div id="div1">
                                     <script type="text/javascript">$("#div1").hide();</script>
                                     <div class="waves-effect waves-light btn" onclick="SvClick()" style="margin-left:0.5rem">Save</div>
@@ -103,36 +103,38 @@
                                 </div>
                                 
                                 <script type="text/javascript">
-                                        function ld(data) {
-                                               obj = JSON.parse(data);
-                                                window.onload = function qwe() {
-                                                    var table = document.getElementById("sr");
-                                                    for (i = 0; obj[i]; i++) {
-                                                        var row = table.insertRow(table.rows.lenght);
-                                                        var cell0 = row.insertCell(0);
-                                                        var cell1 = row.insertCell(1);
-                                                        var cell2 = row.insertCell(2);
-                                                        var cell3 = row.insertCell(3);
-                                                        var cell4 = row.insertCell(4);
-                                                        cell0.innerHTML = '<input type="checkbox" id="' + i.toString() + '"/><label for="' + i.toString() + '"></label>';
-                                                        cell1.innerHTML = obj[i].Name;
-                                                        cell2.innerHTML = obj[i].Mode;
-                                                        cell3.innerHTML = Date(parseInt(obj[i].LastWriteTime.replace('/Date(', '')));
-                                                        cell4.innerHTML = obj[i].FullName;
-                                                    }
-                                                }
-                                            }
-                                      
 
                                     $(document).ready(function () {
-                                        var string = 'F:\\';
+                                        var string = 'd:\\';
                                         $.ajax({
                                             type: 'GET',
                                             url: '@Url.Action("ListOfFile", "Files")',
                                             data: { str: string },
-                                            success: ld                                               
-                                        });                                        
+                                            success: ld
+                                        });
                                     });
+                                    var idt = "sr";
+                                    function ld(data) {
+                                        alert(data);
+                                        obj = JSON.parse(data);                                        
+                                        var table = document.getElementById("sr");
+                                        for (i = table.rows.length-1; i>1 ; i--)
+                                            table.deleteRow(i);
+                                            for (i = 0; obj[i]; i++) {                                                
+                                                var row = table.insertRow(table.rows.lenght);
+                                                var cell0 = row.insertCell(0);
+                                                var cell1 = row.insertCell(1);
+                                                var cell2 = row.insertCell(2);
+                                                var cell3 = row.insertCell(3);
+                                                var cell4 = row.insertCell(4);
+                                                cell0.innerHTML = '<input type="checkbox" id="' + i + '"/><label for="' + i + '"></label>';
+                                                cell1.innerHTML = obj[i].Name;
+                                                cell2.innerHTML = obj[i].Mode;
+                                                cell3.innerHTML = Date(parseInt(obj[i].LastWriteTime.replace('/Date(', '')));
+                                                cell4.innerHTML = obj[i].FullName;
+                                            }                                       
+                                    }
+
                                 </script>
                                 <script type="text/javascript">
                                     function clickEvent(event) {
@@ -165,23 +167,20 @@
                                                     });
                                                 }
                                                 else {
-                                                    var string = 'F:\\';
+                                                    var string = st;
                                                     $.ajax({
                                                         type: 'GET',
                                                         url: '@Url.Action("ListOfFile", "Files")',
                                                         data: { str: string },
                                                         success: ld
                                                     });
-                                                    alert(st);
+                                                    alert(st);                                                    
                                                     if (!wf[0])
                                                         wf = [];
                                                 }
-
                                                 jQuery(function () {
                                                     jQuery('#etext').autoResize();
                                                 });
-                                                //document.getElementById("<%= from11 %>");
-                                                //alert(<% =from11 %>);
                                             }
                                         }
                                     }
@@ -202,7 +201,8 @@
                                     }
                                     function openmanager() {
                                         if (n == 0) {
-                                            ld("sr1");
+                                            idt = "sr1";
+                                            ld;
                                             $("#sr").hide();
                                             $("#sr1").show();
                                             n++;
