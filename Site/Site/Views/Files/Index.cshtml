@@ -8,17 +8,20 @@
 <head runat="server">
     <meta name="viewport" content="width=device-width" />
     <link rel="stylesheet" href="/Content/stylematerial.css" type="text/css" />
-    <title>FileManager</title>
+    <title>FileManager aahahahaahhaah</title>
 </head>
 <body>
+
     <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script type="text/javascript" src="/Scripts/jsmaterial.js"></script>
     <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.4.2.js"></script>
     <script type="text/javascript" src="/Scripts/autoresize.jquery.min.js"></script>
-
-    <header>
+    <script type="text/javascript">
+        var wf = [];
+    </script>
+<header>
         <!--<div class="container">
             <a class="button-collapse top-nav waves-effect waves-light circle hide-on-large-only" data-activates="nav-mobile" href="#">
                 <i class="mdi-navigation-menu"></i>
@@ -37,27 +40,49 @@
             <div class="section grid-example col s12 m12 l10 red lighten-2" style="float:right"><span class="flow-text">File Manager</span></div>
             <div class="section col s12 m12 l10" style="float:right">
                 <div>
-                    <div class="waves-effect waves-light btn" onclick="BNFldrClick" style="margin-left:0.5rem">New File</div>
-                    <div class="waves-effect waves-light btn" onclick="BNFlClick">New Folder</div>
-                    <div class="waves-effect waves-light btn" onclick="BCutClick">Cut</div>
-                    <div class="waves-effect waves-light btn" onclick="BCpyClick">Copy</div>
-                    <div class="waves-effect waves-light btn" onclick="BPstClick">Paste</div>
-                    <div class="waves-effect waves-light btn" onclick="BDelClick">Delete</div>
-                    <div class="waves-effect waves-light btn" onclick="BClsClick" style="margin-right:0.5rem; float:right">Close</div>
-                </div>
-                <div style="margin-top:1rem; border:2px solid #0d47a1">
-                    <a class="btn-floating btn waves-effect waves-light red" style="margin-left:0.5rem" onclick="changedir()">/</a>
-                    <a class="btn-floating btn waves-effect waves-light red" onclick="openmanager()">+</a>
-                    <div style="border:2px solid #0d47a1">
-                        <div class="row">
-                            <div class="input-field col s12">
-                                <input type="text" class="validate">
-                                <label for="search">Search</label>
-                            </div>
-                            <div class="input-field col s12">
-                                <table id="sr" class="striped highlight responsive-table" onclick="clickEvent(event)">
+                    <div class="waves-effect waves-light btn" onclick="BNFldrClick()" style="margin-left:0.5rem">New File</div>
+                    <div class="waves-effect waves-light btn" onclick="BNFlClick()">New Folder</div>
+                    <div class="waves-effect waves-light btn" onclick="BCutClick()">Cut</div>
+                    <div class="waves-effect waves-light btn" onclick="BCpyClick()">Copy</div>
+                    <div id="pst" class="waves-effect waves-light btn" onclick="BPstClick()">Paste</div>
+                    <script type="text/javascript">
+                        if (!wf[0])
+                            document.getElementById('pst').className += " disabled";
+                    </script>
+                        <div class="waves-effect waves-light btn" onclick="BDelClick()">Delete</div>
+                        <div class="waves-effect waves-light btn" onclick="BClsClick()" style="margin-right:0.5rem; float:right">Close</div>
+                    </div>
+                    <div style="margin-top:1rem; border:2px solid #0d47a1">
+                        <a class="btn-floating btn waves-effect waves-light red" style="margin-left:0.5rem" onclick="changedir()">/</a>
+                        <a class="btn-floating btn waves-effect waves-light red" onclick="openmanager()">+</a>
+                        <div style="border:2px solid #0d47a1">
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <input type="text" class="validate">
+                                    <label for="search">Search</label>
+                                </div>
+                                <div class="input-field col s12">
+                                    <table id="sr" class="striped highlight responsive-table sr" onclick="clickEvent(event)">
+                                        <thead>
+                                            <tr>
+                                                <th>123</th>
+                                                <th data-field="id">Name</th>
+                                                <th>Mode</th>
+                                                <th>LastWriteTime</th>
+                                                <th data-field="name">Fullname</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td colspan="5">Back</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <table id="sr1" class="striped highlight responsive-table sr" onclick="clickEvent(event)">
+                                    <script type="text/javascript">$("#sr1").hide(); var n = 0;</script>
                                     <thead>
                                         <tr>
+                                            <th></th>
                                             <th data-field="id">Name</th>
                                             <th>Mode</th>
                                             <th>LastWriteTime</th>
@@ -65,30 +90,20 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr></tr>
-                                    </tbody>
-                                </table>
-                                <table id="sr1" class="striped highlight responsive-table" onclick="clickEvent(event)">
-                                    <script type="text/javascript">$("#sr1").hide();</script>
-                                    <thead>
                                         <tr>
-                                            <th data-field="id">Name</th>
-                                            <th>Mode</th>
-                                            <th>LastWriteTime</th>
-                                            <th data-field="name">Fullname</th>
+                                            <td colspan="5">Back</td>
                                         </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr></tr>
                                     </tbody>
                                 </table>
                                 <div id="div1">
                                     <script type="text/javascript">$("#div1").hide();</script>
                                     <div class="waves-effect waves-light btn" onclick="SvClick()" style="margin-left:0.5rem">Save</div>
                                     <div class="waves-effect waves-light btn" onclick="BClseClick()" style="margin-right:0.5rem; float:right">X</div>
-                                    <textarea id="etext" ></textarea>
+                                    <textarea id="etext"></textarea>
                                 </div>
+
                                 <script type="text/javascript">
+                                    function ld(idt) {
                                     $.ajax({
                                         url: "../../c.txt",
                                         dataType: "text",
@@ -96,8 +111,8 @@
                                         success: function (msg) {
                                             test = msg;
                                             obj = JSON.parse(test);
-                                            window.onload = function () {
-                                                var table = document.getElementById("sr");
+                                            window.onload = function qwe() {
+                                                var table = document.getElementById(idt);
                                                 for (i = 0; obj[i]; i++) {
                                                     var row = table.insertRow(table.rows.lenght);
                                                     var cell0 = row.insertCell(0);
@@ -114,6 +129,9 @@
                                             }
                                         }
                                     });
+                                    }
+                                    ld("sr");
+                                    qwe("sr1");
                                 </script>
                                 <script type="text/javascript">
                                     function clickEvent(event) {
@@ -149,15 +167,17 @@
                                                 {
                                                     $.ajax({
                                                         type: 'GET',
-                                                        url: '@Url.Action("ListOfFile", "Texts")',
+                                                        url: '@Url.Action("getjson", "Texts")',
                                                         data: { str: st },
                                                         success: function () {
                                                             alert('Done');
                                                         }
                                                     });
                                                     alert(st);
+                                                    if(!wf[0])
+                                                        wf = [];
                                                 }
-                                                    
+
                                                 jQuery(function () {
                                                     jQuery('#etext').autoResize();
                                                 });
@@ -166,7 +186,7 @@
                                             }
                                         }
                                     }
-                                    function BClseClick() {
+                                    function SvClick() {
                                         var string = $('textarea[id=etext]').val();
                                         $.ajax({
                                             type: 'GET',
@@ -181,6 +201,75 @@
                                         $("#sr").show();
                                         $("#div1").hide();
                                     }
+                                    function openmanager() {
+                                        if (n == 0) {
+                                            ld("sr1");
+                                            $("#sr").hide();
+                                            $("#sr1").show();
+                                            n++;
+                                        }
+                                    }
+                                    function changedir() {
+                                        if (n != 0)
+                                            if (n % 2 == 0) {
+                                            $("#sr").hide();
+                                            $("#sr1").show();
+                                            n--;
+                                        }
+                                        else {
+                                            $("#sr1").hide();
+                                            $("#sr").show();
+                                            n++;
+                                        }
+                                    }
+                                    function BClsClick() {
+                                        if (n != 0)
+                                            if (n % 2 == 0) {
+                                                $("#sr").hide();
+                                                $("#sr1").show();
+                                                n=0;
+                                            }
+                                            else {
+                                                $("#sr1").hide();
+                                                $("#sr").show();
+                                                n=0;
+                                            }
+                                    }
+                                    function BCutClick() {
+                                        wf[0] = "1";
+                                        wf[1] = "0";
+                                        for(i=2;obj[i-2];i++)
+                                        {
+                                            var checkbox = document.getElementById(i - 2);
+                                            if (checkbox.checked) {
+                                                wf[i] = obj[i - 2].FullName;
+                                                //alert(wf[i]);
+                                            }
+                                        }
+                                        document.getElementById('pst').className = "waves-effect waves-light btn";
+                                    }
+                                    function BCpyClick() {
+                                        wf[0] = "2";
+                                        wf[1] = "0";
+                                        for (i = 2; obj[i - 2]; i++) {
+                                            var checkbox = document.getElementById(i - 2);
+                                            if (checkbox.checked) {
+                                                wf[i] = obj[i - 2].FullName;
+                                                //alert(wf[i]);
+                                            }
+                                        }
+                                        document.getElementById('pst').className = "waves-effect waves-light btn";
+                                    }
+                                    function BPstClick() {
+                                        $.ajax({
+                                            url: '/signin',
+                                            method: 'POST',
+                                            data: form.serialize(),
+                                            complete: function () {
+                                                alert("Done");
+                                            },
+                                        });
+                                    }
                                 </script>
                                 <script type="text/javascript">
                                     var sortAsc = document.createElement("SPAN"),
@@ -192,18 +281,6 @@
 
                                     // Вешаем сортировку на таблицу:
                                     sortTable(document.getElementById("sr"), sortAsc, sortDesc);
-                                </script>
-                                <script type="text/javascript">
-                                    var pressTimer
-                                    $("p").mouseup(function () {
-                                        clearTimeout(pressTimer)
-                                        // Clear timeout
-                                        return false;
-                                    }).mousedown(function () {
-                                        // Set timeout
-                                        pressTimer = window.setTimeout(function () { alarm("111") }, 1000)
-                                        return false;
-                                    });
                                 </script>
                             </div>
                         </div>

@@ -1,0 +1,32 @@
+﻿[
+{ 
+"Name": "dhavryl", 
+"Mode": "d----", 
+"LastWriteTime": "\/Date(1438613939272)\/", 
+"FullName": "C:\\Users\\dhavryl" 
+}, 
+{ 
+"Name": "dhavrylevych", 
+"Mode": "d----", 
+"LastWriteTime": "\/Date(1444578205795)\/", 
+"FullName": "C:\\Users\\dhavrylevych" 
+}, 
+{ 
+"Name": "MediaAdmin$", 
+"Mode": "d----", 
+"LastWriteTime": "\/Date(1444571511437)\/", 
+"FullName": "C:\\Users\\MediaAdmin$" 
+}, 
+{ 
+"Name": "Public", 
+"Mode": "d-r--", 
+"LastWriteTime": "\/Date(1377185972838)\/", 
+"FullName": "C:\\Users\\Public" 
+},
+{ 
+"Name": "с.txt", 
+"Mode": "d-r--", 
+"LastWriteTime": "\/Date(1377185972839)\/", 
+"FullName": "C:\\c.txt" 
+}
+]
