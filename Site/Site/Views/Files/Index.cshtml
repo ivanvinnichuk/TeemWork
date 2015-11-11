@@ -103,9 +103,23 @@
                                 </div>
 
                                 <script type="text/javascript">
-                                    function ld(idt) {
+                                    $(document).ready(function () {
+                                        $.ajax({
+                                            type: 'GET',
+                                            url: '@Url.Action("listoffile", "C:\\")',
+                                            data: { str: st },
+                                            success: function (data) {
+                                                ld("sr",data);
+                                            }
+                                        });
+                                    });
+                                    
+
+
+
+                                    function ld(idt, data) {
                                     $.ajax({
-                                        url: "../../c.txt",
+                                        url: data,
                                         dataType: "text",
                                         async: true,
                                         success: function (msg) {
