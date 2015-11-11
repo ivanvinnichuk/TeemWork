@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 
 <html>
-<head runat="server">
+<head>
     <meta name="viewport" content="width=device-width" />
     <link rel="stylesheet" href="/Content/stylematerial.css" type="text/css" />
     <title>FileManager aahahahaahhaah</title>
@@ -104,10 +104,11 @@
 
                                 <script type="text/javascript">
                                     $(document).ready(function () {
+                                        var string = 'c:\\';
                                         $.ajax({
                                             type: 'GET',
-                                            url: '@Url.Action("listoffile", "C:\\")',
-                                            data: { str: st },
+                                            url: '@Url.Action("ListOfFile", "Files")',
+                                            data: { str: string },
                                             success: function (data) {
                                                 ld("sr",data);
                                             }
@@ -144,8 +145,8 @@
                                         }
                                     });
                                     }
-                                    ld("sr");
-                                    qwe("sr1");
+                                    //ld("sr");
+                                   // qwe("sr1");
                                 </script>
                                 <script type="text/javascript">
                                     function clickEvent(event) {
