@@ -303,5 +303,22 @@
             </div>
         </div>
     </main>
+    <div>
+        <input type="button" value="Zdorow" id="zdz"/>
+        <script>
+            $(document).ready(function () {
+                $('#zdz').click(function () {
+                    $.ajax({
+                        type: 'GET',
+                        url: '@Url.Action("Hello", "Fiels")',
+                        success: function () {
+                            alert("Zdorov");
+                        }
+                    });
+                });
+            });
+
+        </script>
+    </div>
 </body>
 </html>

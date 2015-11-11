@@ -21,13 +21,34 @@ namespace Site.Controllers
         //
         public ActionResult ListOfFile(string str)
         {
-            string str1 = "@Url.Content(\"~/ScriptPowerShell\")";
+            string ss;
             var shell = PowerShell.Create();
-            shell.Commands.AddScript("@Url.Content(\"~/Scripts/PrintDirectory.ps1\") -Path " + str + "-pathToStore"+str1);
-            var result = shell.Invoke();
-            return File(str,"application/json");
-        }
+            shell.Commands.AddScript(" Get-ChildItem '" + str + "' |  Select-Object Name, Mode, LastWriteTime, FullName  | ConvertTo-Json");
+            var results = shell.Invoke();
+            if (results.Count > 0)
+            {
 
+                var builder = new StringBuilder();
+                
+
+
+                foreach (var psObject in results)
+                {
+                    builder.Append(psObject.ToString() + "\r\n");
+                   
+                }
+                string Result = builder.ToString();
+                return Content(Result);
+            }
+
+            return Content("Папка пуста!");
+        }
+        public ActionResult Hello() {
+            var shell = PowerShell.Create();
+            shell.Commands.AddScript("New-Item -Path 'C:\' -ItemType 'file' -Value 'HEllo' -name 'vasa' ");
+            var result = shell.Invoke();
+            return View();
+        }
         
         
         
