@@ -1,0 +1,320 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="/Content/stylematerial.css" type="text/css" />
+    <title>FileManager aahahahaahhaah</title>
+</head>
+<body>
+
+    <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="/Scripts/jsmaterial.js"></script>
+    <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.4.2.js"></script>
+    <script type="text/javascript" src="/Scripts/autoresize.jquery.min.js"></script>
+    <script type="text/javascript">
+        var wf = [];
+    </script>
+<header>
+        <!--<div class="container">
+            <a class="button-collapse top-nav waves-effect waves-light circle hide-on-large-only" data-activates="nav-mobile" href="#">
+                <i class="mdi-navigation-menu"></i>
+            </a>
+        </div> -->
+        <div @* id="nav-mobile" *@ class="side-nav fixed grey">
+            <a href="/Home/Index" class="waves-effect waves-light btn container input-field">General</a>
+            <a href="/Home/Settings" class="waves-effect waves-light btn container input-field">Settings</a>
+            <a href="/Home/Cron" class="waves-effect waves-light btn container input-field">Cron</a>
+            <a href="/Files/Index" class="waves-effect waves-light btn container input-field">File Manager</a>
+            <a href="/Home/Index" class="waves-effect waves-light btn container input-field">Page4</a>
+        </div>
+    </header>
+    <main>
+        <div class="row">
+            <div class="section grid-example col s12 m12 l10 red lighten-2" style="float:right"><span class="flow-text">File Manager</span></div>
+            <div class="section col s12 m12 l10" style="float:right">
+                <div>
+                    <div class="waves-effect waves-light btn" onclick="BNFldrClick()" style="margin-left:0.5rem">New File</div>
+                    <div class="waves-effect waves-light btn" onclick="BNFlClick()">New Folder</div>
+                    <div class="waves-effect waves-light btn" onclick="BCutClick()">Cut</div>
+                    <div class="waves-effect waves-light btn" onclick="BCpyClick()">Copy</div>
+                    <div id="pst" class="waves-effect waves-light btn" onclick="BPstClick()">Paste</div>
+                    <script type="text/javascript">
+                        if (!wf[0])
+                            document.getElementById('pst').className += " disabled";
+                    </script>
+                        <div class="waves-effect waves-light btn" onclick="BDelClick()">Delete</div>
+                        <div class="waves-effect waves-light btn" onclick="BClsClick()" style="margin-right:0.5rem; float:right">Close</div>
+                    </div>
+                    <div style="margin-top:1rem; border:2px solid #0d47a1">
+                        <a class="btn-floating btn waves-effect waves-light red" style="margin-left:0.5rem" onclick="changedir()">/</a>
+                        <a class="btn-floating btn waves-effect waves-light red" onclick="openmanager()">+</a>
+                        <div style="border:2px solid #0d47a1">
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <input type="text" class="validate">
+                                    <label for="search">Search</label>
+                                </div>
+                                <div class="input-field col s12">
+                                    <table id="sr" class="striped highlight responsive-table sr" onclick="clickEvent(event)">
+                                        <thead>
+                                            <tr>
+                                                <th>123</th>
+                                                <th data-field="id">Name</th>
+                                                <th>Mode</th>
+                                                <th>LastWriteTime</th>
+                                                <th data-field="name">Fullname</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td colspan="5">Back</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <table id="sr1" class="striped highlight responsive-table sr" onclick="clickEvent(event)">
+                                    <script type="text/javascript">$("#sr1").hide(); var n = 0;</script>
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th data-field="id">Name</th>
+                                            <th>Mode</th>
+                                            <th>LastWriteTime</th>
+                                            <th data-field="name">Fullname</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td colspan="5">Back</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div id="div1">
+                                    <script type="text/javascript">$("#div1").hide();</script>
+                                    <div class="waves-effect waves-light btn" onclick="SvClick()" style="margin-left:0.5rem">Save</div>
+                                    <div class="waves-effect waves-light btn" onclick="BClseClick()" style="margin-right:0.5rem; float:right">X</div>
+                                    <textarea id="etext"></textarea>
+                                </div>
+                                
+                                <script type="text/javascript">
+                                        function ld(data) {
+                                               obj = JSON.parse(data);
+                                                window.onload = function qwe() {
+                                                    var table = document.getElementById("sr");
+                                                    for (i = 0; obj[i]; i++) {
+                                                        var row = table.insertRow(table.rows.lenght);
+                                                        var cell0 = row.insertCell(0);
+                                                        var cell1 = row.insertCell(1);
+                                                        var cell2 = row.insertCell(2);
+                                                        var cell3 = row.insertCell(3);
+                                                        var cell4 = row.insertCell(4);
+                                                        cell0.innerHTML = '<input type="checkbox" id="' + i.toString() + '"/><label for="' + i.toString() + '"></label>';
+                                                        cell1.innerHTML = obj[i].Name;
+                                                        cell2.innerHTML = obj[i].Mode;
+                                                        cell3.innerHTML = Date(parseInt(obj[i].LastWriteTime.replace('/Date(', '')));
+                                                        cell4.innerHTML = obj[i].FullName;
+                                                    }
+                                                }
+                                            }
+                                      
+
+                                    $(document).ready(function () {
+                                        var string = 'c:\\';
+                                        $.ajax({
+                                            type: 'GET',
+                                            url: '@Url.Action("ListOfFile", "Files")',
+                                            data: { str: string },
+                                            success: ld
+                                               
+                                        });
+                                        
+                                    });
+                                    
+
+
+
+                                    
+                                    //ld("sr");
+                                   // qwe("sr1");
+                                </script>
+                                <script type="text/javascript">
+                                    function clickEvent(event) {
+                                        var target;
+                                        if (!event) {
+                                            var event = window.event;
+                                        }
+                                        if (event.target) {
+                                            target = event.target;
+                                        } else if (event.srcElement) {
+                                            target = event.srcElement;
+                                        }
+                                        if (target) {
+                                            if (target.nodeType == 3) {
+                                                target = target.parentNode;
+                                            }
+                                            if (target.tagName.toLowerCase() == "td") {
+                                                var row = target.parentNode;
+                                                var td;
+                                                var st = row.getElementsByTagName("td").item(4).innerHTML;
+                                                if ((st.search(".txt") != -1) || (st.search(".bat") != -1) || (st.search(".html") != -1)) {
+                                                    $("#sr").hide();
+                                                    $("#div1").show();
+                                                    var div1 = document.getElementById('div1');
+                                                    $.ajax({
+                                                        url: "../../qwe.txt",
+                                                        success: function (data) {
+                                                            $("#etext").html(data);
+                                                        }
+                                                    });
+                                                }
+                                                else
+                                                {
+                                                    $.ajax({
+                                                        type: 'GET',
+                                                        url: '@Url.Action("getjson", "Texts")',
+                                                        data: { str: st },
+                                                        success: function () {
+                                                            alert('Done');
+                                                        }
+                                                    });
+                                                    alert(st);
+                                                    if(!wf[0])
+                                                        wf = [];
+                                                }
+
+                                                jQuery(function () {
+                                                    jQuery('#etext').autoResize();
+                                                });
+                                                //document.getElementById("<%= from11 %>");
+                                                //alert(<% =from11 %>);
+                                            }
+                                        }
+                                    }
+                                    function SvClick() {
+                                        var string = $('textarea[id=etext]').val();
+                                        $.ajax({
+                                            type: 'GET',
+                                            url: '@Url.Action("RewriteToFile", "Texts")',
+                                            data: { str: string },
+                                            success: function () {
+                                                alert('Done');
+                                            }
+                                        });
+                                    }
+                                    function BClseClick() {
+                                        $("#sr").show();
+                                        $("#div1").hide();
+                                    }
+                                    function openmanager() {
+                                        if (n == 0) {
+                                            ld("sr1");
+                                            $("#sr").hide();
+                                            $("#sr1").show();
+                                            n++;
+                                        }
+                                    }
+                                    function changedir() {
+                                        if (n != 0)
+                                            if (n % 2 == 0) {
+                                            $("#sr").hide();
+                                            $("#sr1").show();
+                                            n--;
+                                        }
+                                        else {
+                                            $("#sr1").hide();
+                                            $("#sr").show();
+                                            n++;
+                                        }
+                                    }
+                                    function BClsClick() {
+                                        if (n != 0)
+                                            if (n % 2 == 0) {
+                                                $("#sr").hide();
+                                                $("#sr1").show();
+                                                n=0;
+                                            }
+                                            else {
+                                                $("#sr1").hide();
+                                                $("#sr").show();
+                                                n=0;
+                                            }
+                                    }
+                                    function BCutClick() {
+                                        wf[0] = "1";
+                                        wf[1] = "0";
+                                        for(i=2;obj[i-2];i++)
+                                        {
+                                            var checkbox = document.getElementById(i - 2);
+                                            if (checkbox.checked) {
+                                                wf[i] = obj[i - 2].FullName;
+                                                //alert(wf[i]);
+                                            }
+                                        }
+                                        document.getElementById('pst').className = "waves-effect waves-light btn";
+                                    }
+                                    function BCpyClick() {
+                                        wf[0] = "2";
+                                        wf[1] = "0";
+                                        for (i = 2; obj[i - 2]; i++) {
+                                            var checkbox = document.getElementById(i - 2);
+                                            if (checkbox.checked) {
+                                                wf[i] = obj[i - 2].FullName;
+                                                //alert(wf[i]);
+                                            }
+                                        }
+                                        document.getElementById('pst').className = "waves-effect waves-light btn";
+                                    }
+                                    function BPstClick() {
+                                        $.ajax({
+                                            url: '/signin',
+                                            method: 'POST',
+                                            data: form.serialize(),
+                                            complete: function () {
+                                                alert("Done");
+                                            },
+                                        });
+                                    }
+                                </script>
+                                <script type="text/javascript">
+                                    var sortAsc = document.createElement("SPAN"),
+                                        sortDesc = document.createElement("SPAN");
+
+                                    // Значки сортировки для заголовка таблицы:
+                                    sortAsc.innerHTML = "&#9660;";
+                                    sortDesc.innerHTML = "&#9650;";
+
+                                    // Вешаем сортировку на таблицу:
+                                    sortTable(document.getElementById("sr"), sortAsc, sortDesc);
+                                </script>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <div>
+        <input type="button" value="Zdorow" id="zdz"/>
+        <script>
+            $(document).ready(function () {
+                $('#zdz').click(function () {
+                    $.ajax({
+                        type: 'GET',
+                        url: '@Url.Action("Hello", "Fiels")',
+                        success: function () {
+                            alert("Zdorov");
+                        }
+                    });
+                });
+            });
+
+        </script>
+    </div>
+</body>
+</html>
