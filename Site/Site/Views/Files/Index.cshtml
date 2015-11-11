@@ -125,23 +125,14 @@
                                       
 
                                     $(document).ready(function () {
-                                        var string = 'c:\\';
+                                        var string = 'F:\\';
                                         $.ajax({
                                             type: 'GET',
                                             url: '@Url.Action("ListOfFile", "Files")',
                                             data: { str: string },
-                                            success: ld
-                                               
-                                        });
-                                        
+                                            success: ld                                               
+                                        });                                        
                                     });
-                                    
-
-
-
-                                    
-                                    //ld("sr");
-                                   // qwe("sr1");
                                 </script>
                                 <script type="text/javascript">
                                     function clickEvent(event) {
@@ -173,18 +164,16 @@
                                                         }
                                                     });
                                                 }
-                                                else
-                                                {
+                                                else {
+                                                    var string = 'F:\\';
                                                     $.ajax({
                                                         type: 'GET',
-                                                        url: '@Url.Action("getjson", "Texts")',
-                                                        data: { str: st },
-                                                        success: function () {
-                                                            alert('Done');
-                                                        }
+                                                        url: '@Url.Action("ListOfFile", "Files")',
+                                                        data: { str: string },
+                                                        success: ld
                                                     });
                                                     alert(st);
-                                                    if(!wf[0])
+                                                    if (!wf[0])
                                                         wf = [];
                                                 }
 
@@ -222,15 +211,15 @@
                                     function changedir() {
                                         if (n != 0)
                                             if (n % 2 == 0) {
-                                            $("#sr").hide();
-                                            $("#sr1").show();
-                                            n--;
-                                        }
-                                        else {
-                                            $("#sr1").hide();
-                                            $("#sr").show();
-                                            n++;
-                                        }
+                                                $("#sr").hide();
+                                                $("#sr1").show();
+                                                n--;
+                                            }
+                                            else {
+                                                $("#sr1").hide();
+                                                $("#sr").show();
+                                                n++;
+                                            }
                                     }
                                     function BClsClick() {
                                         if (n != 0)
