@@ -103,22 +103,8 @@
                                 </div>
                                 
                                 <script type="text/javascript">
-
-                                   /* function ld(dat1) {
-                                        alert(dat1);
-                                        var data = dat1;
-                                        alert("data");
-                                        alert(data);
-                                        $.ajax({
-                                            dataType: "text",
-                                            data:data,
-                                            complete:*/
-
-                                                function ld(data) {
-                                                alert("hello");
-                                                alert(data);
-                                                test = data;
-                                                obj = JSON.parse(test);
+                                        function ld(data) {
+                                               obj = JSON.parse(data);
                                                 window.onload = function qwe() {
                                                     var table = document.getElementById("sr");
                                                     for (i = 0; obj[i]; i++) {
@@ -136,8 +122,7 @@
                                                     }
                                                 }
                                             }
-                                       /* });
-                                    }*/
+                                      
 
                                     $(document).ready(function () {
                                         var string = 'c:\\';
@@ -145,28 +130,8 @@
                                             type: 'GET',
                                             url: '@Url.Action("ListOfFile", "Files")',
                                             data: { str: string },
-                                            success:   function (data) {
-                                                alert("hello");
-                                                alert(data);
-                                                test = data;
-                                                obj = JSON.parse(data);
-                                                window.onload = function qwe() {
-                                                    var table = document.getElementById("sr");
-                                                    for (i = 0; obj[i]; i++) {
-                                                        var row = table.insertRow(table.rows.lenght);
-                                                        var cell0 = row.insertCell(0);
-                                                        var cell1 = row.insertCell(1);
-                                                        var cell2 = row.insertCell(2);
-                                                        var cell3 = row.insertCell(3);
-                                                        var cell4 = row.insertCell(4);
-                                                        cell0.innerHTML = '<input type="checkbox" id="' + i.toString() + '"/><label for="' + i.toString() + '"></label>';
-                                                        cell1.innerHTML = obj[i].Name;
-                                                        cell2.innerHTML = obj[i].Mode;
-                                                        cell3.innerHTML = Date(parseInt(obj[i].LastWriteTime.replace('/Date(', '')));
-                                                        cell4.innerHTML = obj[i].FullName;
-                                                    }
-                                                }
-                                            }
+                                            success: ld
+                                               
                                         });
                                         
                                     });
