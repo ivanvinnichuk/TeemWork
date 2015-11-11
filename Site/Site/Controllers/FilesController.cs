@@ -21,7 +21,7 @@ namespace Site.Controllers
         //
         public ActionResult ListOfFile(string str)
         {
-            string ss;
+            
             var shell = PowerShell.Create();
             shell.Commands.AddScript(" Get-ChildItem '" + str + "' |  Select-Object Name, Mode, LastWriteTime, FullName  | ConvertTo-Json");
             var results = shell.Invoke();
