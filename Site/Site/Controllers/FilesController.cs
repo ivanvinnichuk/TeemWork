@@ -43,7 +43,11 @@ namespace Site.Controllers
 
             return Content("Папка пуста!");
         }
-        public ActionResult CutCopy(string[] str) {
+        public ActionResult CutCopy(string[] str)
+        {
+
+            
+            
             var shell = PowerShell.Create();
             if(str[0]=="2")
             {
