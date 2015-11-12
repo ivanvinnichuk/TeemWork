@@ -8,7 +8,7 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <link rel="stylesheet" href="/Content/stylematerial.css" type="text/css" />
-    <title>FileManager aahahahaahhaah</title>
+    <title>FileManager</title>
 </head>
 <body>
     <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
@@ -115,8 +115,8 @@
                                             success: ld
                                         });
                                     });
-                                    function ld(data) {
-                                        //alert(data);
+                                    function ld(data) {                                        
+                                        var m_names = new Array("January", "February", "March","April", "May", "June", "July", "August", "September","October", "November", "December");
                                         obj = JSON.parse(data);
                                         var table = document.getElementById("sr");
                                         for (i = table.rows.length - 1; i > 1 ; i--)
@@ -131,7 +131,13 @@
                                             cell0.innerHTML = '<input type="checkbox" id="' + i + '"/><label for="' + i + '"></label>';
                                             cell1.innerHTML = obj[i].Name;
                                             cell2.innerHTML = obj[i].Mode;
-                                            cell3.innerHTML = Date(parseInt(obj[i].LastWriteTime.replace('/Date(', '')));
+                                            var d = new Date();//Date(parseInt(obj[i].LastWriteTime.replace('/Date(', '')));
+                                            var curr_date = d.getDate();
+                                            var curr_month = d.getMonth(); //Months are zero based
+                                            var curr_year = d.getFullYear();
+                                            var curr_hour = d.getHours();
+                                            var curr_min = d.getMinutes();
+                                            cell3.innerHTML = curr_date +" "+ m_names[curr_month] +" "+ curr_year + " " + curr_hour+":"+curr_min;//Date(parseInt(obj[i].LastWriteTime.replace('/Date(', '')));
                                             cell4.innerHTML = obj[i].FullName;
                                         }
                                     }
@@ -286,17 +292,9 @@
                                         $.ajax({
                                             type: 'GET',
                                             url: '@Url.Action("CutCopy", "Files")',
-<<<<<<< HEAD
                                             data: {type:wf[0],path:wf[1],file:wf[2]},
                                             success:
                                                 alarm("done")
-=======
-                                            dataType: "array",
-                                            data: {str:wf},
-                                            success: function (data) {
-                                                alarm(data);
-                                            }
->>>>>>> origin/master
                                         });
                                     }
                                 </script>
