@@ -286,7 +286,7 @@
                                         $.ajax({
                                             type: 'GET',
                                             url: '@Url.Action("CutCopy", "Files")',
-                                            data: wf,
+                                            data: {type:wf[0],path:wf[1],file:wf[2]},
                                             success:
                                                 alarm("done")
                                         });
