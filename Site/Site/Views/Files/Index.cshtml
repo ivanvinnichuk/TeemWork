@@ -19,6 +19,8 @@
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.4.2.js"></script>
     <script type="text/javascript" src="/Scripts/autoresize.jquery.min.js"></script>
     <script type="text/javascript">
+        var string = 'd:\\';
+        var stringback = 'd:\\';
         var wf = [];
     </script>
 <header>
@@ -74,7 +76,7 @@
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td colspan="5">Back</td>
+                                                <td colspan="5" onclick="back()">Back</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -90,7 +92,7 @@
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td colspan="5">Back</td>
+                                            <td colspan="5" onclick="back">Back</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -105,7 +107,7 @@
                                 <script type="text/javascript">
 
                                     $(document).ready(function () {
-                                        var string = 'd:\\';
+                                        string = 'd:\\';
                                         $.ajax({
                                             type: 'GET',
                                             url: '@Url.Action("ListOfFile", "Files")',
@@ -115,7 +117,7 @@
                                     });
                                     var idt = "sr";
                                     function ld(data) {
-                                        alert(data);
+                                        //alert(data);
                                         obj = JSON.parse(data);                                        
                                         var table = document.getElementById("sr");
                                         for (i = table.rows.length-1; i>1 ; i--)
@@ -166,37 +168,38 @@
                                                         }
                                                     });
                                                 }
-                                                if (!row.getElementsByTagName("td").item(1).innerHTML.search("Back")) {
-                                                    alert("1");
-                                                    var string = "c:\\";
-                                                    $.ajax({
-                                                        type: 'GET',
-                                                        url: '@Url.Action("ListOfFile", "Files")',
-                                                        data: { str: string },
-                                                        success: ld
-                                                    });
-                                                    alert(st);                                                    
-                                                    if (!wf[0])
-                                                        wf = [];
-                                                }
                                                 else {
-                                                    var string = st;
+                                                    stringback = string;
+                                                    string = st;
                                                     $.ajax({
                                                         type: 'GET',
                                                         url: '@Url.Action("ListOfFile", "Files")',
                                                         data: { str: string },
                                                         success: ld
-                                                    });
-                                                    alert(st);                                                    
-                                                    if (!wf[0])
-                                                        wf = [];
-                                                }
+                                                });
+                                                //alert(st);                                                    
+                                                if (!wf[0])
+                                                    wf = [];
+                                            }
                                                 jQuery(function () {
                                                     jQuery('#etext').autoResize();
                                                 });
                                             }
                                         }
                                     }
+
+                                    function back(){
+                                        $.ajax({
+                                            type: 'GET',
+                                            url: '@Url.Action("ListOfFile", "Files")',
+                                            data: { str: stringback },
+                                            success: ld
+                                        });
+                                        //alert(st);
+                                        if (!wf[0])
+                                            wf = [];
+                                    }
+                                            
                                     function SvClick() {
                                         var string = $('textarea[id=etext]').val();
                                         $.ajax({
