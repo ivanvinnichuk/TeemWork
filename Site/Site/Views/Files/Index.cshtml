@@ -18,12 +18,12 @@
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.4.2.js"></script>
     <script type="text/javascript" src="/Scripts/autoresize.jquery.min.js"></script>
     <script type="text/javascript">
-        var string = 'd:\\';
+        var string = 'c:\\';
         var stringback = [];
-        var count=0;
+        var count = 0;
         var wf = [];
     </script>
-<header>
+    <header>
         <!--<div class="container">
             <a class="button-collapse top-nav waves-effect waves-light circle hide-on-large-only" data-activates="nav-mobile" href="#">
                 <i class="mdi-navigation-menu"></i>
@@ -51,36 +51,36 @@
                         if (!wf[0])
                             document.getElementById('pst').className += " disabled";
                     </script>
-                        <div class="waves-effect waves-light btn" onclick="BDelClick()">Delete</div>
-                        <div class="waves-effect waves-light btn" onclick="BClsClick()" style="margin-right:0.5rem; float:right">Close</div>
-                    </div>
-                    <div style="margin-top:1rem; border:2px solid #0d47a1">
-                        <a class="btn-floating btn waves-effect waves-light red" style="margin-left:0.5rem" onclick="changedir()">/</a>
-                        <a class="btn-floating btn waves-effect waves-light red" onclick="openmanager()">+</a>
-                        <div style="border:2px solid #0d47a1">
-                            <div class="row">
-                                <div class="input-field col s12">
-                                    <input type="text" class="validate">
-                                    <label for="search">Search</label>
-                                </div>
-                                <div class="input-field col s12">
-                                    <table id="sr" class="striped highlight responsive-table sr" onclick="clickEvent(event)">
-                                        <thead>
-                                            <tr>
-                                                <th>123</th>
-                                                <th data-field="id">Name</th>
-                                                <th>Mode</th>
-                                                <th>LastWriteTime</th>
-                                                <th data-field="name">Fullname</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td colspan="5" onclick="back()">Back</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                    <table id="sr1" class="striped highlight responsive-table sr" onclick="clickEvent(event)">                                    
+                    <div class="waves-effect waves-light btn" onclick="BDelClick()">Delete</div>
+                    <div class="waves-effect waves-light btn" onclick="BClsClick()" style="margin-right:0.5rem; float:right">Close</div>
+                </div>
+                <div style="margin-top:1rem; border:2px solid #0d47a1">
+                    <a class="btn-floating btn waves-effect waves-light red" style="margin-left:0.5rem" onclick="changedir()">/</a>
+                    <a class="btn-floating btn waves-effect waves-light red" onclick="openmanager()">+</a>
+                    <div style="border:2px solid #0d47a1">
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input type="text" class="validate">
+                                <label for="search">Search</label>
+                            </div>
+                            <div class="input-field col s12">
+                                <table id="sr" class="striped highlight responsive-table sr" onclick="clickEvent(event)">
+                                    <thead>
+                                        <tr>
+                                            <th>123</th>
+                                            <th data-field="id">Name</th>
+                                            <th>Mode</th>
+                                            <th>LastWriteTime</th>
+                                            <th data-field="name">Fullname</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td colspan="5" onclick="back()">Back</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <table id="sr1" class="striped highlight responsive-table sr" onclick="clickEvent(event)">
                                     <thead>
                                         <tr>
                                             <th></th>
@@ -103,45 +103,33 @@
                                     <div class="waves-effect waves-light btn" onclick="BClseClick()" style="margin-right:0.5rem; float:right">X</div>
                                     <textarea id="etext"></textarea>
                                 </div>
-                                
+
                                 <script type="text/javascript">
 
                                     function ld(data) {
-                                        alert("Helloo");
-                                            alert(data);
-                                            obj = JSON.parse(data);
-                                               // window.onload = function qwe() {
-                                                    var table = document.getElementById("sr");
-                                                    for (i = 0; obj[i]; i++) {
-                                                        var row = table.insertRow(table.rows.lenght);
-                                                        var cell0 = row.insertCell(0);
-                                                        var cell1 = row.insertCell(1);
-                                                        var cell2 = row.insertCell(2);
-                                                        var cell3 = row.insertCell(3);
-                                                        var cell4 = row.insertCell(4);
-                                                        cell0.innerHTML = '<input type="checkbox" id="' + i.toString() + '"/><label for="' + i.toString() + '"></label>';
-                                                        cell1.innerHTML = obj[i].Name;
-                                                        cell2.innerHTML = obj[i].Mode;
-                                                        cell3.innerHTML = Date(parseInt(obj[i].LastWriteTime.replace('/Date(', '')));
-                                                        cell4.innerHTML = obj[i].FullName;
-                                                    }
-                                                //}
-                                            }
-                                      
+                                        //alert("Helloo");
+                                        //alert(data);
+                                        obj = JSON.parse(data);
+                                        // window.onload = function qwe() {
+                                        var table = document.getElementById("sr");
+                                        for (i = 0; obj[i]; i++) {
+                                            var row = table.insertRow(table.rows.lenght);
+                                            var cell0 = row.insertCell(0);
+                                            var cell1 = row.insertCell(1);
+                                            var cell2 = row.insertCell(2);
+                                            var cell3 = row.insertCell(3);
+                                            var cell4 = row.insertCell(4);
+                                            cell0.innerHTML = '<input type="checkbox" id="' + i.toString() + '"/><label for="' + i.toString() + '"></label>';
+                                            cell1.innerHTML = obj[i].Name;
+                                            cell2.innerHTML = obj[i].Mode;
+                                            cell3.innerHTML = Date(parseInt(obj[i].LastWriteTime.replace('/Date(', '')));
+                                            cell4.innerHTML = obj[i].FullName;
+                                        }
+                                        //}
+                                    }
 
-<<<<<<< HEAD
                                     $(document).ready(function () {
                                         var string = 'c:\\';
-
-
-                                    $(document).ready(function () {
-                                        var string = 'd:\\';
-
-=======
-                                    
-                                    $(document).ready(function () {
-                                        var string = 'd:\\';
->>>>>>> origin/master
                                         $.ajax({
                                             type: 'GET',
                                             url: '@Url.Action("ListOfFile", "Files")',
@@ -151,23 +139,23 @@
                                     });
                                     function ld(data) {
                                         //alert(data);
-                                        obj = JSON.parse(data);                                        
+                                        obj = JSON.parse(data);
                                         var table = document.getElementById("sr");
-                                        for (i = table.rows.length-1; i>1 ; i--)
+                                        for (i = table.rows.length - 1; i > 1 ; i--)
                                             table.deleteRow(i);
-                                            for (i = 0; obj[i]; i++) {                                                
-                                                var row = table.insertRow(table.rows.lenght);
-                                                var cell0 = row.insertCell(0);
-                                                var cell1 = row.insertCell(1);
-                                                var cell2 = row.insertCell(2);
-                                                var cell3 = row.insertCell(3);
-                                                var cell4 = row.insertCell(4);
-                                                cell0.innerHTML = '<input type="checkbox" id="' + i + '"/><label for="' + i + '"></label>';
-                                                cell1.innerHTML = obj[i].Name;
-                                                cell2.innerHTML = obj[i].Mode;
-                                                cell3.innerHTML = Date(parseInt(obj[i].LastWriteTime.replace('/Date(', '')));
-                                                cell4.innerHTML = obj[i].FullName;
-                                            }                                       
+                                        for (i = 0; obj[i]; i++) {
+                                            var row = table.insertRow(table.rows.lenght);
+                                            var cell0 = row.insertCell(0);
+                                            var cell1 = row.insertCell(1);
+                                            var cell2 = row.insertCell(2);
+                                            var cell3 = row.insertCell(3);
+                                            var cell4 = row.insertCell(4);
+                                            cell0.innerHTML = '<input type="checkbox" id="' + i + '"/><label for="' + i + '"></label>';
+                                            cell1.innerHTML = obj[i].Name;
+                                            cell2.innerHTML = obj[i].Mode;
+                                            cell3.innerHTML = Date(parseInt(obj[i].LastWriteTime.replace('/Date(', '')));
+                                            cell4.innerHTML = obj[i].FullName;
+                                        }
                                     }
 
                                 </script>
@@ -210,12 +198,12 @@
                                                         url: '@Url.Action("ListOfFile", "Files")',
                                                         data: { str: string },
                                                         success: ld
-                                                });
-                                                    alert(count);
+                                                    });
+                                                    //alert(count);
 
-                                                if (!wf[0])
-                                                    wf = [];
-                                            }
+                                                    if (!wf[0])
+                                                        wf = [];
+                                                }
                                                 jQuery(function () {
                                                     jQuery('#etext').autoResize();
                                                 });
@@ -229,7 +217,7 @@
                                         $.ajax({
                                             type: 'GET',
                                             url: '@Url.Action("ListOfFile", "Files")',
-                                            data: { str: stringback[count-1] },
+                                            data: { str: stringback[count - 1] },
                                             success: ld
                                         });
                                         if (count > 1)
@@ -237,11 +225,11 @@
                                         else
                                             string = stringback[0];
                                         count--;
-                                        alert(string);
+                                        //alert(string);
                                         if (!wf[0])
                                             wf = [];
                                     }
-                                            
+
                                     function SvClick() {
                                         var string = $('textarea[id=etext]').val();
                                         $.ajax({
@@ -284,23 +272,23 @@
                                             if (n % 2 == 0) {
                                                 $("#sr").hide();
                                                 $("#sr1").show();
-                                                n=0;
+                                                n = 0;
                                             }
                                             else {
                                                 $("#sr1").hide();
                                                 $("#sr").show();
-                                                n=0;
+                                                n = 0;
                                             }
                                     }
                                     function BCutClick() {
                                         wf[0] = "1";
-                                        for(i=1;obj[i-1];i++)
-                                        {
+                                        for (i = 1; obj[i - 1]; i++) {
                                             var checkbox = document.getElementById(i - 1);
                                             if (checkbox.checked) {
                                                 wf[i] = obj[i - 1].FullName;
                                             }
                                         }
+                                        
                                         document.getElementById('pst').className = "waves-effect waves-light btn";
                                     }
                                     function BCpyClick() {
@@ -314,12 +302,16 @@
                                         document.getElementById('pst').className = "waves-effect waves-light btn";
                                     }
                                     function BPstClick() {
+                                        for (i = 0; i < wf.length; i++)
+                                            alert(wf[i]);
                                         $.ajax({
                                             type: 'GET',
-                                            url: '@Url.Action("CopyPaste", "Files")',
+                                            url: '@Url.Action("CutCopy", "Files")',
                                             data: { str: wf },
-                                            success: 
-                                                alarm("done")
+                                            success:function(data){
+                                                alarm(data);
+                                            }
+                                                
                                         });
                                     }
                                 </script>
@@ -339,6 +331,6 @@
             </div>
         </div>
     </main>
-   
+
 </body>
 </html>
