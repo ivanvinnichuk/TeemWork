@@ -43,7 +43,7 @@ namespace Site.Controllers
 
             return Content("Папка пуста!");
         }
-        public ActionResult Hello() {
+        public ActionResult CutCopy() {
             var shell = PowerShell.Create();
             shell.Commands.AddScript("New-Item -Path 'C:\' -ItemType 'file' -Value 'HEllo' -name 'vasa' ");
             var result = shell.Invoke();
