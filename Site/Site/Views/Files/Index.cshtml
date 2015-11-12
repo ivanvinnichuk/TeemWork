@@ -103,9 +103,11 @@
                                 </div>
                                 
                                 <script type="text/javascript">
-                                        function ld(data) {
-                                               obj = JSON.parse(data);
-                                                window.onload = function qwe() {
+                                    function ld(data) {
+                                        alert("Helloo");
+                                            alert(data);
+                                            obj = JSON.parse(data);
+                                               // window.onload = function qwe() {
                                                     var table = document.getElementById("sr");
                                                     for (i = 0; obj[i]; i++) {
                                                         var row = table.insertRow(table.rows.lenght);
@@ -120,12 +122,12 @@
                                                         cell3.innerHTML = Date(parseInt(obj[i].LastWriteTime.replace('/Date(', '')));
                                                         cell4.innerHTML = obj[i].FullName;
                                                     }
-                                                }
+                                                //}
                                             }
                                       
 
                                     $(document).ready(function () {
-                                        var string = 'F:\\';
+                                        var string = 'c:\\';
                                         $.ajax({
                                             type: 'GET',
                                             url: '@Url.Action("ListOfFile", "Files")',
@@ -165,7 +167,7 @@
                                                     });
                                                 }
                                                 else {
-                                                    var string = 'F:\\';
+                                                    var string = 'd:\\';
                                                     $.ajax({
                                                         type: 'GET',
                                                         url: '@Url.Action("ListOfFile", "Files")',
