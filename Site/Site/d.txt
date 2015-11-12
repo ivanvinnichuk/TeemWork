@@ -27,6 +27,6 @@
 "Name": "с.txt", 
 "Mode": "d-r--", 
 "LastWriteTime": "\/Date(1377185972839)\/", 
-"FullName": "C:\\c.txt" 
+"FullName": "C:\\cdfdf.txt" 
 }
 ]
