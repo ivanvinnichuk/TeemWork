@@ -43,11 +43,20 @@ namespace Site.Controllers
 
             return Content("Папка пуста!");
         }
-        public ActionResult CutCopy() {
+        public ActionResult CutCopy(string[] str) {
             var shell = PowerShell.Create();
-            shell.Commands.AddScript("New-Item -Path 'C:\' -ItemType 'file' -Value 'HEllo' -name 'vasa' ");
-            var result = shell.Invoke();
-            return View();
+            if(str[0]=="2")
+            {
+                for (int i = str.Length; i > 1;i-- )
+                    shell.Commands.AddScript("Copy-Item  '" + str[i] + "'  '" + str[1]+ "'");
+            }
+            if (str[0] == "1")
+            {
+                for (int i = str.Length; i > 1; i--)
+                    shell.Commands.AddScript("Move-Item  '" + str[i] + "'  '" + str[1] + "'");
+            }
+            
+            return Content("Done");
         }
         
         
