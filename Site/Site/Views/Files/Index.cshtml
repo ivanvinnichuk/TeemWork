@@ -106,8 +106,40 @@
                                 
                                 <script type="text/javascript">
 
+                                    function ld(data) {
+                                        alert("Helloo");
+                                            alert(data);
+                                            obj = JSON.parse(data);
+                                               // window.onload = function qwe() {
+                                                    var table = document.getElementById("sr");
+                                                    for (i = 0; obj[i]; i++) {
+                                                        var row = table.insertRow(table.rows.lenght);
+                                                        var cell0 = row.insertCell(0);
+                                                        var cell1 = row.insertCell(1);
+                                                        var cell2 = row.insertCell(2);
+                                                        var cell3 = row.insertCell(3);
+                                                        var cell4 = row.insertCell(4);
+                                                        cell0.innerHTML = '<input type="checkbox" id="' + i.toString() + '"/><label for="' + i.toString() + '"></label>';
+                                                        cell1.innerHTML = obj[i].Name;
+                                                        cell2.innerHTML = obj[i].Mode;
+                                                        cell3.innerHTML = Date(parseInt(obj[i].LastWriteTime.replace('/Date(', '')));
+                                                        cell4.innerHTML = obj[i].FullName;
+                                                    }
+                                                //}
+                                            }
+                                      
+
                                     $(document).ready(function () {
+                                        var string = 'c:\\';
+=======
+
+                                    $(document).ready(function () {
+<<<<<<< HEAD
                                         string = 'd:\\';
+=======
+                                        var string = 'd:\\';
+>>>>>>> origin/master
+>>>>>>> origin/master
                                         $.ajax({
                                             type: 'GET',
                                             url: '@Url.Action("ListOfFile", "Files")',
@@ -169,8 +201,16 @@
                                                     });
                                                 }
                                                 else {
+<<<<<<< HEAD
                                                     stringback = string;
                                                     string = st;
+=======
+<<<<<<< HEAD
+                                                    var string = 'd:\\';
+=======
+                                                    var string = st;
+>>>>>>> origin/master
+>>>>>>> origin/master
                                                     $.ajax({
                                                         type: 'GET',
                                                         url: '@Url.Action("ListOfFile", "Files")',
