@@ -11,7 +11,6 @@
     <title>FileManager aahahahaahhaah</title>
 </head>
 <body>
-
     <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script type="text/javascript" src="/Scripts/jsmaterial.js"></script>
@@ -20,7 +19,8 @@
     <script type="text/javascript" src="/Scripts/autoresize.jquery.min.js"></script>
     <script type="text/javascript">
         var string = 'd:\\';
-        var stringback = 'd:\\';
+        var stringback = [];
+        var count=0;
         var wf = [];
     </script>
 <header>
@@ -129,17 +129,9 @@
                                             }
                                       
 
+                                    
                                     $(document).ready(function () {
-                                        var string = 'c:\\';
-=======
-
-                                    $(document).ready(function () {
-<<<<<<< HEAD
-                                        string = 'd:\\';
-=======
                                         var string = 'd:\\';
->>>>>>> origin/master
->>>>>>> origin/master
                                         $.ajax({
                                             type: 'GET',
                                             url: '@Url.Action("ListOfFile", "Files")',
@@ -147,7 +139,6 @@
                                             success: ld
                                         });
                                     });
-                                    var idt = "sr";
                                     function ld(data) {
                                         //alert(data);
                                         obj = JSON.parse(data);                                        
@@ -201,23 +192,17 @@
                                                     });
                                                 }
                                                 else {
-<<<<<<< HEAD
-                                                    stringback = string;
+                                                    stringback[count] = string;
+                                                    count++;
                                                     string = st;
-=======
-<<<<<<< HEAD
-                                                    var string = 'd:\\';
-=======
-                                                    var string = st;
->>>>>>> origin/master
->>>>>>> origin/master
                                                     $.ajax({
                                                         type: 'GET',
                                                         url: '@Url.Action("ListOfFile", "Files")',
                                                         data: { str: string },
                                                         success: ld
                                                 });
-                                                //alert(st);                                                    
+                                                    alert(count);
+
                                                 if (!wf[0])
                                                     wf = [];
                                             }
@@ -228,14 +213,21 @@
                                         }
                                     }
 
-                                    function back(){
+                                    function back() {
+                                        if (count == 0)
+                                            return;
                                         $.ajax({
                                             type: 'GET',
                                             url: '@Url.Action("ListOfFile", "Files")',
-                                            data: { str: stringback },
+                                            data: { str: stringback[count-1] },
                                             success: ld
                                         });
-                                        //alert(st);
+                                        if (count > 1)
+                                            string = stringback[count - 2];
+                                        else
+                                            string = stringback[0];
+                                        count--;
+                                        alert(string);
                                         if (!wf[0])
                                             wf = [];
                                     }
@@ -297,7 +289,6 @@
                                             var checkbox = document.getElementById(i - 1);
                                             if (checkbox.checked) {
                                                 wf[i] = obj[i - 1].FullName;
-                                                //alert(wf[i]);
                                             }
                                         }
                                         document.getElementById('pst').className = "waves-effect waves-light btn";
@@ -308,7 +299,6 @@
                                             var checkbox = document.getElementById(i - 1);
                                             if (checkbox.checked) {
                                                 wf[i] = obj[i - 1].FullName;
-                                                //alert(wf[i]);
                                             }
                                         }
                                         document.getElementById('pst').className = "waves-effect waves-light btn";
@@ -326,11 +316,9 @@
                                 <script type="text/javascript">
                                     var sortAsc = document.createElement("SPAN"),
                                         sortDesc = document.createElement("SPAN");
-
                                     // Значки сортировки для заголовка таблицы:
                                     sortAsc.innerHTML = "&#9660;";
                                     sortDesc.innerHTML = "&#9650;";
-
                                     // Вешаем сортировку на таблицу:
                                     sortTable(document.getElementById("sr"), sortAsc, sortDesc);
                                 </script>
