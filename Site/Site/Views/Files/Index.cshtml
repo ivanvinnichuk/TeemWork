@@ -21,7 +21,7 @@
         var string = [];
         var stringback = [];
         var count = 0;
-        var wf = new Array;
+        var wf = new Array();
     </script>
     <header>
         <!--<div class="container">
@@ -286,9 +286,11 @@
                                         $.ajax({
                                             type: 'GET',
                                             url: '@Url.Action("CutCopy", "Files")',
-                                            data: wf,
-                                            success:
-                                                alarm("done")
+                                            dataType: "array",
+                                            data: {str:wf},
+                                            success: function (data) {
+                                                alarm(data);
+                                            }
                                         });
                                     }
                                 </script>
