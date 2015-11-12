@@ -18,7 +18,11 @@
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.4.2.js"></script>
     <script type="text/javascript" src="/Scripts/autoresize.jquery.min.js"></script>
     <script type="text/javascript">
+<<<<<<< HEAD
         var string = 'c:\\';
+=======
+        var string = [];
+>>>>>>> origin/master
         var stringback = [];
         var count = 0;
         var wf = [];
@@ -106,6 +110,7 @@
 
                                 <script type="text/javascript">
 
+<<<<<<< HEAD
                                     function ld(data) {
                                         //alert("Helloo");
                                         //alert(data);
@@ -130,10 +135,36 @@
 
                                     $(document).ready(function () {
                                         var string = 'c:\\';
+=======
+                                    /*function ld(data) {
+                                        //alert("Helloo");
+                                            //alert(data);
+                                            obj = JSON.parse(data);
+                                               // window.onload = function qwe() {
+                                                    var table = document.getElementById("sr");
+                                                    for (i = 0; obj[i]; i++) {
+                                                        var row = table.insertRow(table.rows.lenght);
+                                                        var cell0 = row.insertCell(0);
+                                                        var cell1 = row.insertCell(1);
+                                                        var cell2 = row.insertCell(2);
+                                                        var cell3 = row.insertCell(3);
+                                                        var cell4 = row.insertCell(4);
+                                                        cell0.innerHTML = '<input type="checkbox" id="' + i.toString() + '"/><label for="' + i.toString() + '"></label>';
+                                                        cell1.innerHTML = obj[i].Name;
+                                                        cell2.innerHTML = obj[i].Mode;
+                                                        cell3.innerHTML = Date(parseInt(obj[i].LastWriteTime.replace('/Date(', '')));
+                                                        cell4.innerHTML = obj[i].FullName;
+                                                    }
+                                                //}
+                                            }*/
+
+                                    $(document).ready(function () {
+                                        string[count] = 'd:\\';
+>>>>>>> origin/master
                                         $.ajax({
                                             type: 'GET',
                                             url: '@Url.Action("ListOfFile", "Files")',
-                                            data: { str: string },
+                                            data: { str: string[count] },
                                             success: ld
                                         });
                                     });
@@ -190,15 +221,19 @@
                                                     });
                                                 }
                                                 else {
-                                                    stringback[count] = string;
+                                                    stringback[count] = string[count];
                                                     count++;
-                                                    string = st;
+                                                    string[count] = st;
                                                     $.ajax({
                                                         type: 'GET',
                                                         url: '@Url.Action("ListOfFile", "Files")',
-                                                        data: { str: string },
+                                                        data: { str: string[count] },
                                                         success: ld
+<<<<<<< HEAD
                                                     });
+=======
+                                                });
+>>>>>>> origin/master
                                                     //alert(count);
 
                                                     if (!wf[0])
@@ -212,7 +247,7 @@
                                     }
 
                                     function back() {
-                                        if (count == 0)
+                                        if (count < 1)
                                             return;
                                         $.ajax({
                                             type: 'GET',
@@ -221,9 +256,9 @@
                                             success: ld
                                         });
                                         if (count > 1)
-                                            string = stringback[count - 2];
+                                            string[count] = stringback[count - 2];
                                         else
-                                            string = stringback[0];
+                                            string[count] = stringback[0];
                                         count--;
                                         //alert(string);
                                         if (!wf[0])
@@ -231,11 +266,11 @@
                                     }
 
                                     function SvClick() {
-                                        var string = $('textarea[id=etext]').val();
+                                        var string1 = $('textarea[id=etext]').val();
                                         $.ajax({
                                             type: 'GET',
                                             url: '@Url.Action("RewriteToFile", "Texts")',
-                                            data: { str: string },
+                                            data: { str: string1 },
                                             success: function () {
                                                 alert('Done');
                                             }
@@ -306,12 +341,19 @@
                                             alert(wf[i]);
                                         $.ajax({
                                             type: 'GET',
+<<<<<<< HEAD
                                             url: '@Url.Action("CutCopy", "Files")',
                                             data: { str: wf },
                                             success:function(data){
                                                 alarm(data);
                                             }
                                                 
+=======
+                                            url: '@Url.Action("CopyPaste", "Files")',
+                                            data: 'jsonData=' + $.toJSON(wf),
+                                            success: 
+                                                alarm("done")
+>>>>>>> origin/master
                                         });
                                     }
                                 </script>
