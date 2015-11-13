@@ -43,23 +43,23 @@ namespace Site.Controllers
 
             return Content("Папка пуста!");
         }
-        public ActionResult CutCopy(string[] str)
+        public ActionResult CutCopy(string type)
         {
 
+            string s = type;
             
-            
-            var shell = PowerShell.Create();
-            if(str[0]=="2")
+            /*var shell = PowerShell.Create();
+            if(type=="2")
             {
-                for (int i = str.Length; i > 1;i-- )
-                    shell.Commands.AddScript("Copy-Item  '" + str[i] + "'  '" + str[1]+ "'");
+                
+                    shell.Commands.AddScript("Copy-Item  '" + file + "'  '" + path+ "'");
             }
-            if (str[0] == "1")
+            if (type == "1")
             {
-                for (int i = str.Length; i > 1; i--)
-                    shell.Commands.AddScript("Move-Item  '" + str[i] + "'  '" + str[1] + "'");
+               
+                    shell.Commands.AddScript("Move-Item  '" + file + "'  '" + path + "'");
             }
-            
+            */
             return Content("Done");
         }
         
