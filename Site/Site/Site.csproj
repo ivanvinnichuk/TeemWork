@@ -182,6 +182,14 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="icons\file-excel.png" />
+    <Content Include="icons\file-pdf.png" />
+    <Content Include="icons\file-word %281%29.png" />
+    <Content Include="icons\file-word-box %281%29.png" />
+    <Content Include="icons\file-word-box.png" />
+    <Content Include="icons\file-word.png" />
+    <Content Include="icons\file.png" />
+    <Content Include="icons\folder.png" />
     <Content Include="qwe.txt" />
     <Content Include="Scripts\autoresize.jquery.min.js" />
     <Content Include="Scripts\bootstrap.js" />
