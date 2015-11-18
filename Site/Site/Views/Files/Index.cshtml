@@ -27,6 +27,7 @@
         var headful;
         var k = 0;
         var c = 0;
+        var $toastContent;
     </script>
     <script type="text/javascript">
         function enable() {
@@ -377,20 +378,21 @@
                                         }
                                     }
                                     function newff() {
-                                        if ($('input[name="group1"]:checked').val() == 1)
-                                            $.ajax({
-                                                type: 'GET',
-                                                url: '@Url.Action("newfile", "Files")',
-                                                data: { str: document.getElementById("fname").value },
-                                                success: ld
-                                            });
-                                        else
-                                            $.ajax({
-                                                type: 'GET',
-                                                url: '@Url.Action("newfolder", "Files")',
-                                                data: { str: document.getElementById("fname").value },
-                                                success: ld
-                                            });
+                                        if (document.getElementById("fname").value)
+                                            if ($('input[name="group1"]:checked').val() == 1)
+                                                $.ajax({
+                                                    type: 'GET',
+                                                    url: '@Url.Action("newfile", "Files")',
+                                                    data: { str: headful + document.getElementById("fname").value },
+                                                    success: ld
+                                                });
+                                            else
+                                                $.ajax({
+                                                    type: 'GET',
+                                                    url: '@Url.Action("newfolder", "Files")',
+                                                    data: { str: headful + document.getElementById("fname").value },
+                                                    success: ld
+                                                });
                                     }
                                     function back() {
                                         if (count < 1)
@@ -487,28 +489,27 @@
                                         wf[1] = string[count];
                                         if (!wf[3])
                                             if (wf[0] == 2)
-                                                var $toastContent = $('<div id="ctoast" >' + wf[2] + ' is copying<img src="../icons/close.png" style="cursor:pointer" onclick="toasthide()"/></div>');
+                                                $toastContent = $('<div>' + wf[2] + ' is copying<img src="../icons/close.png" style="cursor:pointer" onclick="toasthide()"/></div>');
                                             else
-                                                var $toastContent = $('<div id="ctoast">' + wf[2] + ' is replasing<img src="../icons/close.png" /></div>');
+                                                $toastContent = $('<div>' + wf[2] + ' is replasing<img src="../icons/close.png" /></div>');
                                         else if (wf[0] == 2)
-                                            var $toastContent = $('<div id="ctoast">' + wf.length - 2 + ' files are copying<img src="../icons/close.png" /></div>');
+                                            $toastContent = $('<div>' + wf.length - 2 + ' files are copying<img src="../icons/close.png" /></div>');
                                         else
-                                            var $toastContent = $('<div id="ctoast">' + wf.length - 2 + ' files are replacing<img src="../icons/close.png" /></div>');
+                                            $toastContent = $('<div>' + wf.length - 2 + ' files are replacing<img src="../icons/close.png" /></div>');
                                         Materialize.toast($toastContent);
                                         $.ajax({
                                             type: 'GET',
                                             url: '@Url.Action("CutCopy", "Files")',
-                                            dataType: "array",
-                                            data: { str: wf },
+                                            data: ({ "type": wf[0], "path": wf[1], "file": wf[2] }),
                                             success: function (data) {
-                                                alarm(data);
-                                                $("ctoast").hide();
+                                                $("#newwtoast").hide();
                                                 Materialize.toast('Complete', 2500);
+                                                ld;
                                             }
                                         });
                                     }
-                                    function toasthide() {
-                                        $("ctoast").hide();
+                                    function toasthide() {                                        
+                                        $("#newwtoast").hide();
                                     }
                                     function BDelClick() {
                                         if (c > 0) {

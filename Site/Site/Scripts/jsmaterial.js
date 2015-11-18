@@ -1824,7 +1824,7 @@ else {
                 duration: 375,
                 easing: 'easeOutExpo',
                 queue: false,
-                complete: function () {
+                complete: function thide() {
                     // Call the optional callback
                     if (typeof (completeCallback) === "function")
                         completeCallback();
@@ -1842,6 +1842,7 @@ else {
 
         // Create toast
         var toast = document.createElement('div');
+        toast.id = "newwtoast";
         toast.classList.add('toast');
         if (className) {
             var classes = className.split(' ');
