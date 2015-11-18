@@ -41,28 +41,32 @@ namespace Site.Controllers
                 return Content(Result);
             }
 
-            return Content("Папка пуста!");
+            return Content("Папка пуста!","text/plain");
         }
-        public ActionResult CutCopy(string type)
+
+        //[HttpGet]
+        public ActionResult CutCopy(string type, string path, string file)
         {
 
-            string s = type;
+            string s = type.ToString();
             
-            /*var shell = PowerShell.Create();
+            
             if(type=="2")
             {
-                
-                    shell.Commands.AddScript("Copy-Item  '" + file + "'  '" + path+ "'");
+                var shell = PowerShell.Create();
+                    shell.Commands.AddScript(" Copy-Item  " + file + "  " + path);
+                    var results = shell.Invoke();
             }
             if (type == "1")
             {
-               
-                    shell.Commands.AddScript("Move-Item  '" + file + "'  '" + path + "'");
+                var shell = PowerShell.Create();
+                    shell.Commands.AddScript(" Move-Item  '" + file + "'  '" + path + "'");
+                    var results = shell.Invoke();
             }
-            */
-            return Content("Done");
+            
+            return Content("Done", "text/plain");
         }
-        
+
         
         
 	}
