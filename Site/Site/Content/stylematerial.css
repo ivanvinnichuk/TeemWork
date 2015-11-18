@@ -2200,7 +2200,7 @@ thead {
   border-bottom: 1px solid #d0d0d0; }
 
 td, th {
-  padding: 15px 5px;
+  padding: 5px 5px;
   display: table-cell;
   text-align: left;
   vertical-align: middle;
@@ -4808,7 +4808,7 @@ nav ul a span.badge {
   content: "\e8ae"; }
 
 .mdi-navigation-menu:before {
-  content: "\e8af"; }
+  content: ""; }
 
 .mdi-navigation-more-horiz:before {
   content: "\e8b0"; }
@@ -6746,11 +6746,11 @@ form p:last-child {
   /* checkbox aspect */ }
   [type="checkbox"] + label {
     position: relative;
-    padding-left: 35px;
+    padding-left: 25px;
     cursor: pointer;
     display: inline-block;
-    height: 25px;
-    line-height: 25px;
+    height: 40px;
+    line-height: 40px;
     font-size: 1rem;
     -webkit-user-select: none;
     /* webkit (safari, chrome) browsers */
@@ -7248,8 +7248,8 @@ select {
     color: #444;
     display: block;
     font-size: 1rem;
-    height: 64px;
-    line-height: 64px;
+    /*height: 64px;
+    line-height: 64px;*/
     padding: 0 15px; }
 
 .drag-target {
