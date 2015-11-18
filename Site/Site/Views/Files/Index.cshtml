@@ -9,14 +9,38 @@
     <meta name="viewport" content="width=device-width" />
     <link rel="stylesheet" href="/Content/stylematerial.css" type="text/css" />
     <title>FileManager</title>
+<<<<<<< HEAD
 </head>
 <body>
+=======
+>>>>>>> origin/master
     <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script type="text/javascript" src="/Scripts/jsmaterial.js"></script>
     @*<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.4.2.js"></script>*@
     <script type="text/javascript" src="/Scripts/autoresize.jquery.min.js"></script>
+    <script type="text/javascript">
+
+        function enable() {
+            var c = 0;
+            for (i = 1; obj[i - 1]; i++) {
+                var checkbox = document.getElementById(i - 1);
+                if (checkbox.checked)
+                    c++;
+            }
+            if (c > 0) {
+                document.getElementById('Cpy').className = "waves-effect waves-light btn";
+                document.getElementById('Cut').className = "waves-effect waves-light btn";
+            }
+            else {
+                document.getElementById('Cpy').className = "btn disabled";
+                document.getElementById('Cut').className = "btn disabled";
+            }
+        }
+    </script>
+</head>
+<body>
     <script type="text/javascript">
         var string = [];
         var stringback = [];
@@ -94,6 +118,7 @@
         <div class="row">
             <div class="col s12 m12 l10" style="float:right">
                 <div>
+<<<<<<< HEAD
                     <a class="waves-effect waves-light btn modal-trigger" href="#modal1" onclick="newfilefolder()" style="margin-left:0.5rem">New...</a>
                     <script type="text/javascript">
                         function newfilefolder() {
@@ -107,6 +132,19 @@
                     <script type="text/javascript">
                         if (!wf[0])
                             document.getElementById('pst').className = document.getElementById('pst').className+" disabled";
+=======
+                    <div class="waves-effect waves-light btn" onclick="BNFldrClick()" style="margin-left:0.5rem">New...</div>
+                    <div id="Cpy" class="btn disabled" onclick="BCpyClick()">Copy</div>
+                    <div id="Cut" class="btn disabled" onclick="BCutClick()">Cut</div>
+                    <div id="pst" onclick="BPstClick()">Paste</div>
+                    <script type="text/javascript">
+                        if ((wf[0] != 1) || (wf[0] != 2))
+                            document.getElementById('pst').className = "btn disabled";
+                        else {
+                            alert(wf[0]);
+                            document.getElementById('pst').className = "waves-effect waves-light btn";
+                        }
+>>>>>>> origin/master
                     </script>
                     <div id="Del" class="btn disabled" onclick="BDelClick()">Delete</div>
                     <div class="waves-effect waves-light btn" onclick="BClsClick()" style="margin-right:0.5rem; float:right">Close</div>
@@ -215,6 +253,61 @@
                                                 success: ld
                                             });
                                         });
+<<<<<<< HEAD
+=======
+                                    });
+                                    function ld(data) {
+                                        var m_names = new Array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
+                                        obj = JSON.parse(data);
+                                        var table = document.getElementById("sr");
+                                        for (i = table.rows.length - 1; i > 1 ; i--)
+                                            table.deleteRow(i);
+                                        for (i = 0; obj[i]; i++) {
+                                            var row = table.insertRow(table.rows.lenght);
+                                            var cell0 = row.insertCell(0);
+                                            var cell1 = row.insertCell(1);
+                                            var cell2 = row.insertCell(2);
+                                            var cell3 = row.insertCell(3);
+                                            var cell4 = row.insertCell(4);
+<<<<<<< HEAD
+                                            cell0.innerHTML = '<input type="checkbox" id="' + i + '"onchange = "enable();"/><label for="' + i + '"></label>';
+=======
+<<<<<<< HEAD
+                                            var cell5 = row.insertCell(5);
+                                            cell0.innerHTML = '<input type="checkbox" id="' + i + '"onchange = "enable();"/><label for="' + i + '"></label>';
+                                            cell1.innerHTML = obj[i].Name;
+                                            cell3.innerHTML = obj[i].Mode;
+                                            //cell2.innerHTML = obj[i].Mode[0];
+                                            if (obj[i].Mode[1] == "d")
+                                                cell2.innerHTML = '<p><img src="../icons/folder.png"/></p>';
+                                            cell3.innerHTML = obj[i].Mode;
+                                            var d = new Date(parseInt(obj[i].LastWriteTime.replace('/Date(', '')));
+                                            var curr_date = d.getDate();
+                                            var curr_month = d.getMonth();
+                                            var curr_year = d.getFullYear();
+                                            var curr_hour = d.getHours();
+                                            var curr_min = d.getMinutes();
+                                            if (curr_min < 10)
+                                                curr_min = "0" + curr_min;
+                                            cell4.innerHTML = curr_date +" "+ m_names[curr_month] +" "+ curr_year + " " + curr_hour+":"+curr_min;//Date(parseInt(obj[i].LastWriteTime.replace('/Date(', '')));
+                                            cell5.innerHTML = obj[i].FullName;
+=======
+                                            cell0.innerHTML = '<input type="checkbox" id="' + i + '"/><label for="' + i + '"></label>';
+>>>>>>> origin/master
+                                            cell1.innerHTML = obj[i].Name;
+                                            cell2.innerHTML = obj[i].Mode;
+                                            var d = new Date();//Date(parseInt(obj[i].LastWriteTime.replace('/Date(', '')));
+                                            var curr_date = d.getDate();
+                                            var curr_month = d.getMonth(); //Months are zero based
+                                            var curr_year = d.getFullYear();
+                                            var curr_hour = d.getHours();
+                                            var curr_min = d.getMinutes();
+                                            cell3.innerHTML = curr_date + " " + m_names[curr_month] + " " + curr_year + " " + curr_hour + ":" + curr_min;//Date(parseInt(obj[i].LastWriteTime.replace('/Date(', '')));
+                                            cell4.innerHTML = obj[i].FullName;
+>>>>>>> origin/master
+                                        }
+                                    }
+>>>>>>> origin/master
 
                                         function ld(data) {
                                             //alert(data);
@@ -434,6 +527,7 @@
                                                 $("#sr1").show();
                                                 n++;
                                             }
+<<<<<<< HEAD
                                         }
                                         function changedir() {
                                             if (n != 0)
@@ -543,6 +637,72 @@
                                         
                                     </script>
                                 </div>
+=======
+                                    }
+                                    function BClsClick() {
+                                        if (n != 0)
+                                            if (n % 2 == 0) {
+                                                $("#sr").hide();
+                                                $("#sr1").show();
+                                                n = 0;
+                                            }
+                                            else {
+                                                $("#sr1").hide();
+                                                $("#sr").show();
+                                                n = 0;
+                                            }
+                                    }
+                                    function BCutClick() {
+                                        var j = 2;
+                                        for (i = 1; obj[i - 1]; i++) {
+                                            var checkbox = document.getElementById(i - 1);
+                                            if (checkbox.checked) {
+                                                wf[j++] = obj[i - 1].FullName;
+                                                wf[0] = "1";
+                                                document.getElementById('pst').className = "waves-effect waves-light btn";
+                                            }
+                                        }
+                                    }
+                                    function BCpyClick() {
+                                        var j = 2;
+                                        for (i = 1; obj[i - 1]; i++) {
+                                            var checkbox = document.getElementById(i - 1);
+                                            if (checkbox.checked) {
+                                                wf[j++] = obj[i - 1].FullName;
+                                                wf[0] = "2";
+                                                document.getElementById('pst').className = "waves-effect waves-light btn";
+                                            }
+                                        }
+                                    }
+                                    function BPstClick() {
+                                        if (wf[0] > 0) {
+                                            wf[1] = string[count];
+                                            alert(wf);
+                                            
+                                            $.ajax({
+                                                type: 'GET',
+                                                url: '@Url.Action("CutCopy", "Files")',
+                                                data: ({ "type": wf[0], "path": wf[1], "file": wf[2] }),
+                                                success: function (data) {
+                                                    alarm("done")
+                                                }
+                                            });
+                                        }
+                                    }
+                                  
+
+                                </script>
+                                <script type="text/javascript">
+                                    var sortAsc = document.createElement("SPAN"),
+                                        sortDesc = document.createElement("SPAN");
+                                    // Значки сортировки для заголовка таблицы:
+                                    sortAsc.innerHTML = "&#9660;";
+                                    sortDesc.innerHTML = "&#9650;";
+                                    // Вешаем сортировку на таблицу:
+                                    sortTable(document.getElementById("sr"), sortAsc, sortDesc);
+                                </script>
+                            </div>
+>>>>>>> origin/master
                         </div>
                     </div>
                 </div>
