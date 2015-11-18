@@ -503,7 +503,7 @@
                                             success: function(data){
                                                 $(".toast").hide();
                                                 Materialize.toast('Complete', 2500);
-                                                ld;
+                                                ld
                                             }
                                         });
                                     }
@@ -516,19 +516,15 @@
                                             for (i = 1; obj[i - 1]; i++) {
                                                 var checkbox = document.getElementById(i - 1);
                                                 if (checkbox.checked) {
-                                                    df[j++] = obj[i - 1].FullName;
-                                                    document.getElementById('pst').className = "waves-effect waves-light btn";
+                                                    df[j++] = obj[i - 1].FullName;                                                    
                                                 }
                                             }
                                         }
                                         $.ajax({
                                             type: 'GET',
                                             url: '@Url.Action("Delete", "Files")',
-                                            dataType: "array",
-                                            data: { str: df },
-                                            success: function (data) {
-                                                alarm(data);
-                                            }
+                                            data: { "str": df },  //df-архів стрінгів з повним шляхом
+                                            success: Materialize.toast('Delete complete', 2500)                                            
                                         });
                                     }
                                 </script>
