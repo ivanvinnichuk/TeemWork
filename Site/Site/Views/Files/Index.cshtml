@@ -346,7 +346,7 @@
                                                     $("#div1").show();
                                                     var div1 = document.getElementById('div1');
                                                     $.ajax({
-                                                        url: "../../qwe.txt",
+                                                        url: '@Url.Action("OpenFile", "Files")',
                                                         success: function (data) {
                                                             $("#etext").html(data);
                                                         }
@@ -364,8 +364,8 @@
                                                         data: { str: string[count] },
                                                         success: ld
                                                     });
-                                                    $("#sr").show();
                                                     $("#loading").hide();
+                                                    $("#sr").show();
                                                     df = [];
                                                     if (!wf[0])
                                                         wf = [];
@@ -382,14 +382,14 @@
                                                 $.ajax({
                                                     type: 'GET',
                                                     url: '@Url.Action("newfile", "Files")',
-                                                    data: { str: headful + document.getElementById("fname").value },
+                                                    data: { "str": headful + document.getElementById("fname").value },
                                                     success: ld
                                                 });
                                             else
                                                 $.ajax({
                                                     type: 'GET',
                                                     url: '@Url.Action("newfolder", "Files")',
-                                                    data: { str: headful + document.getElementById("fname").value },
+                                                    data: { "str": headful + document.getElementById("fname").value },
                                                     success: ld
                                                 });
                                     }
@@ -417,9 +417,9 @@
                                         $.ajax({
                                             type: 'GET',
                                             url: '@Url.Action("RewriteToFile", "Texts")',
-                                            data: { str: string1 },
+                                            data: { "str": string1 },
                                             success: function () {
-                                                alert('Done');
+                                                Materialize.toast('Complete', 2500)
                                             }
                                         });
                                     }
@@ -520,6 +520,7 @@
                                                 }
                                             }
                                         }
+                                        prompt(df);
                                         $.ajax({
                                             type: 'GET',
                                             url: '@Url.Action("Delete", "Files")',
