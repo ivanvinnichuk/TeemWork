@@ -27,7 +27,6 @@
         var headful;
         var k = 0;
         var c = 0;
-        var $toastContent;
     </script>
     <script type="text/javascript">
         function enable() {
@@ -489,27 +488,27 @@
                                         wf[1] = string[count];
                                         if (!wf[3])
                                             if (wf[0] == 2)
-                                                $toastContent = $('<div>' + wf[2] + ' is copying<img src="../icons/close.png" style="cursor:pointer" onclick="toasthide()"/></div>');
+                                                var $toastContent = $('<div>' + wf[2] + ' is copying<img src="../icons/close.png" style="cursor:pointer" onclick="toasthide()"/></div>');
                                             else
-                                                $toastContent = $('<div>' + wf[2] + ' is replasing<img src="../icons/close.png" /></div>');
+                                                var $toastContent = $('<div>' + wf[2] + ' is replasing<img src="../icons/close.png" /></div>');
                                         else if (wf[0] == 2)
-                                            $toastContent = $('<div>' + wf.length - 2 + ' files are copying<img src="../icons/close.png" /></div>');
+                                            var $toastContent = $('<div>' + wf.length - 2 + ' files are copying<img src="../icons/close.png" /></div>');
                                         else
-                                            $toastContent = $('<div>' + wf.length - 2 + ' files are replacing<img src="../icons/close.png" /></div>');
+                                            var $toastContent = $('<div>' + wf.length - 2 + ' files are replacing<img src="../icons/close.png" /></div>');
                                         Materialize.toast($toastContent);
                                         $.ajax({
                                             type: 'GET',
                                             url: '@Url.Action("CutCopy", "Files")',
                                             data: ({ "type": wf[0], "path": wf[1], "file": wf[2] }),
-                                            success: function (data) {
-                                                $("#newwtoast").hide();
+                                            success: function(data){
+                                                $(".toast").hide();
                                                 Materialize.toast('Complete', 2500);
-                                                ld
+                                                ld;
                                             }
                                         });
                                     }
                                     function toasthide() {                                        
-                                        $("#newwtoast").hide();
+                                        $(".toast").hide();
                                     }
                                     function BDelClick() {
                                         if (c > 0) {
