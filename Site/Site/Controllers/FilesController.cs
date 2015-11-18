@@ -63,8 +63,9 @@ namespace Site.Controllers
                     shell.Commands.AddScript(" Move-Item  '" + file + "'  '" + path + "'");
                     var results = shell.Invoke();
             }
-            
-            return Content("Done", "text/plain");
+
+            string res = "Done";
+            return Content(res);
         }
 
         
