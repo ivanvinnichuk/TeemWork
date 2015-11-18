@@ -9,38 +9,14 @@
     <meta name="viewport" content="width=device-width" />
     <link rel="stylesheet" href="/Content/stylematerial.css" type="text/css" />
     <title>FileManager</title>
-<<<<<<< HEAD
 </head>
 <body>
-=======
->>>>>>> origin/master
     <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script type="text/javascript" src="/Scripts/jsmaterial.js"></script>
     @*<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
-    <script type="text/javascript" src="http://code.jquery.com/jquery-1.4.2.js"></script>*@
+        <script type="text/javascript" src="http://code.jquery.com/jquery-1.4.2.js"></script>*@
     <script type="text/javascript" src="/Scripts/autoresize.jquery.min.js"></script>
-    <script type="text/javascript">
-
-        function enable() {
-            var c = 0;
-            for (i = 1; obj[i - 1]; i++) {
-                var checkbox = document.getElementById(i - 1);
-                if (checkbox.checked)
-                    c++;
-            }
-            if (c > 0) {
-                document.getElementById('Cpy').className = "waves-effect waves-light btn";
-                document.getElementById('Cut').className = "waves-effect waves-light btn";
-            }
-            else {
-                document.getElementById('Cpy').className = "btn disabled";
-                document.getElementById('Cut').className = "btn disabled";
-            }
-        }
-    </script>
-</head>
-<body>
     <script type="text/javascript">
         var string = [];
         var stringback = [];
@@ -49,7 +25,7 @@
         var df = new Array();
         var head;
         var headful;
-        var k=0;
+        var k = 0;
         var c = 0;
     </script>
     <script type="text/javascript">
@@ -76,7 +52,7 @@
     <header>
         <div id="slide-out" class="side-nav fixed yellow lighten-4">
             <div class="section yellow darken-2"><h5>qwe corp.</h5></div>
-            <div class="section grey"><h4>File Manager</h4></div>                           
+            <div class="section grey"><h4>File Manager</h4></div>
             <div style="position: fixed; bottom:0%; width:inherit">
                 <a href="/Home/Index" class="waves-effect waves-light btn input-field">General</a>
                 <a href="/Home/Settings" class="waves-effect waves-light btn input-field">Settings</a>
@@ -118,7 +94,6 @@
         <div class="row">
             <div class="col s12 m12 l10" style="float:right">
                 <div>
-<<<<<<< HEAD
                     <a class="waves-effect waves-light btn modal-trigger" href="#modal1" onclick="newfilefolder()" style="margin-left:0.5rem">New...</a>
                     <script type="text/javascript">
                         function newfilefolder() {
@@ -131,20 +106,7 @@
                     <div id="pst" class="waves-effect waves-light btn" onclick="BPstClick()">Paste</div>
                     <script type="text/javascript">
                         if (!wf[0])
-                            document.getElementById('pst').className = document.getElementById('pst').className+" disabled";
-=======
-                    <div class="waves-effect waves-light btn" onclick="BNFldrClick()" style="margin-left:0.5rem">New...</div>
-                    <div id="Cpy" class="btn disabled" onclick="BCpyClick()">Copy</div>
-                    <div id="Cut" class="btn disabled" onclick="BCutClick()">Cut</div>
-                    <div id="pst" onclick="BPstClick()">Paste</div>
-                    <script type="text/javascript">
-                        if ((wf[0] != 1) || (wf[0] != 2))
-                            document.getElementById('pst').className = "btn disabled";
-                        else {
-                            alert(wf[0]);
-                            document.getElementById('pst').className = "waves-effect waves-light btn";
-                        }
->>>>>>> origin/master
+                            document.getElementById('pst').className = document.getElementById('pst').className + " disabled";
                     </script>
                     <div id="Del" class="btn disabled" onclick="BDelClick()">Delete</div>
                     <div class="waves-effect waves-light btn" onclick="BClsClick()" style="margin-right:0.5rem; float:right">Close</div>
@@ -201,7 +163,7 @@
                                     <div class="waves-effect waves-light btn" onclick="BClseClick()" style="margin-right:0.5rem; float:right">X</div>
                                     <textarea id="etext"></textarea>
                                 </div>
-                                
+
                                 <div id="loading" class="preloader-wrapper active">
                                     <div class="spinner-layer spinner-blue">
                                         <div class="circle-clipper left">
@@ -241,25 +203,25 @@
                                     </div>
                                 </div>
 
-                                    <script type="text/javascript">
-                                        $(document).ready(function () {
-                                            $("#loading").hide();
-                                            cellb = document.getElementById('back').insertCell(1);
-                                            string[count] = 'd:\\';
-                                            $.ajax({
-                                                type: 'GET',
-                                                url: '@Url.Action("ListOfFile", "Files")',
-                                                data: { str: string[count] },
-                                                success: ld
-                                            });
+                                <script type="text/javascript">
+                                    $(document).ready(function () {
+                                        $("#loading").hide();
+                                        cellb = document.getElementById('back').insertCell(1);
+                                        string[count] = 'd:\\';
+                                        $.ajax({
+                                            type: 'GET',
+                                            url: '@Url.Action("ListOfFile", "Files")',
+                                            data: { str: string[count] },
+                                            success: ld
                                         });
-<<<<<<< HEAD
-=======
                                     });
+
                                     function ld(data) {
+                                        //alert(data);
                                         var m_names = new Array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
                                         obj = JSON.parse(data);
                                         var table = document.getElementById("sr");
+                                        //table.style.maxHeight = "300px";
                                         for (i = table.rows.length - 1; i > 1 ; i--)
                                             table.deleteRow(i);
                                         for (i = 0; obj[i]; i++) {
@@ -269,18 +231,43 @@
                                             var cell2 = row.insertCell(2);
                                             var cell3 = row.insertCell(3);
                                             var cell4 = row.insertCell(4);
-<<<<<<< HEAD
-                                            cell0.innerHTML = '<input type="checkbox" id="' + i + '"onchange = "enable();"/><label for="' + i + '"></label>';
-=======
-<<<<<<< HEAD
                                             var cell5 = row.insertCell(5);
                                             cell0.innerHTML = '<input type="checkbox" id="' + i + '"onchange = "enable();"/><label for="' + i + '"></label>';
                                             cell1.innerHTML = obj[i].Name;
-                                            cell3.innerHTML = obj[i].Mode;
-                                            //cell2.innerHTML = obj[i].Mode[0];
-                                            if (obj[i].Mode[1] == "d")
-                                                cell2.innerHTML = '<p><img src="../icons/folder.png"/></p>';
-                                            cell3.innerHTML = obj[i].Mode;
+                                            if (obj[i].Mode[0] == "d")
+                                                cell2.innerHTML = '<p><img src="../icons/folder.png" alt="d"/></p>';
+                                            else {
+                                                /*var stt;
+                                                for (j = obj[i].Name.lenght - 3; j < obj[i].Name.lenght; j++)
+                                                    stt = stt + obj[i].Name[j];
+                                                cell2.innerHTML = obj[i].Name;*/
+                                                if ((obj[i].Name.search(".doc") > 0) || (obj[i].Name.search(".docx") > 0))
+                                                    cell2.innerHTML = '<p><img src="../icons/file-word.png" /></p>';
+                                                else if ((obj[i].Name.search(".xls") > 0) || (obj[i].Name.search(".xlsx") > 0))
+                                                    cell2.innerHTML = '<p><img src="../icons/file-excel.png" /></p>';
+                                                else if ((obj[i].Name.search(".ppt") > 0) || (obj[i].Name.search(".pptx") > 0))
+                                                    cell2.innerHTML = '<p><img src="../icons/file-powerpoint.png" /></p>';
+                                                else if (obj[i].Name.search(".pdf") > 0)
+                                                    cell2.innerHTML = '<p><img src="../icons/file-pdf.png" /></p>';
+                                                else if (obj[i].Name.search(".txt") > 0)
+                                                    cell2.innerHTML = '<p><img src="../icons/file-document.png" /></p>';
+                                                else if ((obj[i].Name.search(".jpg") > 0) || (obj[i].Name.search(".jpeg") > 0) || (obj[i].Name.search(".png") > 0) || (obj[i].Name.search(".bmp") > 0) || (obj[i].Name.search(".gif") > 0))
+                                                    cell2.innerHTML = '<p><img src="../icons/file-image.png" /></p>';
+                                                else cell2.innerHTML = '<p><img src="../icons/file.png" /></p>';
+                                            }
+                                            if (obj[i].Mode[1] == "a")
+                                                cell3.innerHTML = '<p style="width:82px"><img class="tooltipped" data-position="top" data-delay="50" data-tooltip="I am tooltip" src="../icons/read.png" /><img src="../icons/Write.png" /><img src="../icons/execute.png" /></p>';
+                                                //cell3.innerHTML = '<p class="waves-effect waves-light btn tooltipped" data-position="bottom" data-delay="5000" data-tooltip="I am tooltip">TOP</p>';
+                                            else {
+                                                if (obj[i].Mode[2] == "r")
+                                                    cell3.innerHTML = '<p><img src="../icons/file.png" /></p>';
+                                                if (obj[i].Mode[3] == "w")
+                                                    cell3.innerHTML = '<p><img src="../icons/file-pdf.png" /></p>';
+                                                if (obj[i].Mode[4] == "e")
+                                                    cell3.innerHTML = '<p><img src="../icons/file-word.png" /></p>';
+                                                else
+                                                    cell3.innerHTML = "NOT";
+                                            }
                                             var d = new Date(parseInt(obj[i].LastWriteTime.replace('/Date(', '')));
                                             var curr_date = d.getDate();
                                             var curr_month = d.getMonth();
@@ -289,355 +276,177 @@
                                             var curr_min = d.getMinutes();
                                             if (curr_min < 10)
                                                 curr_min = "0" + curr_min;
-                                            cell4.innerHTML = curr_date +" "+ m_names[curr_month] +" "+ curr_year + " " + curr_hour+":"+curr_min;//Date(parseInt(obj[i].LastWriteTime.replace('/Date(', '')));
-                                            cell5.innerHTML = obj[i].FullName;
-=======
-                                            cell0.innerHTML = '<input type="checkbox" id="' + i + '"/><label for="' + i + '"></label>';
->>>>>>> origin/master
-                                            cell1.innerHTML = obj[i].Name;
-                                            cell2.innerHTML = obj[i].Mode;
-                                            var d = new Date();//Date(parseInt(obj[i].LastWriteTime.replace('/Date(', '')));
-                                            var curr_date = d.getDate();
-                                            var curr_month = d.getMonth(); //Months are zero based
-                                            var curr_year = d.getFullYear();
-                                            var curr_hour = d.getHours();
-                                            var curr_min = d.getMinutes();
-                                            cell3.innerHTML = curr_date + " " + m_names[curr_month] + " " + curr_year + " " + curr_hour + ":" + curr_min;//Date(parseInt(obj[i].LastWriteTime.replace('/Date(', '')));
-                                            cell4.innerHTML = obj[i].FullName;
->>>>>>> origin/master
+                                            cell4.innerHTML = curr_date + " " + m_names[curr_month] + " " + curr_year + " " + curr_hour + ":" + curr_min;
+                                            var slesh = 0;
+                                            head = '';
+                                            for (j = 0; j < obj[i].FullName.toString().length; j++) {
+                                                if (slesh < 3)
+                                                    head = head + obj[i].FullName[j];
+                                                if (obj[i].FullName[j] == '\\')
+                                                    slesh++;
+                                            }
+                                            if (slesh >= 3) {
+                                                cellb.innerHTML = head + "...";
+                                                k = 1;
+                                                var hl = head.toString().length;
+                                                headful = '';
+                                            }
+                                            else {
+                                                k = 0;
+                                                hl = 0;
+                                            }
+                                            var name = '';
+                                            if (hl != 0) {
+                                                var hl1 = 0;
+                                                for (j = obj[i].FullName.toString().length - 1; j > hl - 1; j--)
+                                                    if (obj[i].FullName[j] == "\\") {
+                                                        hl1 = j;
+                                                        break;
+                                                    }
+                                                for (j = hl1 - 1; j > hl; j--)
+                                                    if (obj[i].FullName[j] == "\\") {
+                                                        hl = j;
+                                                        break;
+                                                    }
+                                                for (j = 0; j < hl; j++)
+                                                    headful = headful + obj[i].FullName[j];
+                                            }
+                                            for (j = hl; j < obj[i].FullName.toString().length; j++)
+                                                name = name + obj[i].FullName[j];
+                                            //cellb.innerHTML = headful;
+                                            cell5.innerHTML = name;
                                         }
+                                        if (k == 1)
+                                            headful = headful;// + "\\";
+                                        else
+                                            headful = "";
+                                        enable();
                                     }
->>>>>>> origin/master
-
-                                        function ld(data) {
-                                            //alert(data);
-                                            var m_names = new Array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
-                                            obj = JSON.parse(data);
-                                            var table = document.getElementById("sr");
-                                            //table.style.maxHeight = "300px";
-                                            for (i = table.rows.length - 1; i > 1 ; i--)
-                                                table.deleteRow(i);
-                                            for (i = 0; obj[i]; i++) {
-                                                var row = table.insertRow(table.rows.lenght);
-                                                var cell0 = row.insertCell(0);
-                                                var cell1 = row.insertCell(1);
-                                                var cell2 = row.insertCell(2);
-                                                var cell3 = row.insertCell(3);
-                                                var cell4 = row.insertCell(4);
-                                                var cell5 = row.insertCell(5);
-                                                cell0.innerHTML = '<input type="checkbox" id="' + i + '"onchange = "enable();"/><label for="' + i + '"></label>';
-                                                cell1.innerHTML = obj[i].Name;
-                                                if (obj[i].Mode[0] == "d")
-                                                    cell2.innerHTML = '<p><img src="../icons/folder.png" alt="d"/></p>';
-                                                else {
-                                                    /*var stt;
-                                                    for (j = obj[i].Name.lenght - 3; j < obj[i].Name.lenght; j++)
-                                                        stt = stt + obj[i].Name[j];
-                                                    cell2.innerHTML = obj[i].Name;*/
-                                                    if ((obj[i].Name.search(".doc") > 0) || (obj[i].Name.search(".docx") > 0))
-                                                        cell2.innerHTML = '<p><img src="../icons/file-word.png" /></p>';
-                                                    else if ((obj[i].Name.search(".xls") > 0) || (obj[i].Name.search(".xlsx") > 0))
-                                                        cell2.innerHTML = '<p><img src="../icons/file-excel.png" /></p>';
-                                                    else if ((obj[i].Name.search(".ppt") > 0) || (obj[i].Name.search(".pptx") > 0))
-                                                        cell2.innerHTML = '<p><img src="../icons/file-powerpoint.png" /></p>';
-                                                    else if (obj[i].Name.search(".pdf") > 0)
-                                                        cell2.innerHTML = '<p><img src="../icons/file-pdf.png" /></p>';
-                                                    else if (obj[i].Name.search(".txt") > 0)
-                                                        cell2.innerHTML = '<p><img src="../icons/file-document.png" /></p>';
-                                                    else if ((obj[i].Name.search(".jpg") > 0) || (obj[i].Name.search(".jpeg") > 0) || (obj[i].Name.search(".png") > 0) || (obj[i].Name.search(".bmp") > 0) || (obj[i].Name.search(".gif") > 0))
-                                                        cell2.innerHTML = '<p><img src="../icons/file-image.png" /></p>';
-                                                    else cell2.innerHTML = '<p><img src="../icons/file.png" /></p>';
-                                                }
-                                                if (obj[i].Mode[1] == "a")
-                                                    cell3.innerHTML = '<p style="width:82px"><img class="tooltipped" data-position="top" data-delay="50" data-tooltip="I am tooltip" src="../icons/read.png" /><img src="../icons/Write.png" /><img src="../icons/execute.png" /></p>';
-                                                    //cell3.innerHTML = '<p class="waves-effect waves-light btn tooltipped" data-position="bottom" data-delay="5000" data-tooltip="I am tooltip">TOP</p>';
-                                                else {
-                                                    if (obj[i].Mode[2] == "r")
-                                                        cell3.innerHTML = '<p><img src="../icons/file.png" /></p>';
-                                                    if (obj[i].Mode[3] == "w")
-                                                        cell3.innerHTML = '<p><img src="../icons/file-pdf.png" /></p>';
-                                                    if (obj[i].Mode[4] == "e")
-                                                        cell3.innerHTML = '<p><img src="../icons/file-word.png" /></p>';
-                                                    else
-                                                        cell3.innerHTML = "NOT";
-                                                }
-                                                var d = new Date(parseInt(obj[i].LastWriteTime.replace('/Date(', '')));
-                                                var curr_date = d.getDate();
-                                                var curr_month = d.getMonth();
-                                                var curr_year = d.getFullYear();
-                                                var curr_hour = d.getHours();
-                                                var curr_min = d.getMinutes();
-                                                if (curr_min < 10)
-                                                    curr_min = "0" + curr_min;
-                                                cell4.innerHTML = curr_date + " " + m_names[curr_month] + " " + curr_year + " " + curr_hour + ":" + curr_min;
-                                                var slesh = 0;
-                                                head = '';
-                                                for (j = 0; j < obj[i].FullName.toString().length; j++) {
-                                                    if (slesh < 3)
-                                                        head = head + obj[i].FullName[j];
-                                                    if (obj[i].FullName[j] == '\\')
-                                                        slesh++;
-                                                }
-                                                if (slesh >= 3) {
-                                                    cellb.innerHTML = head + "...";
-                                                    k = 1;
-                                                    var hl = head.toString().length;
-                                                    headful = '';
-                                                }
-                                                else {
-                                                    k = 0;
-                                                    hl = 0;
-                                                }
-                                                var name = '';
-                                                if (hl != 0) {
-                                                    var hl1 = 0;
-                                                    for (j = obj[i].FullName.toString().length - 1; j > hl - 1; j--)
-                                                        if (obj[i].FullName[j] == "\\") {
-                                                            hl1 = j;
-                                                            break;
-                                                        }
-                                                    for (j = hl1 - 1; j > hl; j--)
-                                                        if (obj[i].FullName[j] == "\\") {
-                                                            hl = j;
-                                                            break;
-                                                        }
-                                                    for (j = 0; j < hl; j++)
-                                                        headful = headful + obj[i].FullName[j];
-                                                }
-                                                for (j = hl; j < obj[i].FullName.toString().length; j++)
-                                                    name = name + obj[i].FullName[j];
-                                                //cellb.innerHTML = headful;
-                                                cell5.innerHTML = name;
-                                            }
-                                            if (k == 1)
-                                                headful = headful;// + "\\";
-                                            else
-                                                headful = "";
-                                            enable();
+                                </script>
+                                <script type="text/javascript">
+                                    function clickEvent(event) {
+                                        var target;
+                                        if (!event) {
+                                            var event = window.event;
                                         }
-                                    </script>
-                                    <script type="text/javascript">
-                                        function clickEvent(event) {
-                                            var target;
-                                            if (!event) {
-                                                var event = window.event;
+                                        if (event.target) {
+                                            target = event.target;
+                                        } else if (event.srcElement) {
+                                            target = event.srcElement;
+                                        }
+                                        if (target) {
+                                            if (target.nodeType == 3) {
+                                                target = target.parentNode;
                                             }
-                                            if (event.target) {
-                                                target = event.target;
-                                            } else if (event.srcElement) {
-                                                target = event.srcElement;
-                                            }
-                                            if (target) {
-                                                if (target.nodeType == 3) {
-                                                    target = target.parentNode;
-                                                }
-                                                if (target.tagName.toLowerCase() == "td") {
-                                                    var row = target.parentNode;
-                                                    var st = row.getElementsByTagName("td").item(5).innerHTML;
-                                                    if ((st.search(".txt") != -1) || (st.search(".bat") != -1) || (st.search(".html") != -1)) {
-                                                        $("#sr").hide();
-                                                        $("#div1").show();
-                                                        var div1 = document.getElementById('div1');
-                                                        $.ajax({
-                                                            url: "../../qwe.txt",
-                                                            success: function (data) {
-                                                                $("#etext").html(data);
-                                                            }
-                                                        });
-                                                    }
-                                                    else if ((st[st.toString().length - 4] != ".")&&(st[st.toString().length - 5] != ".")) {                                                        
-                                                        $("#sr").hide();
-                                                        $("#loading").show(); 
-                                                        stringback[count] = string[count];
-                                                        count++;
-                                                        string[count] = headful + st;
-                                                        $.ajax({
-                                                            type: 'GET',
-                                                            url: '@Url.Action("ListOfFile", "Files")',
-                                                            data: { str: string[count] },
-                                                            success: ld
-                                                        });
-                                                        $("#sr").show();
-                                                        $("#loading").hide();
-                                                        df = [];
-                                                        if (!wf[0])
-                                                            wf = [];
-                                                    }
-                                                    jQuery(function () {
-                                                        jQuery('#etext').autoResize();
+                                            if (target.tagName.toLowerCase() == "td") {
+                                                var row = target.parentNode;
+                                                var st = row.getElementsByTagName("td").item(5).innerHTML;
+                                                if ((st.search(".txt") != -1) || (st.search(".bat") != -1) || (st.search(".html") != -1)) {
+                                                    $("#sr").hide();
+                                                    $("#div1").show();
+                                                    var div1 = document.getElementById('div1');
+                                                    $.ajax({
+                                                        url: "../../qwe.txt",
+                                                        success: function (data) {
+                                                            $("#etext").html(data);
+                                                        }
                                                     });
                                                 }
+                                                else if ((st[st.toString().length - 4] != ".") && (st[st.toString().length - 5] != ".")) {
+                                                    $("#sr").hide();
+                                                    $("#loading").show();
+                                                    stringback[count] = string[count];
+                                                    count++;
+                                                    string[count] = headful + st;
+                                                    $.ajax({
+                                                        type: 'GET',
+                                                        url: '@Url.Action("ListOfFile", "Files")',
+                                                        data: { str: string[count] },
+                                                        success: ld
+                                                    });
+                                                    $("#sr").show();
+                                                    $("#loading").hide();
+                                                    df = [];
+                                                    if (!wf[0])
+                                                        wf = [];
+                                                }
+                                                jQuery(function () {
+                                                    jQuery('#etext').autoResize();
+                                                });
                                             }
                                         }
-                                        function newff() {
-                                            if ($('input[name="group1"]:checked').val()==1)
-                                                $.ajax({
-                                                    type: 'GET',
-                                                    url: '@Url.Action("newfile", "Files")',
-                                                    data: { str:  document.getElementById("fname").value},
-                                                    success: ld
-                                                });
-                                            else
-                                                $.ajax({
-                                                    type: 'GET',
-                                                    url: '@Url.Action("newfolder", "Files")',
-                                                    data: { str:  document.getElementById("fname").value},
-                                                    success: ld
-                                                });
-                                        }
-                                        function back() {
-                                            if (count < 1)
-                                                return;
+                                    }
+                                    function newff() {
+                                        if ($('input[name="group1"]:checked').val() == 1)
                                             $.ajax({
                                                 type: 'GET',
-                                                url: '@Url.Action("ListOfFile", "Files")',
-                                                data: { str: stringback[count - 1] },
+                                                url: '@Url.Action("newfile", "Files")',
+                                                data: { str: document.getElementById("fname").value },
                                                 success: ld
                                             });
-                                            if (count > 1)
-                                                string[count] = stringback[count - 2];
-                                            else
-                                                string[count] = stringback[0];
-                                            count--;
-                                            df = [];
-                                            if (!wf[0])
-                                                wf = [];
-                                        }
-
-                                        function SvClick() {
-                                            var string1 = $('textarea[id=etext]').val();
+                                        else
                                             $.ajax({
                                                 type: 'GET',
-                                                url: '@Url.Action("RewriteToFile", "Texts")',
-                                                data: { str: string1 },
-                                                success: function () {
-                                                    alert('Done');
-                                                }
+                                                url: '@Url.Action("newfolder", "Files")',
+                                                data: { str: document.getElementById("fname").value },
+                                                success: ld
                                             });
-                                        }                                        
-                                        function BClseClick() {
-                                            $("#sr").show();
-                                            $("#div1").hide();
+                                    }
+                                    function back() {
+                                        if (count < 1)
+                                            return;
+                                        $.ajax({
+                                            type: 'GET',
+                                            url: '@Url.Action("ListOfFile", "Files")',
+                                            data: { str: stringback[count - 1] },
+                                            success: ld
+                                        });
+                                        if (count > 1)
+                                            string[count] = stringback[count - 2];
+                                        else
+                                            string[count] = stringback[0];
+                                        count--;
+                                        df = [];
+                                        if (!wf[0])
+                                            wf = [];
+                                    }
+
+                                    function SvClick() {
+                                        var string1 = $('textarea[id=etext]').val();
+                                        $.ajax({
+                                            type: 'GET',
+                                            url: '@Url.Action("RewriteToFile", "Texts")',
+                                            data: { str: string1 },
+                                            success: function () {
+                                                alert('Done');
+                                            }
+                                        });
+                                    }
+                                    function BClseClick() {
+                                        $("#sr").show();
+                                        $("#div1").hide();
+                                    }
+                                    function openmanager() {
+                                        if (n == 0) {
+                                            idt = "sr1";
+                                            ld;
+                                            $("#sr").hide();
+                                            $("#sr1").show();
+                                            n++;
                                         }
-                                        function openmanager() {
-                                            if (n == 0) {
-                                                idt = "sr1";
-                                                ld;
+                                    }
+                                    function changedir() {
+                                        if (n != 0)
+                                            if (n % 2 == 0) {
                                                 $("#sr").hide();
                                                 $("#sr1").show();
+                                                n--;
+                                            }
+                                            else {
+                                                $("#sr1").hide();
+                                                $("#sr").show();
                                                 n++;
                                             }
-<<<<<<< HEAD
-                                        }
-                                        function changedir() {
-                                            if (n != 0)
-                                                if (n % 2 == 0) {
-                                                    $("#sr").hide();
-                                                    $("#sr1").show();
-                                                    n--;
-                                                }
-                                                else {
-                                                    $("#sr1").hide();
-                                                    $("#sr").show();
-                                                    n++;
-                                                }
-                                        }
-                                        function BClsClick() {
-                                            if (n != 0)
-                                                if (n % 2 == 0) {
-                                                    $("#sr").hide();
-                                                    $("#sr1").show();
-                                                    n = 0;
-                                                }
-                                                else {
-                                                    $("#sr1").hide();
-                                                    $("#sr").show();
-                                                    n = 0;
-                                                }
-                                        }
-                                        function BCutClick() {
-                                            wf[0] = "1";
-                                            var j = 2;
-                                            for (i = 1; obj[i - 1]; i++) {
-                                                var checkbox = document.getElementById(i - 1);
-                                                if (checkbox.checked) {
-                                                    wf[j++] = obj[i - 1].FullName;
-                                                    document.getElementById('pst').className = "waves-effect waves-light btn";
-                                                }
-                                            }
-                                        }
-                                        function BCpyClick() {
-                                            wf[0] = "2";
-                                            var j = 2;
-                                            for (i = 1; obj[i - 1]; i++) {
-                                                var checkbox = document.getElementById(i - 1);
-                                                if (checkbox.checked) {
-                                                    wf[j++] = obj[i - 1].FullName;
-                                                    document.getElementById('pst').className = "waves-effect waves-light btn";
-                                                }
-                                            }
-                                        }
-                                        function BPstClick() {
-                                            wf[1] = string[count];
-                                            if (!wf[3])
-                                                if (wf[0] == 2)
-                                                    var $toastContent = $('<div id="ctoast" >' + wf[2] + ' is copying<img src="../icons/close.png" style="cursor:pointer" onclick="toasthide()"/></div>');
-                                                else
-                                                    var $toastContent = $('<div id="ctoast">' + wf[2] + ' is replasing<img src="../icons/close.png" /></div>');
-                                            else if (wf[0] == 2)
-                                                var $toastContent = $('<div id="ctoast">' + wf.length - 2 + ' files are copying<img src="../icons/close.png" /></div>');
-                                            else
-                                                var $toastContent = $('<div id="ctoast">' + wf.length - 2 + ' files are replacing<img src="../icons/close.png" /></div>');
-                                            Materialize.toast($toastContent);
-                                            $.ajax({
-                                                type: 'GET',
-                                                url: '@Url.Action("CutCopy", "Files")',
-                                                dataType: "array",
-                                                data: { str: wf },
-                                                success: function (data) {
-                                                    alarm(data);
-                                                    $("ctoast").hide();
-                                                    Materialize.toast('Complete', 2500);                                                    
-                                                }
-                                            });
-                                        }
-                                        function toasthide() {
-                                            $("ctoast").hide();
-                                        }
-                                        function BDelClick() {
-                                            if (c > 0) {
-                                                var j = 0;
-                                                for (i = 1; obj[i - 1]; i++) {
-                                                    var checkbox = document.getElementById(i - 1);
-                                                    if (checkbox.checked) {
-                                                        df[j++] = obj[i - 1].FullName;
-                                                        document.getElementById('pst').className = "waves-effect waves-light btn";
-                                                    }
-                                                }
-                                            }
-                                            $.ajax({
-                                                type: 'GET',
-                                                url: '@Url.Action("Delete", "Files")',
-                                                dataType: "array",
-                                                data: { str: df },
-                                                success: function (data) {
-                                                    alarm(data);
-                                                }
-                                            });
-                                        }
-                                    </script>
-                                    <script type="text/javascript">
-                                        sortTable(document.getElementById("sr"), sortAsc, sortDesc);
-                                        var sortAsc = document.createElement("SPAN"),
-                                            sortDesc = document.createElement("SPAN");
-                                        // Значки сортировки для заголовка таблицы:
-                                        sortAsc.innerHTML = "&#9660;";
-                                        sortDesc.innerHTML = "&#9650;";
-                                        // Вешаем сортировку на таблицу:
-                                        
-                                    </script>
-                                </div>
-=======
                                     }
                                     function BClsClick() {
                                         if (n != 0)
@@ -653,56 +462,87 @@
                                             }
                                     }
                                     function BCutClick() {
+                                        wf[0] = "1";
                                         var j = 2;
                                         for (i = 1; obj[i - 1]; i++) {
                                             var checkbox = document.getElementById(i - 1);
                                             if (checkbox.checked) {
                                                 wf[j++] = obj[i - 1].FullName;
-                                                wf[0] = "1";
                                                 document.getElementById('pst').className = "waves-effect waves-light btn";
                                             }
                                         }
                                     }
                                     function BCpyClick() {
+                                        wf[0] = "2";
                                         var j = 2;
                                         for (i = 1; obj[i - 1]; i++) {
                                             var checkbox = document.getElementById(i - 1);
                                             if (checkbox.checked) {
                                                 wf[j++] = obj[i - 1].FullName;
-                                                wf[0] = "2";
                                                 document.getElementById('pst').className = "waves-effect waves-light btn";
                                             }
                                         }
                                     }
                                     function BPstClick() {
-                                        if (wf[0] > 0) {
-                                            wf[1] = string[count];
-                                            alert(wf);
-                                            
-                                            $.ajax({
-                                                type: 'GET',
-                                                url: '@Url.Action("CutCopy", "Files")',
-                                                data: ({ "type": wf[0], "path": wf[1], "file": wf[2] }),
-                                                success: function (data) {
-                                                    alarm("done")
-                                                }
-                                            });
-                                        }
+                                        wf[1] = string[count];
+                                        if (!wf[3])
+                                            if (wf[0] == 2)
+                                                var $toastContent = $('<div id="ctoast" >' + wf[2] + ' is copying<img src="../icons/close.png" style="cursor:pointer" onclick="toasthide()"/></div>');
+                                            else
+                                                var $toastContent = $('<div id="ctoast">' + wf[2] + ' is replasing<img src="../icons/close.png" /></div>');
+                                        else if (wf[0] == 2)
+                                            var $toastContent = $('<div id="ctoast">' + wf.length - 2 + ' files are copying<img src="../icons/close.png" /></div>');
+                                        else
+                                            var $toastContent = $('<div id="ctoast">' + wf.length - 2 + ' files are replacing<img src="../icons/close.png" /></div>');
+                                        Materialize.toast($toastContent);
+                                        $.ajax({
+                                            type: 'GET',
+                                            url: '@Url.Action("CutCopy", "Files")',
+                                            dataType: "array",
+                                            data: { str: wf },
+                                            success: function (data) {
+                                                alarm(data);
+                                                $("ctoast").hide();
+                                                Materialize.toast('Complete', 2500);
+                                            }
+                                        });
                                     }
-                                  
-
+                                    function toasthide() {
+                                        $("ctoast").hide();
+                                    }
+                                    function BDelClick() {
+                                        if (c > 0) {
+                                            var j = 0;
+                                            for (i = 1; obj[i - 1]; i++) {
+                                                var checkbox = document.getElementById(i - 1);
+                                                if (checkbox.checked) {
+                                                    df[j++] = obj[i - 1].FullName;
+                                                    document.getElementById('pst').className = "waves-effect waves-light btn";
+                                                }
+                                            }
+                                        }
+                                        $.ajax({
+                                            type: 'GET',
+                                            url: '@Url.Action("Delete", "Files")',
+                                            dataType: "array",
+                                            data: { str: df },
+                                            success: function (data) {
+                                                alarm(data);
+                                            }
+                                        });
+                                    }
                                 </script>
                                 <script type="text/javascript">
+                                    sortTable(document.getElementById("sr"), sortAsc, sortDesc);
                                     var sortAsc = document.createElement("SPAN"),
                                         sortDesc = document.createElement("SPAN");
                                     // Значки сортировки для заголовка таблицы:
                                     sortAsc.innerHTML = "&#9660;";
                                     sortDesc.innerHTML = "&#9650;";
                                     // Вешаем сортировку на таблицу:
-                                    sortTable(document.getElementById("sr"), sortAsc, sortDesc);
+
                                 </script>
                             </div>
->>>>>>> origin/master
                         </div>
                     </div>
                 </div>
