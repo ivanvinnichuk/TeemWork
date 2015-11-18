@@ -347,6 +347,7 @@
                                                     var div1 = document.getElementById('div1');
                                                     $.ajax({
                                                         url: '@Url.Action("OpenFile", "Files")',
+                                                        data: {"str":headful + st},
                                                         success: function (data) {
                                                             $("#etext").html(data);
                                                         }
@@ -417,7 +418,7 @@
                                         $.ajax({
                                             type: 'GET',
                                             url: '@Url.Action("RewriteToFile", "Texts")',
-                                            data: { "str": string1 },
+                                            data: { "path":headful+st, "str": string1 },
                                             success: function () {
                                                 Materialize.toast('Complete', 2500)
                                             }
