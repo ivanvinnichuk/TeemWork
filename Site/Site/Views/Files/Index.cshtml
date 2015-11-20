@@ -495,7 +495,7 @@
                                                         url: '@Url.Action("OpenFile", "Files")',
                                                         data: {"str":headful + st},
                                                         success: function (data) {
-                                                            $("#etext").html(data);
+                                                            $("#etext").val(data);
                                                         }
                                                     });
                                                 }
@@ -546,7 +546,7 @@
                                     //Створення нового файлу/папки
                                     function newff() {
                                         if (document.getElementById("fname").value)
-                                            if ($('input[name="group1"]:checked').val == 1)
+                                            if ($('input[name="group1"]:checked').val() == 1)
                                                 $.ajax({
                                                     type: 'GET',
                                                     url: '@Url.Action("CreateFile", "Files")',
