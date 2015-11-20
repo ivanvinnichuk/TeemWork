@@ -18,6 +18,8 @@
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.4.2.js"></script>*@
     <script type="text/javascript" src="/Scripts/autoresize.jquery.min.js"></script>
     <script type="text/javascript">
+        var obj = new Array();
+        var dobj = new Array();
         var string = [];
         var stringback = [];
         var count = 0;
@@ -264,17 +266,20 @@
                                             table.deleteRow(i);
                                         if (data == "Папка пуста!"){
                                             var row = table.insertRow(table.rows.lenght);
-                                            var cell0 = row.insertCell(0);
-                                            var cell1 = row.insertCell(1);
-                                            var cell2 = row.insertCell(2);
-                                            var cell3 = row.insertCell(3);
-                                            var cell4 = row.insertCell(4);
-                                            var cell5 = row.insertCell(5);
                                             row.innerHTML = '<td colspan="6" onclick="back()">Папка пуста</td>';
                                         }
                                         else {
-                                            obj = JSON.parse(data);
-                                            for (i = 0; obj[i]; i++) {
+                                            test = JSON.parse(data);
+                                            if (test.Name) {
+                                                obj[0].Name = test.Name;
+                                                obj[0].Mode = test.Mode;
+                                                obj[0].LastWriteTime = test.LastWriteTime;
+                                                obj[0].FullName = test.FullName;
+                                                obj[1] = null;
+                                            }
+                                            else
+                                                obj = test;
+                                            for (i = 0; obj[i]; i++) {                                                
                                                 var row = table.insertRow(table.rows.lenght);
                                                 var cell0 = row.insertCell(0);
                                                 var cell1 = row.insertCell(1);
@@ -378,17 +383,20 @@
                                         for (iid = tabled.rows.length - 1; iid > 1 ; iid--)
                                             tabled.deleteRow(iid);
                                         if (data == "Папка пуста!") {
-                                            var drow = tabled.insertRow(tabled.rows.lenght);
-                                            var dcell0 = drow.insertCell(0);
-                                            var dcell1 = drow.insertCell(1);
-                                            var dcell2 = drow.insertCell(2);
-                                            var dcell3 = drow.insertCell(3);
-                                            var dcell4 = drow.insertCell(4);
-                                            var dcell5 = drow.insertCell(5);
-                                            dcell0.innerHTML = '<td onclick=back();>Папка пуста</td>';
+                                            var drow = tabled.insertRow(tabled.rows.lenght);                                            
+                                            drow.innerHTML = '<td colspan="6" onclick="back()">Папка пуста</td>';
                                         }
                                         else {
-                                            objd = JSON.parse(data);
+                                            test = JSON.parse(data);
+                                            if (test.Name) {
+                                                objd[0].Name = test.Name;
+                                                objd[0].Mode = test.Mode;
+                                                objd[0].LastWriteTime = test.LastWriteTime;
+                                                objd[0].FullName = test.FullName;
+                                                objd[1] = null;
+                                            }
+                                            else
+                                                objd = test;
                                             for (iid = 0; objd[iid]; iid++) {
                                                 var drow = tabled.insertRow(tabled.rows.lenght);
                                                 var dcell0 = drow.insertCell(0);
