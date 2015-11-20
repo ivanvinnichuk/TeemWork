@@ -546,17 +546,17 @@
                                     //Створення нового файлу/папки
                                     function newff() {
                                         if (document.getElementById("fname").value)
-                                            if ($('input[name="group1"]:checked').val() == 1)
+                                            if ($('input[name="group1"]:checked').val == 1)
                                                 $.ajax({
                                                     type: 'GET',
-                                                    url: '@Url.Action("newfile", "Files")',
+                                                    url: '@Url.Action("CreateFile", "Files")',
                                                     data: { "str": string[count] + "\\" + document.getElementById("fname").value },
                                                     success: ld
                                                 });
                                             else if ($('input[name="group1"]:checked').val() == 2)
                                                 $.ajax({
                                                     type: 'GET',
-                                                    url: '@Url.Action("newfolder", "Files")',
+                                                    url: '@Url.Action("CreateDirectory", "Files")',
                                                     data: { "str": string[count] +"\\"+ document.getElementById("fname").value },
                                                     success: ld
                                                 });
@@ -613,13 +613,11 @@
                                     }
                                     //Закриття режиму редагування файлу
                                     function BClseClick() {
+                                        $("#div1").hide();
                                         if (n == 0)
                                             $("#sr").show();
                                         else
                                             $("#sr1").show();
-                                        $("#etext").val == "";
-                                        document.getElementById('etext').value = '';
-                                        $("#div1").hide();
                                     }
                                     function root() {
                                         if (n == 0) {
