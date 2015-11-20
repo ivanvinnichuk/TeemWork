@@ -257,14 +257,12 @@
 
                                     //Завантаження даних в таблицю
                                     function ld(data) {
-                                        //alert(data);
                                         var m_names = new Array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
-                                        obj = JSON.parse(data);
                                         var table = document.getElementById("sr");
                                         //table.style.maxHeight = "300px";
                                         for (i = table.rows.length - 1; i > 1 ; i--)
                                             table.deleteRow(i);
-                                        for (i = 0; obj[i]; i++) {
+                                        if (data == "Папка пуста!"){
                                             var row = table.insertRow(table.rows.lenght);
                                             var cell0 = row.insertCell(0);
                                             var cell1 = row.insertCell(1);
@@ -272,103 +270,114 @@
                                             var cell3 = row.insertCell(3);
                                             var cell4 = row.insertCell(4);
                                             var cell5 = row.insertCell(5);
-                                            cell0.innerHTML = '<input type="checkbox" id="' + i + '"onchange = "enable();"/><label for="' + i + '"></label>';
-                                            cell1.innerHTML = obj[i].Name;
-                                            if (obj[i].Mode[0] == "d")
-                                                cell2.innerHTML = '<p><img src="../icons/folder.png" alt="d"/></p>';
-                                            else {
-                                                /*var stt;
-                                                for (j = obj[i].Name.lenght - 3; j < obj[i].Name.lenght; j++)
-                                                    stt = stt + obj[i].Name[j];
-                                                cell2.innerHTML = obj[i].Name;*/
-                                                if ((obj[i].Name.search(".doc") > 0) || (obj[i].Name.search(".docx") > 0))
-                                                    cell2.innerHTML = '<p><img src="../icons/file-word.png" /></p>';
-                                                else if ((obj[i].Name.search(".xls") > 0) || (obj[i].Name.search(".xlsx") > 0))
-                                                    cell2.innerHTML = '<p><img src="../icons/file-excel.png" /></p>';
-                                                else if ((obj[i].Name.search(".ppt") > 0) || (obj[i].Name.search(".pptx") > 0))
-                                                    cell2.innerHTML = '<p><img src="../icons/file-powerpoint.png" /></p>';
-                                                else if (obj[i].Name.search(".pdf") > 0)
-                                                    cell2.innerHTML = '<p><img src="../icons/file-pdf.png" /></p>';
-                                                else if (obj[i].Name.search(".txt") > 0)
-                                                    cell2.innerHTML = '<p><img src="../icons/file-document.png" /></p>';
-                                                else if ((obj[i].Name.search(".jpg") > 0) || (obj[i].Name.search(".jpeg") > 0) || (obj[i].Name.search(".png") > 0) || (obj[i].Name.search(".bmp") > 0) || (obj[i].Name.search(".gif") > 0))
-                                                    cell2.innerHTML = '<p><img src="../icons/file-image.png" /></p>';
-                                                else cell2.innerHTML = '<p><img src="../icons/file.png" /></p>';
+                                            row.innerHTML = '<td colspan="6" onclick="back()">Папка пуста</td>';
+                                        }
+                                        else {
+                                            obj = JSON.parse(data);
+                                            for (i = 0; obj[i]; i++) {
+                                                var row = table.insertRow(table.rows.lenght);
+                                                var cell0 = row.insertCell(0);
+                                                var cell1 = row.insertCell(1);
+                                                var cell2 = row.insertCell(2);
+                                                var cell3 = row.insertCell(3);
+                                                var cell4 = row.insertCell(4);
+                                                var cell5 = row.insertCell(5);
+                                                cell0.innerHTML = '<input type="checkbox" id="' + i + '"onchange = "enable();"/><label for="' + i + '"></label>';
+                                                cell1.innerHTML = obj[i].Name;
+                                                if (obj[i].Mode[0] == "d")
+                                                    cell2.innerHTML = '<p><img src="../icons/folder.png" alt="d"/></p>';
+                                                else {
+                                                    /*var stt;
+                                                    for (j = obj[i].Name.lenght - 3; j < obj[i].Name.lenght; j++)
+                                                        stt = stt + obj[i].Name[j];
+                                                    cell2.innerHTML = obj[i].Name;*/
+                                                    if ((obj[i].Name.search(".doc") > 0) || (obj[i].Name.search(".docx") > 0))
+                                                        cell2.innerHTML = '<p><img src="../icons/file-word.png" /></p>';
+                                                    else if ((obj[i].Name.search(".xls") > 0) || (obj[i].Name.search(".xlsx") > 0))
+                                                        cell2.innerHTML = '<p><img src="../icons/file-excel.png" /></p>';
+                                                    else if ((obj[i].Name.search(".ppt") > 0) || (obj[i].Name.search(".pptx") > 0))
+                                                        cell2.innerHTML = '<p><img src="../icons/file-powerpoint.png" /></p>';
+                                                    else if (obj[i].Name.search(".pdf") > 0)
+                                                        cell2.innerHTML = '<p><img src="../icons/file-pdf.png" /></p>';
+                                                    else if (obj[i].Name.search(".txt") > 0)
+                                                        cell2.innerHTML = '<p><img src="../icons/file-document.png" /></p>';
+                                                    else if ((obj[i].Name.search(".jpg") > 0) || (obj[i].Name.search(".jpeg") > 0) || (obj[i].Name.search(".png") > 0) || (obj[i].Name.search(".bmp") > 0) || (obj[i].Name.search(".gif") > 0))
+                                                        cell2.innerHTML = '<p><img src="../icons/file-image.png" /></p>';
+                                                    else cell2.innerHTML = '<p><img src="../icons/file.png" /></p>';
+                                                }
+                                                if (obj[i].Mode[1] == "a")
+                                                    cell3.innerHTML = '<p style="width:82px"><img class="tooltipped" data-position="top" data-delay="50" data-tooltip="I am tooltip" src="../icons/read.png" /><img src="../icons/Write.png" /><img src="../icons/execute.png" /></p>';
+                                                    //cell3.innerHTML = '<p class="waves-effect waves-light btn tooltipped" data-position="bottom" data-delay="5000" data-tooltip="I am tooltip">TOP</p>';
+                                                else {
+                                                    if (obj[i].Mode[2] == "r")
+                                                        cell3.innerHTML = '<p><img src="../icons/file.png" /></p>';
+                                                    if (obj[i].Mode[3] == "w")
+                                                        cell3.innerHTML = '<p><img src="../icons/file-pdf.png" /></p>';
+                                                    if (obj[i].Mode[4] == "e")
+                                                        cell3.innerHTML = '<p><img src="../icons/file-word.png" /></p>';
+                                                    else
+                                                        cell3.innerHTML = "NOT";
+                                                }
+                                                var d = new Date(parseInt(obj[i].LastWriteTime.replace('/Date(', '')));
+                                                var curr_date = d.getDate();
+                                                var curr_month = d.getMonth();
+                                                var curr_year = d.getFullYear();
+                                                var curr_hour = d.getHours();
+                                                var curr_min = d.getMinutes();
+                                                if (curr_min < 10)
+                                                    curr_min = "0" + curr_min;
+                                                cell4.innerHTML = curr_date + " " + m_names[curr_month] + " " + curr_year + " " + curr_hour + ":" + curr_min;
+                                                var slesh = 0;
+                                                head = '';
+                                                for (j = 0; j < obj[i].FullName.toString().length; j++) {
+                                                    if (slesh < 3)
+                                                        head = head + obj[i].FullName[j];
+                                                    if (obj[i].FullName[j] == '\\')
+                                                        slesh++;
+                                                }
+                                                if (slesh >= 3) {
+                                                    cellb.innerHTML = head + "...";
+                                                    k = 1;
+                                                    var hl = head.toString().length;
+                                                    headful = '';
+                                                }
+                                                else {
+                                                    k = 0;
+                                                    hl = 0;
+                                                }
+                                                var name = '';
+                                                if (hl != 0) {
+                                                    var hl1 = 0;
+                                                    for (j = obj[i].FullName.toString().length - 1; j > hl - 1; j--)
+                                                        if (obj[i].FullName[j] == "\\") {
+                                                            hl1 = j;
+                                                            break;
+                                                        }
+                                                    for (j = hl1 - 1; j > hl; j--)
+                                                        if (obj[i].FullName[j] == "\\") {
+                                                            hl = j;
+                                                            break;
+                                                        }
+                                                    for (j = 0; j < hl; j++)
+                                                        headful = headful + obj[i].FullName[j];
+                                                }
+                                                for (j = hl; j < obj[i].FullName.toString().length; j++)
+                                                    name = name + obj[i].FullName[j];
+                                                //cellb.innerHTML = headful;
+                                                cell5.innerHTML = name;
                                             }
-                                            if (obj[i].Mode[1] == "a")
-                                                cell3.innerHTML = '<p style="width:82px"><img class="tooltipped" data-position="top" data-delay="50" data-tooltip="I am tooltip" src="../icons/read.png" /><img src="../icons/Write.png" /><img src="../icons/execute.png" /></p>';
-                                                //cell3.innerHTML = '<p class="waves-effect waves-light btn tooltipped" data-position="bottom" data-delay="5000" data-tooltip="I am tooltip">TOP</p>';
-                                            else {
-                                                if (obj[i].Mode[2] == "r")
-                                                    cell3.innerHTML = '<p><img src="../icons/file.png" /></p>';
-                                                if (obj[i].Mode[3] == "w")
-                                                    cell3.innerHTML = '<p><img src="../icons/file-pdf.png" /></p>';
-                                                if (obj[i].Mode[4] == "e")
-                                                    cell3.innerHTML = '<p><img src="../icons/file-word.png" /></p>';
-                                                else
-                                                    cell3.innerHTML = "NOT";
-                                            }
-                                            var d = new Date(parseInt(obj[i].LastWriteTime.replace('/Date(', '')));
-                                            var curr_date = d.getDate();
-                                            var curr_month = d.getMonth();
-                                            var curr_year = d.getFullYear();
-                                            var curr_hour = d.getHours();
-                                            var curr_min = d.getMinutes();
-                                            if (curr_min < 10)
-                                                curr_min = "0" + curr_min;
-                                            cell4.innerHTML = curr_date + " " + m_names[curr_month] + " " + curr_year + " " + curr_hour + ":" + curr_min;
-                                            var slesh = 0;
-                                            head = '';
-                                            for (j = 0; j < obj[i].FullName.toString().length; j++) {
-                                                if (slesh < 3)
-                                                    head = head + obj[i].FullName[j];
-                                                if (obj[i].FullName[j] == '\\')
-                                                    slesh++;
-                                            }
-                                            if (slesh >= 3) {
-                                                cellb.innerHTML = head + "...";
-                                                k = 1;
-                                                var hl = head.toString().length;
-                                                headful = '';
-                                            }
-                                            else {
-                                                k = 0;
-                                                hl = 0;
-                                            }
-                                            var name = '';
-                                            if (hl != 0) {
-                                                var hl1 = 0;
-                                                for (j = obj[i].FullName.toString().length - 1; j > hl - 1; j--)
-                                                    if (obj[i].FullName[j] == "\\") {
-                                                        hl1 = j;
-                                                        break;
-                                                    }
-                                                for (j = hl1 - 1; j > hl; j--)
-                                                    if (obj[i].FullName[j] == "\\") {
-                                                        hl = j;
-                                                        break;
-                                                    }
-                                                for (j = 0; j < hl; j++)
-                                                    headful = headful + obj[i].FullName[j];
-                                            }
-                                            for (j = hl; j < obj[i].FullName.toString().length; j++)
-                                                name = name + obj[i].FullName[j];
-                                            //cellb.innerHTML = headful;
-                                            cell5.innerHTML = name;
                                         }
                                         if (k != 1)
                                             headful = "";
                                         enable();
                                     }
                                     function ldd(data) {
-                                        //alert(data);
                                         var m_names = new Array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
-                                        objd = JSON.parse(data);
                                         var tabled = document.getElementById("sr1");
                                         //table.style.maxHeight = "300px";
                                         for (iid = tabled.rows.length - 1; iid > 1 ; iid--)
                                             tabled.deleteRow(iid);
-                                        for (iid = 0; objd[iid]; iid++) {
+                                        if (data == "Папка пуста!") {
                                             var drow = tabled.insertRow(tabled.rows.lenght);
                                             var dcell0 = drow.insertCell(0);
                                             var dcell1 = drow.insertCell(1);
@@ -376,89 +385,102 @@
                                             var dcell3 = drow.insertCell(3);
                                             var dcell4 = drow.insertCell(4);
                                             var dcell5 = drow.insertCell(5);
-                                            dcell0.innerHTML = '<input type="checkbox" id="d' + iid + '"onchange = "enable();"/><label for="d' + iid + '"></label>';
-                                            dcell1.innerHTML = objd[iid].Name;
-                                            if (objd[iid].Mode[0] == "d")
-                                                dcell2.innerHTML = '<p><img src="../icons/folder.png" alt="d"/></p>';
-                                            else {
-                                                /*var stt;
-                                                for (j = obj[i].Name.lenght - 3; j < obj[i].Name.lenght; j++)
-                                                    stt = stt + obj[i].Name[j];
-                                                cell2.innerHTML = obj[i].Name;*/
-                                                if ((objd[iid].Name.search(".doc") > 0) || (objd[iid].Name.search(".docx") > 0))
-                                                    dcell2.innerHTML = '<p><img src="../icons/file-word.png" /></p>';
-                                                else if ((objd[iid].Name.search(".xls") > 0) || (objd[iid].Name.search(".xlsx") > 0))
-                                                    dcell2.innerHTML = '<p><img src="../icons/file-excel.png" /></p>';
-                                                else if ((objd[iid].Name.search(".ppt") > 0) || (objd[iid].Name.search(".pptx") > 0))
-                                                    dcell2.innerHTML = '<p><img src="../icons/file-powerpoint.png" /></p>';
-                                                else if (objd[iid].Name.search(".pdf") > 0)
-                                                    dcell2.innerHTML = '<p><img src="../icons/file-pdf.png" /></p>';
-                                                else if (objd[iid].Name.search(".txt") > 0)
-                                                    dcell2.innerHTML = '<p><img src="../icons/file-document.png" /></p>';
-                                                else if ((objd[iid].Name.search(".jpg") > 0) || (objd[iid].Name.search(".jpeg") > 0) || (objd[iid].Name.search(".png") > 0) || (objd[iid].Name.search(".bmp") > 0) || (objd[iid].Name.search(".gif") > 0))
-                                                    dcell2.innerHTML = '<p><img src="../icons/file-image.png" /></p>';
-                                                else dcell2.innerHTML = '<p><img src="../icons/file.png" /></p>';
+                                            dcell0.innerHTML = '<td onclick=back();>Папка пуста</td>';
+                                        }
+                                        else {
+                                            objd = JSON.parse(data);
+                                            for (iid = 0; objd[iid]; iid++) {
+                                                var drow = tabled.insertRow(tabled.rows.lenght);
+                                                var dcell0 = drow.insertCell(0);
+                                                var dcell1 = drow.insertCell(1);
+                                                var dcell2 = drow.insertCell(2);
+                                                var dcell3 = drow.insertCell(3);
+                                                var dcell4 = drow.insertCell(4);
+                                                var dcell5 = drow.insertCell(5);
+                                                dcell0.innerHTML = '<input type="checkbox" id="d' + iid + '"onchange = "enable();"/><label for="d' + iid + '"></label>';
+                                                dcell1.innerHTML = objd[iid].Name;
+                                                if (objd[iid].Mode[0] == "d")
+                                                    dcell2.innerHTML = '<p><img src="../icons/folder.png" alt="d"/></p>';
+                                                else {
+                                                    /*var stt;
+                                                    for (j = obj[i].Name.lenght - 3; j < obj[i].Name.lenght; j++)
+                                                        stt = stt + obj[i].Name[j];
+                                                    cell2.innerHTML = obj[i].Name;*/
+                                                    if ((objd[iid].Name.search(".doc") > 0) || (objd[iid].Name.search(".docx") > 0))
+                                                        dcell2.innerHTML = '<p><img src="../icons/file-word.png" /></p>';
+                                                    else if ((objd[iid].Name.search(".xls") > 0) || (objd[iid].Name.search(".xlsx") > 0))
+                                                        dcell2.innerHTML = '<p><img src="../icons/file-excel.png" /></p>';
+                                                    else if ((objd[iid].Name.search(".ppt") > 0) || (objd[iid].Name.search(".pptx") > 0))
+                                                        dcell2.innerHTML = '<p><img src="../icons/file-powerpoint.png" /></p>';
+                                                    else if (objd[iid].Name.search(".pdf") > 0)
+                                                        dcell2.innerHTML = '<p><img src="../icons/file-pdf.png" /></p>';
+                                                    else if (objd[iid].Name.search(".txt") > 0)
+                                                        dcell2.innerHTML = '<p><img src="../icons/file-document.png" /></p>';
+                                                    else if ((objd[iid].Name.search(".jpg") > 0) || (objd[iid].Name.search(".jpeg") > 0) || (objd[iid].Name.search(".png") > 0) || (objd[iid].Name.search(".bmp") > 0) || (objd[iid].Name.search(".gif") > 0))
+                                                        dcell2.innerHTML = '<p><img src="../icons/file-image.png" /></p>';
+                                                    else dcell2.innerHTML = '<p><img src="../icons/file.png" /></p>';
+                                                }
+                                                if (objd[iid].Mode[1] == "a")
+                                                    dcell3.innerHTML = '<p style="width:82px"><img class="tooltipped" data-position="top" data-delay="50" data-tooltip="I am tooltip" src="../icons/read.png" /><img src="../icons/Write.png" /><img src="../icons/execute.png" /></p>';
+                                                    //cell3.innerHTML = '<p class="waves-effect waves-light btn tooltipped" data-position="bottom" data-delay="5000" data-tooltip="I am tooltip">TOP</p>';
+                                                else {
+                                                    if (objd[iid].Mode[2] == "r")
+                                                        dcell3.innerHTML = '<p><img src="../icons/file.png" /></p>';
+                                                    if (objd[iid].Mode[3] == "w")
+                                                        dcell3.innerHTML = '<p><img src="../icons/file-pdf.png" /></p>';
+                                                    if (objd[iid].Mode[4] == "e")
+                                                        dcell3.innerHTML = '<p><img src="../icons/file-word.png" /></p>';
+                                                    else
+                                                        dcell3.innerHTML = "NOT";
+                                                }
+                                                var d = new Date(parseInt(objd[iid].LastWriteTime.replace('/Date(', '')));
+                                                var curr_date = d.getDate();
+                                                var curr_month = d.getMonth();
+                                                var curr_year = d.getFullYear();
+                                                var curr_hour = d.getHours();
+                                                var curr_min = d.getMinutes();
+                                                if (curr_min < 10)
+                                                    curr_min = "0" + curr_min;
+                                                dcell4.innerHTML = curr_date + " " + m_names[curr_month] + " " + curr_year + " " + curr_hour + ":" + curr_min;
+                                                var dslesh = 0;
+                                                dhead = '';
+                                                for (j = 0; j < objd[iid].FullName.toString().length; j++) {
+                                                    if (dslesh < 3)
+                                                        dhead = dhead + objd[iid].FullName[j];
+                                                    if (objd[iid].FullName[j] == '\\')
+                                                        dslesh++;
+                                                }
+                                                if (dslesh >= 3) {
+                                                    celld.innerHTML = dhead + "...";
+                                                    dk = 1;
+                                                    var dhl = dhead.toString().length;
+                                                    dheadful = '';
+                                                }
+                                                else {
+                                                    dk = 0;
+                                                    dhl = 0;
+                                                }
+                                                var dname = '';
+                                                if (dhl != 0) {
+                                                    var dhl1 = 0;
+                                                    for (j = objd[iid].FullName.toString().length - 1; j > dhl - 1; j--)
+                                                        if (objd[iid].FullName[j] == "\\") {
+                                                            dhl1 = j;
+                                                            break;
+                                                        }
+                                                    for (j = dhl1 - 1; j > dhl; j--)
+                                                        if (objd[iid].FullName[j] == "\\") {
+                                                            dhl = j;
+                                                            break;
+                                                        }
+                                                    for (j = 0; j < dhl; j++)
+                                                        dheadful = dheadful + objd[iid].FullName[j];
+                                                }
+                                                for (j = dhl; j < objd[iid].FullName.toString().length; j++)
+                                                    dname = dname + objd[iid].FullName[j];
+                                                //celld.innerHTML = dheadful;
+                                                dcell5.innerHTML = dname;
                                             }
-                                            if (objd[iid].Mode[1] == "a")
-                                                dcell3.innerHTML = '<p style="width:82px"><img class="tooltipped" data-position="top" data-delay="50" data-tooltip="I am tooltip" src="../icons/read.png" /><img src="../icons/Write.png" /><img src="../icons/execute.png" /></p>';
-                                                //cell3.innerHTML = '<p class="waves-effect waves-light btn tooltipped" data-position="bottom" data-delay="5000" data-tooltip="I am tooltip">TOP</p>';
-                                            else {
-                                                if (objd[iid].Mode[2] == "r")
-                                                    dcell3.innerHTML = '<p><img src="../icons/file.png" /></p>';
-                                                if (objd[iid].Mode[3] == "w")
-                                                    dcell3.innerHTML = '<p><img src="../icons/file-pdf.png" /></p>';
-                                                if (objd[iid].Mode[4] == "e")
-                                                    dcell3.innerHTML = '<p><img src="../icons/file-word.png" /></p>';
-                                                else
-                                                    dcell3.innerHTML = "NOT";
-                                            }
-                                            var d = new Date(parseInt(objd[iid].LastWriteTime.replace('/Date(', '')));
-                                            var curr_date = d.getDate();
-                                            var curr_month = d.getMonth();
-                                            var curr_year = d.getFullYear();
-                                            var curr_hour = d.getHours();
-                                            var curr_min = d.getMinutes();
-                                            if (curr_min < 10)
-                                                curr_min = "0" + curr_min;
-                                            dcell4.innerHTML = curr_date + " " + m_names[curr_month] + " " + curr_year + " " + curr_hour + ":" + curr_min;
-                                            var dslesh = 0;
-                                            dhead = '';
-                                            for (j = 0; j < objd[iid].FullName.toString().length; j++) {
-                                                if (dslesh < 3)
-                                                    dhead = dhead + objd[iid].FullName[j];
-                                                if (objd[iid].FullName[j] == '\\')
-                                                    dslesh++;
-                                            }
-                                            if (dslesh >= 3) {
-                                                celld.innerHTML = dhead + "...";
-                                                dk = 1;
-                                                var dhl = dhead.toString().length;
-                                                dheadful = '';
-                                            }
-                                            else {
-                                                dk = 0;
-                                                dhl = 0;
-                                            }
-                                            var dname = '';
-                                            if (dhl != 0) {
-                                                var dhl1 = 0;
-                                                for (j = objd[iid].FullName.toString().length - 1; j > dhl - 1; j--)
-                                                    if (objd[iid].FullName[j] == "\\") {
-                                                        dhl1 = j;
-                                                        break;
-                                                    }
-                                                for (j = dhl1 - 1; j > dhl; j--)
-                                                    if (objd[iid].FullName[j] == "\\") {
-                                                        dhl = j;
-                                                        break;
-                                                    }
-                                                for (j = 0; j < dhl; j++)
-                                                    dheadful = dheadful + objd[iid].FullName[j];
-                                            }
-                                            for (j = dhl; j < objd[iid].FullName.toString().length; j++)
-                                                dname = dname + objd[iid].FullName[j];
-                                            //celld.innerHTML = dheadful;
-                                            dcell5.innerHTML = dname;
                                         }
                                         if (dk != 1)
                                             dheadful = "";
@@ -546,20 +568,38 @@
                                     //Створення нового файлу/папки
                                     function newff() {
                                         if (document.getElementById("fname").value)
-                                            if ($('input[name="group1"]:checked').val() == 1)
-                                                $.ajax({
-                                                    type: 'GET',
-                                                    url: '@Url.Action("CreateFile", "Files")',
-                                                    data: { "str": string[count] + "\\" + document.getElementById("fname").value },
-                                                    success: ld
-                                                });
-                                            else if ($('input[name="group1"]:checked').val() == 2)
-                                                $.ajax({
-                                                    type: 'GET',
-                                                    url: '@Url.Action("CreateDirectory", "Files")',
-                                                    data: { "str": string[count] +"\\"+ document.getElementById("fname").value },
-                                                    success: ld
-                                                });
+                                            if (n == 0) {
+                                                if ($('input[name="group1"]:checked').val() == 1)
+                                                    $.ajax({
+                                                        type: 'GET',
+                                                        url: '@Url.Action("CreateFile", "Files")',
+                                                        data: { "str": string[count] + "\\" + document.getElementById("fname").value },
+                                                        success: ld
+                                                    });
+                                                else if ($('input[name="group1"]:checked').val() == 2)
+                                                    $.ajax({
+                                                        type: 'GET',
+                                                        url: '@Url.Action("CreateDirectory", "Files")',
+                                                        data: { "str": string[count] + "\\" + document.getElementById("fname").value },
+                                                        success: ld
+                                                    });
+                                            }
+                                            else {
+                                                if ($('input[name="group1"]:checked').val() == 1)
+                                                    $.ajax({
+                                                        type: 'GET',
+                                                        url: '@Url.Action("CreateFile", "Files")',
+                                                        data: { "str": dstring[dcount] + "\\" + document.getElementById("fname").value },
+                                                        success: ldd
+                                                    });
+                                                else if ($('input[name="group1"]:checked').val() == 2)
+                                                    $.ajax({
+                                                        type: 'GET',
+                                                        url: '@Url.Action("CreateDirectory", "Files")',
+                                                        data: { "str": dstring[dcount] + "\\" + document.getElementById("fname").value },
+                                                        success: ldd
+                                                    });
+                                            }
                                     }
                                     //Повернення в корінь папки
                                     function back() {
