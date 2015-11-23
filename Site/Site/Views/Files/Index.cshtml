@@ -125,7 +125,7 @@
         </div>
         <div class="row">
             <div class="col s12 m12 l10" style="float:right">
-                <div style="position: fixed; z-index:1000;">
+                <div style="position: fixed; z-index:900;">
                     <a class="waves-effect waves-light btn modal-trigger" href="#modal1" onclick="newfilefolder()" style="margin-left:0.5rem">New...</a>
                     <script type="text/javascript">
                         function newfilefolder() {
@@ -667,6 +667,7 @@
                                         else
                                             $("#sr1").show();
                                     }
+                                    //Повернення в корінь диску
                                     function root() {
                                         if (n == 0) {
                                             count=0;                                            
@@ -688,12 +689,14 @@
                                         }
 
                                     }
+                                    //Перехід на диск D 
                                     function openmanager() {
                                         n = 1;
                                         $("#sr").hide();
                                         $("#sr1").show();
                                         enable();
                                     }
+                                    //Перехід на диск C
                                     function changedir() {
                                         n = 0;
                                         $("#sr1").hide();
