@@ -82,17 +82,23 @@
     </script>
 
     <header>@*Ліве меню*@
-        <div id="slide-out" class="side-nav fixed yellow lighten-4">
+        <div id="slide-out" class="side-nav fixed">
             <div class="section yellow darken-2"><h5>qwe corp.</h5></div>
             <div class="section grey"><h4>File Manager</h4></div>
-            <div style="position: fixed; bottom:0%; width:inherit">
-                <a href="/Home/Index" class="waves-effect waves-light btn input-field">General</a>
-                <a href="/Home/Settings" class="waves-effect waves-light btn input-field">Settings</a>
-                <a href="/Home/Cron" class="waves-effect waves-light btn input-field">Cron</a>
-                <a href="/Files/Index" class="waves-effect waves-light btn input-field yellow darken-2">File Manager</a>
+            <div style="position: fixed; width:inherit">
+                <a href="/Home/Index" class="btn waves-effect waves-light  input-field transparent">General</a>
+                <a href="/Home/Settings" class="btn waves-effect waves-light  input-field transparent">Settings</a>
+                <a href="/Home/Cron" class="btn waves-effect waves-light  input-field transparent">Cron</a>
+                <a href="/Files/Index" class="btn waves-effect waves-light  input-field yellow-text darken-2 transparent">File Manager</a>
             </div>
         </div>
-        <a href="#" data-activates="slide-out" class="button-collapse show-on-large mdi-navigation-menu"><img class="btn-floating" src="../icons/menu.png" /></a>
+        <nav style="position: fixed; height: 45px; z-index: 900; background-color: #FBC02D;">
+            <div class="nav-wrapper">
+                <a href="#" data-activates="slide-out" class="button-collapse show-on-large mdi-navigation-menu"><img class="btn-floating" src="../icons/menu.png" /></a>
+                <i style="margin-left:18%; ">diploma11.cloudapp.net</i>
+            </div>
+        </nav>
+        
         <script type="text/javascript">
             // Initialize collapse button
             $(".button-collapse").sideNav();
@@ -123,13 +129,33 @@
                 <a class="modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
             </div>
         </div>
+        <div id="modal2" class="modal" style="width:290px">
+            @*Вспливаюче вікно для створення файлу/папки*@
+        <div class="modal-content" style="background-color: #FFEB3B;">           
+            <div class="row">
+                <div class="input-field col s12">                    
+                    <label for="fname">Are you shure?</label>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a class=" modal-action modal-close waves-effect waves-green btn-flat" onclick="BDelClick()">OK</a>
+            <a class="modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
+        </div>
+    </div>
+
         <div class="row">
             <div class="col s12 m12 l10" style="float:right">
-                <div style="position: fixed; z-index:900;">
+                <div style="position: fixed; z-index:900; margin-top:50px;">
                     <a class="waves-effect waves-light btn modal-trigger" href="#modal1" onclick="newfilefolder()" style="margin-left:0.5rem">New...</a>
                     <script type="text/javascript">
                         function newfilefolder() {
                             $("#modal1").openModal();
+                            document.getElementById('fname').value='';
+                        }
+                        function Bdelmodal() {
+                            if (c > 0)
+                                $("#modal2").openModal();
                         }
                     </script>
                     <div id="Cpy" class="btn disabled" onclick="BCpyClick()">Copy</div>
@@ -139,15 +165,14 @@
                         if (!wf[0])
                             document.getElementById('pst').className = document.getElementById('pst').className + " disabled";
                     </script>
-                    <div id="Del" class="btn disabled" onclick="BDelClick()">Delete</div>
-                    <div class="waves-effect waves-light btn" onclick="BClsClick()" style="margin-right:0.5rem; float:right">Close</div>
+                    <div id="Del" class="btn disabled" onclick="Bdelmodal()">Delete</div>
+                    @*<div class="waves-effect waves-light btn" onclick="BClsClick()" style="margin-right:0.5rem; float:right">Close</div>*@
                 </div>
-                <div style="margin-top: 3rem; border: 1px solid #B6B6B6">
-                    <a class="btn-floating btn waves-effect waves-light red" style="margin-left:0.5rem" onclick="root()">\</a>
-                    <a class="btn-floating btn waves-effect waves-light red" onclick="changedir()">D:\</a>
-                    <a class="btn-floating btn waves-effect waves-light red" onclick="openmanager()">C:\</a>
+                <div style="margin-top: 6rem; border: 1px solid #B6B6B6">
+                    <a class="waves-effect waves-light" style="margin-left:0.5rem" onclick="root()"><img src="../icons/root.png" /></a>
+                    <a class="waves-effect waves-light" onclick="changedir()"><img src="../icons/diskc.png"/></a>
+                    <a class="waves-effect waves-light" onclick="openmanager()"><img src="../icons/diskd.png" /></a>
                     <div style="border: 1px solid #B6B6B6">
-                        <a class="btn tooltipped" data-position="top" data-delay="50" data-tooltip="I am tooltip">TOP!</a>
                         <div class="row">
                             <div class="input-field col s12">
                                 <input type="text" class="validate">
@@ -240,8 +265,8 @@
                                         $("#loading").hide();
                                         cellb = document.getElementById('back').insertCell(1);
                                         celld = document.getElementById('backd').insertCell(1);
-                                        string[count] = 'd:\\';
-                                        dstring[dcount] = 'c:\\';
+                                        string[count] = 'c:\\';
+                                        dstring[dcount] = 'd:\\';
                                         $.ajax({
                                             type: 'GET',
                                             url: '@Url.Action("ListOfFile", "Files")',
@@ -320,8 +345,8 @@
                                                         cell3.innerHTML = '<p><img src="../icons/file-pdf.png" /></p>';
                                                     if (obj[i].Mode[4] == "e")
                                                         cell3.innerHTML = '<p><img src="../icons/file-word.png" /></p>';
-                                                    else
-                                                        cell3.innerHTML = "NOT";
+                                                    else if (obj[i].Mode[0] == "d")
+                                                        cell3.innerHTML = "Folder";
                                                 }
                                                 var d = new Date(parseInt(obj[i].LastWriteTime.replace('/Date(', '')));
                                                 var curr_date = d.getDate();
@@ -668,7 +693,7 @@
                                             $("#sr1").show();
                                     }
                                     //Повернення в корінь диску
-                                    function root() {
+                                    function root() {                                        
                                         if (n == 0) {
                                             count=0;                                            
                                             $.ajax({
@@ -693,6 +718,7 @@
                                     function openmanager() {
                                         n = 1;
                                         $("#sr").hide();
+                                        $("#div1").hide();
                                         $("#sr1").show();
                                         enable();
                                     }
@@ -700,6 +726,7 @@
                                     function changedir() {
                                         n = 0;
                                         $("#sr1").hide();
+                                        $("#div1").hide();
                                         $("#sr").show();
                                         enable();
                                     }
@@ -808,12 +835,14 @@
                                                         }
                                                     }
                                         }
-                                        prompt(df);
                                         $.ajax({
                                             type: 'GET',
                                             url: '@Url.Action("Delete", "Files")',
                                             data: { "str": df[0] },  //df-архів стрінгів з повним шляхом
-                                            success: Materialize.toast('Delete complete', 2500)                                            
+                                            success: function () {
+                                                ld;
+                                                Materialize.toast('Delete complete', 2500);
+                                            }
                                         });
                                     }
                                 </script>
