@@ -19,15 +19,15 @@
     <script type="text/javascript" src="/Scripts/autoresize.jquery.min.js"></script>
     <script type="text/javascript">
         var obj = new Array();
-        var dobj = new Array();
+        var objd = new Array();
         var string = [];
         var stringback = [];
         var count = 0;
         var dstring = [];
         var dstringback = [];
         var dcount = 0;
-        var wf = new Array();
-        var df = new Array();
+        var wf=[];
+        var df =[];
         var head;
         var headful;
         var k = 0;
@@ -89,7 +89,7 @@
                 <a href="/Home/Index" class="btn waves-effect waves-light  input-field transparent">General</a>
                 <a href="/Home/Settings" class="btn waves-effect waves-light  input-field transparent">Settings</a>
                 <a href="/Home/Cron" class="btn waves-effect waves-light  input-field transparent">Cron</a>
-                <a href="/Files/Index" class="btn waves-effect waves-light  input-field yellow-text darken-2 transparent">File Manager</a>
+                <a href="/Files/Index" class="btn waves-effect waves-light  input-field yellow-text text-darken-2 transparent">File Manager</a>
             </div>
         </div>
         <nav style="position: fixed; height: 45px; z-index: 900; background-color: #FBC02D;">
@@ -808,7 +808,10 @@
                                             success: function(data){
                                                 $(".toast").hide();
                                                 Materialize.toast('Complete', 2500);
-                                                ld
+                                                if (n == 0)
+                                                    ld;
+                                                else
+                                                    ldd;
                                             }
                                         });
                                     }
@@ -821,17 +824,17 @@
                                         if (c > 0) {
                                             var j = 0;
                                             if(n==0)
-                                                for (i = 1; obj[i - 1]; i++) {
-                                                    var checkbox = document.getElementById(i - 1);
+                                                for (i = 0; obj[i]; i++) {
+                                                    var checkbox = document.getElementById(i);
                                                     if (checkbox.checked) {
-                                                        df[j++] = obj[i - 1].FullName;
+                                                        df[j++] = obj[i].FullName;
                                                     }
                                                 }
                                                 else
-                                                    for (i = 1; objd[i - 1]; i++) {
-                                                        var checkbox = document.getElementById("d"+i - 1);
+                                                    for (i = 0; objd[i]; i++) {
+                                                        var checkbox = document.getElementById("d"+i);
                                                         if (checkbox.checked) {
-                                                            df[j++] = objd[i - 1].FullName;
+                                                            df[j++] = objd[i].FullName;
                                                         }
                                                     }
                                         }
@@ -840,7 +843,10 @@
                                             url: '@Url.Action("Delete", "Files")',
                                             data: { "str": df[0] },  //df-архів стрінгів з повним шляхом
                                             success: function () {
-                                                ld;
+                                                if (n == 0)
+                                                    ld;
+                                                else
+                                                    ldd;
                                                 Materialize.toast('Delete complete', 2500);
                                             }
                                         });
