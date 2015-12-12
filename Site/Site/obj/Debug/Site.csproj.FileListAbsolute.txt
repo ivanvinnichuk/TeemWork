@@ -146,3 +146,6 @@ C:\Users\Дмитрий\Documents\GitHub\TeemWork\Site\Site\bin\ru\Microsoft.Owi
 C:\Users\Дмитрий\Documents\GitHub\TeemWork\Site\Site\obj\Debug\Site.csprojResolveAssemblyReference.cache
 C:\Users\Дмитрий\Documents\GitHub\TeemWork\Site\Site\obj\Debug\Site.dll
 C:\Users\Дмитрий\Documents\GitHub\TeemWork\Site\Site\obj\Debug\Site.pdb
+C:\Users\Дмитрий\Documents\GitHub\TeemWork\Site\Site\bin\Microsoft.AspNet.SignalR.Core.dll
+C:\Users\Дмитрий\Documents\GitHub\TeemWork\Site\Site\bin\Microsoft.AspNet.SignalR.Core.xml
+C:\Users\Дмитрий\Documents\GitHub\TeemWork\Site\Site\bin\ru\Microsoft.AspNet.SignalR.Core.resources.dll
