@@ -838,19 +838,28 @@
                                     else
                                         var $toastContent = $('<div>' + wf.length - 2 + ' files are replacing<img src="../icons/close.png" /></div>');
                                     Materialize.toast($toastContent);
-                                    $.ajax({
-                                        type: 'GET',
-                                        url: '@Url.Action("CutCopy", "Files")',
-                                        data: ({ "type": wf[0], "path": wf[1], "file": wf[2] }),
-                                        success: function (data) {
-                                            $(".toast").hide();
-                                            Materialize.toast('Complete', 2500);
-                                            if (n == 0)
-                                                ld(data);
-                                            else
-                                                ldd(data);
-                                        }
-                                    });
+                                    copycutcount = wf.length - 1;
+                                    copycutarr();
+                                    function copycutarr() {
+                                        var copycutf = wf[copycutcount];
+                                        $.ajax({
+                                            type: 'GET',
+                                            url: '@Url.Action("CutCopy", "Files")',
+                                            data: ({ "type": wf[0], "path": wf[1], "file": copycutf }),
+                                            success: function (data) {
+                                                if (copycutcount-- > 2)
+                                                    copycutarr();
+                                                else {
+                                                    $(".toast").hide();
+                                                    Materialize.toast('Complete', 2500);
+                                                    if (n == 0)
+                                                        ld(data);
+                                                    else
+                                                        ldd(data);
+                                                }
+                                            }
+                                        });
+                                    }
                                 }
                                 //Приховання вспливаючого вікна під час копіювання
                                 function toasthide() {
@@ -885,8 +894,7 @@
                                         url: '@Url.Action("Delete", "Files")',
                                         data: { "str": delf, "count": delcount },
                                         success: function (data) {
-                                            delcount--;
-                                            if (delcount > 0)
+                                            if (delcount-- > 0)
                                                 delarr();
                                             else {
                                                 if (n == 0)
