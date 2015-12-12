@@ -880,12 +880,12 @@
                                 }
                                 function delarr() {
                                     var delf = df[delcount];
-                                    delcount--;
                                     $.ajax({
                                         type: 'GET',
                                         url: '@Url.Action("Delete", "Files")',
                                         data: { "str": delf, "count": delcount },
                                         success: function (data) {
+                                            delcount--;
                                             if (delcount > 0)
                                                 delarr();
                                             else {
