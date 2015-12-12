@@ -37,6 +37,7 @@
         var c = 0;
         var n = 0;
         var st;
+        var delcount;
     </script>
     <script type="text/javascript">
         //відображення кнопок Copy, Cut, Delete (Enable, Disable)
@@ -874,27 +875,28 @@
                                                 }
                                             }
                                     }
-                                    var delcount = df.length-1;
-                                    function delarr(){                                        
-                                        var delf = df[delcount];
-                                        delcount--;
-                                        $.ajax({
-                                            type: 'GET',
-                                            url: '@Url.Action("Delete", "Files")',
-                                            data: { "str": delf, "count":delcount },  //df-архів стрінгів з повним шляхом
-                                            success: function (data) {
-                                                if (delcount > 0)
-                                                    delarr();
-                                                else {
-                                                    if (n == 0)
-                                                        ld(data);
-                                                    else
-                                                        ldd(data);
-                                                    Materialize.toast('Delete complete', 2500);
-                                                }
+                                    delcount = df.length - 1;
+                                    delarr();
+                                }
+                                function delarr() {
+                                    var delf = df[delcount];
+                                    delcount--;
+                                    $.ajax({
+                                        type: 'GET',
+                                        url: '@Url.Action("Delete", "Files")',
+                                        data: { "str": delf, "count": delcount },
+                                        success: function (data) {
+                                            if (delcount > 0)
+                                                delarr();
+                                            else {
+                                                if (n == 0)
+                                                    ld(data);
+                                                else
+                                                    ldd(data);
+                                                Materialize.toast('Delete complete', 2500);
                                             }
-                                        });
-                                    }
+                                        }
+                                    });
                                 }
                                 //пошук по списку
                                 function find() {
