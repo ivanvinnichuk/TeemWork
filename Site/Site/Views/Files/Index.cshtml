@@ -134,7 +134,7 @@
         <div class="modal-content" style="background-color: #FFEB3B;">           
             <div class="row">
                 <div class="input-field col s12">                    
-                    <label for="fname" style="margin-top:-2.5rem;">Do you realy want to delete those files?</label>
+                    <label for="fname" style="margin-top:-2.5rem;">Do you realy want to delete these files?</label>
                 </div>
                 <div id="deleteObjects"></div>
             </div>
@@ -874,18 +874,27 @@
                                                 }
                                             }
                                     }
-                                    $.ajax({
-                                        type: 'GET',
-                                        url: '@Url.Action("Delete", "Files")',
-                                        data: { "str": df[0] },  //df-архів стрінгів з повним шляхом
-                                        success: function (data) {
-                                            if (n == 0)
-                                                ld(data);
-                                            else
-                                                ldd(data);
-                                            Materialize.toast('Delete complete', 2500);
-                                        }
-                                    });
+                                    var delcount = df.length-1;
+                                    function delarr(){                                        
+                                        var delf = df[delcount];
+                                        delcount--;
+                                        $.ajax({
+                                            type: 'GET',
+                                            url: '@Url.Action("Delete", "Files")',
+                                            data: { "str": delf, "count":delcount },  //df-архів стрінгів з повним шляхом
+                                            success: function (data) {
+                                                if (delcount > 0)
+                                                    delarr();
+                                                else {
+                                                    if (n == 0)
+                                                        ld(data);
+                                                    else
+                                                        ldd(data);
+                                                    Materialize.toast('Delete complete', 2500);
+                                                }
+                                            }
+                                        });
+                                    }
                                 }
                                 //пошук по списку
                                 function find() {
