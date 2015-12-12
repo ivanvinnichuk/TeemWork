@@ -1921,7 +1921,7 @@ else {
     var methods = {
         init: function (options) {
             var defaults = {
-                menuWidth: 240,
+                menuWidth: 220,
                 edge: 'left',
                 closeOnClick: false
             };
@@ -1932,7 +1932,7 @@ else {
                 var menu_id = $("#" + $this.attr('data-activates'));
 
                 // Set to width
-                if (options.menuWidth != 240) {
+                if (options.menuWidth != 220) {
                     menu_id.css('width', options.menuWidth);
                 }
 

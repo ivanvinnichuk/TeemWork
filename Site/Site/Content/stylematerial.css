@@ -32,8 +32,8 @@ input {
   border-bottom: solid 1px #1abc9c;
   -webkit-transition: all 0.3s cubic-bezier(0.64, 0.09, 0.08, 1);
           transition: all 0.3s cubic-bezier(0.64, 0.09, 0.08, 1);
-  background: -webkit-linear-gradient(top, rgba(255, 255, 255, 0) 96%, #1abc9c 4%);
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 96%, #1abc9c 4%);
+  background: -webkit-linear-gradient(top, rgba(255, 255, 255, 0) 96%, 4%);
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 96%, 4%);
   background-position: -200px 0;
   background-size: 200px 100%;
   background-repeat: no-repeat;
@@ -7221,7 +7221,7 @@ select {
 
 .side-nav {
   position: fixed;
-  width: 16.66667%;
+  width: 220px;
   left: -105%;
   top: 0;
   margin: 0;

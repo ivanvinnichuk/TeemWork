@@ -50,9 +50,9 @@
                         c++;
                 }
                 if (c > 0) {
-                    document.getElementById('Cpy').className = "waves-effect waves-light btn";
-                    document.getElementById('Cut').className = "waves-effect waves-light btn";
-                    document.getElementById('Del').className = "waves-effect waves-light btn";
+                    document.getElementById('Cpy').className = "waves-effect waves-light btn yellow darken-2";
+                    document.getElementById('Cut').className = "waves-effect waves-light btn yellow darken-2";
+                    document.getElementById('Del').className = "waves-effect waves-light btn yellow darken-2";
                 }
                 else {
                     document.getElementById('Cpy').className = "btn disabled";
@@ -68,9 +68,9 @@
                         c++;
                 }
                 if (c > 0) {
-                    document.getElementById('Cpy').className = "waves-effect waves-light btn";
-                    document.getElementById('Cut').className = "waves-effect waves-light btn";
-                    document.getElementById('Del').className = "waves-effect waves-light btn";
+                    document.getElementById('Cpy').className = "waves-effect waves-light btn yellow darken-2";
+                    document.getElementById('Cut').className = "waves-effect waves-light btn yellow darken-2";
+                    document.getElementById('Del').className = "waves-effect waves-light btn yellow darken-2";
                 }
                 else {
                     document.getElementById('Cpy').className = "btn disabled";
@@ -88,7 +88,7 @@
             <div style="position: fixed; width:inherit">
                 <a href="/Home/Index" class="btn waves-effect waves-light  input-field transparent">General</a>
                 <a href="/Home/Settings" class="btn waves-effect waves-light  input-field transparent">Settings</a>
-                <a href="/Home/Cron" class="btn waves-effect waves-light  input-field transparent">Cron</a>
+                <a href="/Home/Cron" class="btn waves-effect waves-light  input-field transparent">Task Scheduler</a>
                 <a href="/Files/Index" class="btn waves-effect waves-light  input-field yellow-text text-darken-2 transparent">File Manager</a>
             </div>
         </div>
@@ -129,13 +129,14 @@
                 <a class="modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
             </div>
         </div>
-        <div id="modal2" class="modal" style="width:290px">
+        <div id="modal2" class="modal" style="width:400px">
             @*Вспливаюче вікно для створення файлу/папки*@
         <div class="modal-content" style="background-color: #FFEB3B;">           
             <div class="row">
                 <div class="input-field col s12">                    
-                    <label for="fname">Are you shure?</label>
+                    <label for="fname" style="margin-top:-2.5rem;">Do you realy want to delete those files?</label>
                 </div>
+                <div id="deleteObjects"></div>
             </div>
         </div>
         <div class="modal-footer">
@@ -147,20 +148,36 @@
         <div class="row">
             <div class="col s12 m12 l10" style="float:right">
                 <div style="position: fixed; z-index:900; margin-top:50px;">
-                    <a class="waves-effect waves-light btn modal-trigger" href="#modal1" onclick="newfilefolder()" style="margin-left:0.5rem">New...</a>
+                    <a class="waves-effect waves-light btn modal-trigger yellow darken-2" href="#modal1" onclick="newfilefolder()" style="margin-left:0.5rem">New...</a>
                     <script type="text/javascript">
                         function newfilefolder() {
                             $("#modal1").openModal();
                             document.getElementById('fname').value='';
                         }
                         function Bdelmodal() {
-                            if (c > 0)
+                            $(".delmodal").remove();
+                            if (c > 0) {
+                                if (n == 0)
+                                    for (i = 0; obj[i]; i++) {
+                                        var checkbox = document.getElementById(i);
+                                        if (checkbox.checked) {
+                                            $('<div class="delmodal">' + obj[i].FullName + '</div>').appendTo('#deleteObjects');
+                                        }
+                                    }
+                                else
+                                    for (i = 0; objd[i]; i++) {
+                                        var checkbox = document.getElementById("d" + i);
+                                        if (checkbox.checked) {
+                                            $('<div class="delmodal">' + objd[i].FullName + '</div>').appendTo('#deleteObjects');
+                                        }
+                                    }
                                 $("#modal2").openModal();
+                            }
                         }
                     </script>
                     <div id="Cpy" class="btn disabled" onclick="BCpyClick()">Copy</div>
                     <div id="Cut" class="btn disabled" onclick="BCutClick()">Cut</div>
-                    <div id="pst" class="waves-effect waves-light btn" onclick="BPstClick()">Paste</div>
+                    <div id="pst" class="waves-effect waves-light btn  yellow darken-2" onclick="BPstClick()">Paste</div>
                     <script type="text/javascript">//Відображення кнопки Paste (Enable, Disable)
                         if (!wf[0])
                             document.getElementById('pst').className = document.getElementById('pst').className + " disabled";
@@ -174,12 +191,15 @@
                     <a class="waves-effect waves-light" onclick="openmanager()"><img src="../icons/diskd.png" /></a>
                     <div style="border: 1px solid #B6B6B6">
                         <div class="row">
-                            <div class="input-field col s12">
-                                <input type="text" class="validate">
+                            @*Рядок пошуку*@                            
+                            <div class="input-field col s12" style="display:inline-flex">
+                                <input id="search" type="text" class="validate">
                                 <label for="search">Search</label>
+                                <img src="../icons/magnify.png" style="float:right; height:24px; margin-top:18px" onclick="find()" />
                             </div>
                             <div class="input-field col s12">
-                                <table id="sr" class="striped highlight" onclick="clickEvent(event)">@*Таблиця з файдовим менеджером*@
+                                @*Таблиця з файдовим менеджером*@
+                                <table id="sr" class="striped highlight" onclick="clickEvent(event)">
                                     <thead>
                                         <tr>
                                             <th></th>
@@ -196,6 +216,7 @@
                                         </tr>
                                     </tbody>
                                 </table>
+                                @*Таблиця з файдовим менеджером*@
                                 <table id="sr1" class="striped highlight" onclick="clickEvent(event)">
                                     <thead>
                                         <tr>
@@ -212,16 +233,16 @@
                                             <td colspan="5" onclick="back()">Back</td>
                                         </tr>
                                     </tbody>
-                                </table>@*Таблиця з файдовим менеджером*@
-                                
-                                <div id="div1">@*Вікно перегляду та редагування файлів*@
+                                </table>
+                                @*Вікно перегляду та редагування файлів*@
+                                <div id="div1">
                                     <script type="text/javascript">$("#div1").hide();</script>
-                                    <div class="waves-effect waves-light btn" onclick="SvClick()" style="margin-left:0.5rem">Save</div>
-                                    <div class="waves-effect waves-light btn" onclick="BClseClick()" style="margin-right:0.5rem; float:right">X</div>
+                                    <div class="waves-effect waves-light btn yellow darken-2" onclick="SvClick()" style="margin-left:0.5rem">Save</div>
+                                    <div class="waves-effect waves-light btn yellow darken-2" onclick="BClseClick()" style="margin-right:0.5rem; float:right">X</div>
                                     <textarea id="etext"></textarea>
                                 </div>
-
-                                <div id="loading" class="preloader-wrapper active">@*Іконка завантаження*@
+                                @*Іконка завантаження*@
+                                <div id="loading" class="preloader-wrapper active">
                                     <div class="spinner-layer spinner-blue">
                                         <div class="circle-clipper left">
                                             <div class="circle"></div>
@@ -261,7 +282,8 @@
                                 </div>
 
                                 <script type="text/javascript">//завантаження сторінки
-                                    $(document).ready(function () {                                        
+                                    $(document).ready(function () {
+                                        //alert(window.innerWidth);
                                         $("#loading").hide();
                                         cellb = document.getElementById('back').insertCell(1);
                                         celld = document.getElementById('backd').insertCell(1);
@@ -289,9 +311,9 @@
                                         //table.style.maxHeight = "300px";
                                         for (i = table.rows.length - 1; i > 1 ; i--)
                                             table.deleteRow(i);
-                                        if (data == "Папка пуста!"){
+                                        if (data.length<25){
                                             var row = table.insertRow(table.rows.lenght);
-                                            row.innerHTML = '<td colspan="6" onclick="back()">Папка пуста</td>';
+                                            row.innerHTML = '<td colspan="6" onclick="back()">' + data + '</td>';
                                         }
                                         else {
                                             test = JSON.parse(data);
@@ -372,6 +394,7 @@
                                                     headful = '';
                                                 }
                                                 else {
+                                                    cellb.innerHTML = '';
                                                     k = 0;
                                                     hl = 0;
                                                 }
@@ -407,9 +430,9 @@
                                         //table.style.maxHeight = "300px";
                                         for (iid = tabled.rows.length - 1; iid > 1 ; iid--)
                                             tabled.deleteRow(iid);
-                                        if (data == "Папка пуста!") {
+                                        if (data.length<25) {
                                             var drow = tabled.insertRow(tabled.rows.lenght);                                            
-                                            drow.innerHTML = '<td colspan="6" onclick="back()">Папка пуста</td>';
+                                            drow.innerHTML = '<td colspan="6" onclick="back()">'+data+'</td>';
                                         }
                                         else {
                                             test = JSON.parse(data);
@@ -490,6 +513,7 @@
                                                     dheadful = '';
                                                 }
                                                 else {
+                                                    celld.innerHTML = '';
                                                     dk = 0;
                                                     dhl = 0;
                                                 }
@@ -521,341 +545,382 @@
                                     }
                                 </script>
                                 <script type="text/javascript">
-                                    //Натиснення на елемент таблиці код переходить в файл для редегування або змінює директорію
-                                    function clickEvent(event) {
-                                        var target;
-                                        if (!event) {
-                                            var event = window.event;
+                                //Натиснення на елемент таблиці код переходить в файл для редегування або змінює директорію
+                                function clickEvent(event) {
+                                    var target;
+                                    if (!event) {
+                                        var event = window.event;
+                                    }
+                                    if (event.target) {
+                                        target = event.target;
+                                    } else if (event.srcElement) {
+                                        target = event.srcElement;
+                                    }
+                                    if (target) {
+                                        if (target.nodeType == 3) {
+                                            target = target.parentNode;
                                         }
-                                        if (event.target) {
-                                            target = event.target;
-                                        } else if (event.srcElement) {
-                                            target = event.srcElement;
-                                        }
-                                        if (target) {
-                                            if (target.nodeType == 3) {
-                                                target = target.parentNode;
-                                            }
-                                            if (target.tagName.toLowerCase() == "td") {
-                                                var row = target.parentNode;
-                                                st = row.getElementsByTagName("td").item(5).innerHTML;
-                                                if ((st.search(".txt") != -1) || (st.search(".bat") != -1) || (st.search(".html") != -1)) {
-                                                    if (n == 0)
-                                                        $("#sr").hide();
-                                                    else
-                                                        $("#sr1").hide();
-                                                    $("#div1").show();
-                                                    var div1 = document.getElementById('div1');
-                                                    $.ajax({
-                                                        url: '@Url.Action("OpenFile", "Files")',
-                                                        data: {"str":headful + st},
-                                                        success: function (data) {
-                                                            $("#etext").val(data);
-                                                        }
-                                                    });
-                                                }
-                                                else if ((st[st.toString().length - 4] != ".") && (st[st.toString().length - 5] != ".")) {
-                                                    if (n == 0)
-                                                        $("#sr").hide();
-                                                    else
-                                                        $("#sr1").hide();
-                                                    $("#loading").show();
-                                                    if (n == 0) {
-                                                        stringback[count] = string[count];
-                                                        count++;
-                                                        string[count] = headful + st;
-                                                        $.ajax({
-                                                            type: 'GET',
-                                                            url: '@Url.Action("ListOfFile", "Files")',
-                                                            data: { str: string[count] },
-                                                            success: ld
-                                                        });
+                                        if (target.tagName.toLowerCase() == "td") {
+                                            var row = target.parentNode;
+                                            st = row.getElementsByTagName("td").item(5).innerHTML;
+                                            if ((st.search(".txt") != -1) || (st.search(".bat") != -1) || (st.search(".html") != -1)) {
+                                                if (n == 0)
+                                                    $("#sr").hide();
+                                                else
+                                                    $("#sr1").hide();
+                                                $("#div1").show();
+                                                var div1 = document.getElementById('div1');
+                                                $.ajax({
+                                                    url: '@Url.Action("OpenFile", "Files")',
+                                                    data: { "str": headful + st },
+                                                    success: function (data) {
+                                                        $("#etext").val(data);
                                                     }
-                                                    else
-                                                    {
-                                                        dstringback[dcount] = dstring[dcount];
-                                                        dcount++;
-                                                        dstring[dcount] = dheadful + st;
-                                                        $.ajax({
-                                                            type: 'GET',
-                                                            url: '@Url.Action("ListOfFile", "Files")',
-                                                            data: { str: dstring[dcount] },
-                                                            success: ldd
-                                                        });
-                                                    }
-                                                    $("#loading").hide();
-                                                    if (n == 0)
-                                                        $("#sr").show();
-                                                    else
-                                                        $("#sr1").show();
-                                                    df = [];
-                                                    if (!wf[0])
-                                                        wf = [];
-                                                }
-                                                jQuery(function () {
-                                                    jQuery('#etext').autoResize();
                                                 });
                                             }
+                                            else if ((st[st.toString().length - 4] != ".") && (st[st.toString().length - 5] != ".")) {
+                                                if (n == 0)
+                                                    $("#sr").hide();
+                                                else
+                                                    $("#sr1").hide();
+                                                $("#loading").show();
+                                                if (n == 0) {
+                                                    stringback[count] = string[count];
+                                                    count++;
+                                                    string[count] = headful + st;
+                                                    $.ajax({
+                                                        type: 'GET',
+                                                        url: '@Url.Action("ListOfFile", "Files")',
+                                                        data: { str: string[count] },
+                                                        success: ld
+                                                    });
+                                                }
+                                                else {
+                                                    dstringback[dcount] = dstring[dcount];
+                                                    dcount++;
+                                                    dstring[dcount] = dheadful + st;
+                                                    $.ajax({
+                                                        type: 'GET',
+                                                        url: '@Url.Action("ListOfFile", "Files")',
+                                                        data: { str: dstring[dcount] },
+                                                        success: ldd
+                                                    });
+                                                }
+                                                $("#loading").hide();
+                                                if (n == 0)
+                                                    $("#sr").show();
+                                                else
+                                                    $("#sr1").show();
+                                                df = [];
+                                                if (!wf[0])
+                                                    wf = [];
+                                            }
+                                            jQuery(function () {
+                                                jQuery('#etext').autoResize();
+                                            });
                                         }
                                     }
-                                    //Створення нового файлу/папки
-                                    function newff() {
-                                        if (document.getElementById("fname").value)
-                                            if (n == 0) {
-                                                if ($('input[name="group1"]:checked').val() == 1)
-                                                    $.ajax({
-                                                        type: 'GET',
-                                                        url: '@Url.Action("CreateFile", "Files")',
-                                                        data: { "str": string[count] + "\\" + document.getElementById("fname").value },
-                                                        success: ld
-                                                    });
-                                                else if ($('input[name="group1"]:checked').val() == 2)
-                                                    $.ajax({
-                                                        type: 'GET',
-                                                        url: '@Url.Action("CreateDirectory", "Files")',
-                                                        data: { "str": string[count] + "\\" + document.getElementById("fname").value },
-                                                        success: ld
-                                                    });
-                                            }
-                                            else {
-                                                if ($('input[name="group1"]:checked').val() == 1)
-                                                    $.ajax({
-                                                        type: 'GET',
-                                                        url: '@Url.Action("CreateFile", "Files")',
-                                                        data: { "str": dstring[dcount] + "\\" + document.getElementById("fname").value },
-                                                        success: ldd
-                                                    });
-                                                else if ($('input[name="group1"]:checked').val() == 2)
-                                                    $.ajax({
-                                                        type: 'GET',
-                                                        url: '@Url.Action("CreateDirectory", "Files")',
-                                                        data: { "str": dstring[dcount] + "\\" + document.getElementById("fname").value },
-                                                        success: ldd
-                                                    });
-                                            }
-                                    }
-                                    //Повернення в корінь папки
-                                    function back() {
+                                }
+                                //Створення нового файлу/папки
+                                function newff() {
+                                    if (document.getElementById("fname").value)
                                         if (n == 0) {
-                                            if (count < 1)
-                                                return;
-                                            $.ajax({
-                                                type: 'GET',
-                                                url: '@Url.Action("ListOfFile", "Files")',
-                                                data: { str: stringback[count - 1] },
-                                                success: ld
-                                            });
-                                            if (count > 1)
-                                                string[count] = stringback[count - 2];
-                                            else
-                                                string[count] = stringback[0];
-                                            count--;
+                                            if ($('input[name="group1"]:checked').val() == 1)
+                                                $.ajax({
+                                                    type: 'GET',
+                                                    url: '@Url.Action("CreateFile", "Files")',
+                                                    data: { "str": string[count] + "\\" + document.getElementById("fname").value },
+                                                    success: ld
+                                                });
+                                            else if ($('input[name="group1"]:checked').val() == 2)
+                                                $.ajax({
+                                                    type: 'GET',
+                                                    url: '@Url.Action("CreateDirectory", "Files")',
+                                                    data: { "str": string[count] + "\\" + document.getElementById("fname").value },
+                                                    success: ld
+                                                });
                                         }
                                         else {
-                                            if (dcount < 1)
-                                                return;
-                                            $.ajax({
-                                                type: 'GET',
-                                                url: '@Url.Action("ListOfFile", "Files")',
-                                                data: { str: dstringback[dcount - 1] },
-                                                success: ldd
-                                            });
-                                            if (dcount > 1)
-                                                dstring[dcount] = dstringback[dcount - 2];
-                                            else
-                                                dstring[dcount] = dstringback[0];
-                                            dcount--;
+                                            if ($('input[name="group1"]:checked').val() == 1)
+                                                $.ajax({
+                                                    type: 'GET',
+                                                    url: '@Url.Action("CreateFile", "Files")',
+                                                    data: { "str": dstring[dcount] + "\\" + document.getElementById("fname").value },
+                                                    success: ldd
+                                                });
+                                            else if ($('input[name="group1"]:checked').val() == 2)
+                                                $.ajax({
+                                                    type: 'GET',
+                                                    url: '@Url.Action("CreateDirectory", "Files")',
+                                                    data: { "str": dstring[dcount] + "\\" + document.getElementById("fname").value },
+                                                    success: ldd
+                                                });
                                         }
-                                        df = [];
-                                        if (!wf[0])
-                                            wf = [];
-                                    }
-                                    //Зберігання змін в файлі
-                                    function SvClick() {                                        
-                                        var string1 = $('textarea[id=etext]').val();                                        
-                                        if (n == 0)
-                                            var pathsv = headful + st;
-                                        else
-                                            var pathsv = dheadful + st;
+                                }
+                                //Повернення в корінь папки
+                                function back() {
+                                    if (n == 0) {
+                                        if (count < 1)
+                                            return;
+                                        if (!stringback[count - 1])
+                                            count--;
                                         $.ajax({
                                             type: 'GET',
-                                            url: '@Url.Action("RewriteToFile", "Files")',
-                                            data: ({ "path": pathsv, "str": string1 }),
-                                            success: Materialize.toast('Complete', 2500)
+                                            url: '@Url.Action("ListOfFile", "Files")',
+                                            data: { str: stringback[count - 1] },
+                                            success: ld
+                                        });
+                                        if (count > 1)
+                                            string[count] = stringback[count - 2];
+                                        else
+                                            string[count] = stringback[0];
+                                        count--;
+                                    }
+                                    else {
+                                        if (dcount < 1)
+                                            return;
+                                        if (!dstringback[dcount - 1])
+                                            dcount--;
+                                        $.ajax({
+                                            type: 'GET',
+                                            url: '@Url.Action("ListOfFile", "Files")',
+                                            data: { str: dstringback[dcount - 1] },
+                                            success: ldd
+                                        });
+                                        if (dcount > 1)
+                                            dstring[dcount] = dstringback[dcount - 2];
+                                        else
+                                            dstring[dcount] = dstringback[0];
+                                        dcount--;
+                                    }
+                                    df = [];
+                                    if (!wf[0])
+                                        wf = [];
+                                }
+                                //Зберігання змін в файлі
+                                function SvClick() {
+                                    var string1 = $('textarea[id=etext]').val();
+                                    if (n == 0)
+                                        var pathsv = headful + st;
+                                    else
+                                        var pathsv = dheadful + st;
+                                    $.ajax({
+                                        type: 'GET',
+                                        url: '@Url.Action("RewriteToFile", "Files")',
+                                        data: ({ "path": pathsv, "str": string1 }),
+                                        success: Materialize.toast('Complete', 2500)
+                                    });
+                                }
+                                //Закриття режиму редагування файлу
+                                function BClseClick() {
+                                    $("#div1").hide();
+                                    if (n == 0)
+                                        $("#sr").show();
+                                    else
+                                        $("#sr1").show();
+                                }
+                                //Повернення в корінь диску
+                                function root() {
+                                    if (n == 0) {
+                                        count = 0;
+                                        $.ajax({
+                                            type: 'GET',
+                                            url: '@Url.Action("ListOfFile", "Files")',
+                                            data: { str: string[count] },
+                                            success: ld
                                         });
                                     }
-                                    //Закриття режиму редагування файлу
-                                    function BClseClick() {
-                                        $("#div1").hide();
-                                        if (n == 0)
-                                            $("#sr").show();
-                                        else
-                                            $("#sr1").show();
+                                    else {
+                                        dcount = 0;
+                                        $.ajax({
+                                            type: 'GET',
+                                            url: '@Url.Action("ListOfFile", "Files")',
+                                            data: { str: dstring[dcount] },
+                                            success: ldd
+                                        });
                                     }
-                                    //Повернення в корінь диску
-                                    function root() {                                        
-                                        if (n == 0) {
-                                            count=0;                                            
-                                            $.ajax({
-                                                type: 'GET',
-                                                url: '@Url.Action("ListOfFile", "Files")',
-                                                data: { str: string[count] },
-                                                success: ld
-                                            });
+
+                                }
+                                //Перехід на диск D
+                                function openmanager() {
+                                    n = 1;
+                                    $("#sr").hide();
+                                    $("#div1").hide();
+                                    $("#sr1").show();
+                                    enable();
+                                }
+                                //Перехід на диск C
+                                function changedir() {
+                                    n = 0;
+                                    $("#sr1").hide();
+                                    $("#div1").hide();
+                                    $("#sr").show();
+                                    enable();
+                                }
+                                /*function BClsClick() {
+                                    if (n == 0)
+                                        {
+                                            $("#sr").hide();
+                                            $("#sr1").show();
+                                            n = 1;
                                         }
                                         else {
-                                            dcount=0;                                            
-                                            $.ajax({
-                                                type: 'GET',
-                                                url: '@Url.Action("ListOfFile", "Files")',
-                                                data: { str: dstring[dcount] },
-                                                success: ldd
-                                            });
+                                            $("#sr1").hide();
+                                            $("#sr").show();
+                                            n = 0;
                                         }
-
-                                    }
-                                    //Перехід на диск D 
-                                    function openmanager() {
-                                        n = 1;
-                                        $("#sr").hide();
-                                        $("#div1").hide();
-                                        $("#sr1").show();
-                                        enable();
-                                    }
-                                    //Перехід на диск C
-                                    function changedir() {
-                                        n = 0;
-                                        $("#sr1").hide();
-                                        $("#div1").hide();
-                                        $("#sr").show();
-                                        enable();
-                                    }
-                                    /*function BClsClick() {
-                                        if (n == 0)
-                                            {
-                                                $("#sr").hide();
-                                                $("#sr1").show();
-                                                n = 1;
+                                }*/
+                                //Заповнення масиву з файлами для переміщення
+                                function BCutClick() {
+                                    wf[0] = "1";
+                                    var j = 2;
+                                    if (n == 0)
+                                        for (i = 0; obj[i]; i++) {
+                                            var checkbox = document.getElementById(i);
+                                            if (checkbox.checked) {
+                                                wf[j++] = obj[i].FullName;
+                                                document.getElementById('pst').className = "waves-effect waves-light btn yellow darken-2";
                                             }
-                                            else {
-                                                $("#sr1").hide();
-                                                $("#sr").show();
-                                                n = 0;
+                                        }
+                                    else
+                                        for (i = 0; objd[i]; i++) {
+                                            var checkbox = document.getElementById("d" + i);
+                                            if (checkbox.checked) {
+                                                wf[j++] = objd[i].FullName;
+                                                document.getElementById('pst').className = "waves-effect waves-light btn yellow darken-2";
                                             }
-                                    }*/
-                                    //Заповнення масиву з файлами для переміщення
-                                    function BCutClick() {
-                                        wf[0] = "1";
-                                        var j = 2;
+                                        }
+                                }
+                                //Заповнення масиву з файлами для копіювання
+                                function BCpyClick() {
+                                    wf[0] = "2";
+                                    var j = 2;
+                                    if (n == 0)
+                                        for (i = 0; obj[i]; i++) {
+                                            var checkbox = document.getElementById(i);
+                                            if (checkbox.checked) {
+                                                wf[j++] = obj[i].FullName;
+                                                document.getElementById('pst').className = "waves-effect waves-light btn yellow darken-2";
+                                            }
+                                        }
+                                    else
+                                        for (i = 0; objd[i]; i++) {
+                                            var checkbox = document.getElementById("d" + i);
+                                            if (checkbox.checked) {
+                                                wf[j++] = objd[i].FullName;
+                                                document.getElementById('pst').className = "waves-effect waves-light btn yellow darken-2";
+                                            }
+                                        }
+                                    if (!wf[3])
+                                        var $toastContent = $('<div>File ' + wf[2] + ' in Bufer</div>');
+                                    else 
+                                        var $toastContent = $('<div>' + wf.length - 2 + ' files in Bufer</div>');
+                                    Materialize.toast($toastContent,2500);
+                                }
+                                //Відправлення на сервер команди копіювання/переміщення
+                                function BPstClick() {
+                                    if (n == 0)
+                                        wf[1] = string[count];
+                                    else
+                                        wf[1] = dstring[dcount];
+                                    if (!wf[3])
+                                        if (wf[0] == 2)
+                                            var $toastContent = $('<div>' + wf[2] + ' is copying<img src="../icons/close.png" style="cursor:pointer" onclick="toasthide()"/></div>');
+                                        else
+                                            var $toastContent = $('<div>' + wf[2] + ' is replasing<img src="../icons/close.png" /></div>');
+                                    else if (wf[0] == 2)
+                                        var $toastContent = $('<div>' + wf.length - 2 + ' files are copying<img src="../icons/close.png" /></div>');
+                                    else
+                                        var $toastContent = $('<div>' + wf.length - 2 + ' files are replacing<img src="../icons/close.png" /></div>');
+                                    Materialize.toast($toastContent);
+                                    $.ajax({
+                                        type: 'GET',
+                                        url: '@Url.Action("CutCopy", "Files")',
+                                        data: ({ "type": wf[0], "path": wf[1], "file": wf[2] }),
+                                        success: function (data) {
+                                            $(".toast").hide();
+                                            Materialize.toast('Complete', 2500);
+                                            if (n == 0)
+                                                ld(data);
+                                            else
+                                                ldd(data);
+                                        }
+                                    });
+                                }
+                                //Приховання вспливаючого вікна під час копіювання
+                                function toasthide() {
+                                    $(".toast").hide();
+                                }
+                                //Відправлення на сервер команди видалення
+                                function BDelClick() {
+                                    if (c > 0) {
+                                        var j = 0;
                                         if (n == 0)
                                             for (i = 0; obj[i]; i++) {
                                                 var checkbox = document.getElementById(i);
                                                 if (checkbox.checked) {
-                                                    wf[j++] = obj[i].FullName;
-                                                    document.getElementById('pst').className = "waves-effect waves-light btn";
+                                                    df[j++] = obj[i].FullName;
                                                 }
                                             }
                                         else
                                             for (i = 0; objd[i]; i++) {
                                                 var checkbox = document.getElementById("d" + i);
                                                 if (checkbox.checked) {
-                                                    wf[j++] = objd[i].FullName;
-                                                    document.getElementById('pst').className = "waves-effect waves-light btn";
+                                                    df[j++] = objd[i].FullName;
                                                 }
                                             }
                                     }
-                                    //Заповнення масиву з файлами для копіювання
-                                    function BCpyClick() {
-                                        wf[0] = "2";
-                                        var j = 2;
-                                        if(n==0)
-                                            for (i = 0; obj[i]; i++) {
-                                                var checkbox = document.getElementById(i);
-                                                if (checkbox.checked) {
-                                                    wf[j++] = obj[i].FullName;
-                                                    document.getElementById('pst').className = "waves-effect waves-light btn";
-                                                }
-                                            }
-                                        else
-                                            for (i = 0; objd[i]; i++) {
-                                                var checkbox = document.getElementById("d"+i);
-                                                if (checkbox.checked) {
-                                                    wf[j++] = objd[i].FullName;
-                                                    document.getElementById('pst').className = "waves-effect waves-light btn";
-                                                }
-                                            }
-                                    }
-                                    //Відправлення на сервер команди копіювання/переміщення
-                                    function BPstClick() {
-                                        if (n == 0)
-                                            wf[1] = string[count];
-                                        else
-                                            wf[1] = dstring[dcount];
-                                        if (!wf[3])
-                                            if (wf[0] == 2)
-                                                var $toastContent = $('<div>' + wf[2] + ' is copying<img src="../icons/close.png" style="cursor:pointer" onclick="toasthide()"/></div>');
+                                    $.ajax({
+                                        type: 'GET',
+                                        url: '@Url.Action("Delete", "Files")',
+                                        data: { "str": df[0] },  //df-архів стрінгів з повним шляхом
+                                        success: function () {
+                                            if (n == 0)
+                                                ld(data);
                                             else
-                                                var $toastContent = $('<div>' + wf[2] + ' is replasing<img src="../icons/close.png" /></div>');
-                                        else if (wf[0] == 2)
-                                            var $toastContent = $('<div>' + wf.length - 2 + ' files are copying<img src="../icons/close.png" /></div>');
-                                        else
-                                            var $toastContent = $('<div>' + wf.length - 2 + ' files are replacing<img src="../icons/close.png" /></div>');
-                                        Materialize.toast($toastContent);
-                                        $.ajax({
-                                            type: 'GET',
-                                            url: '@Url.Action("CutCopy", "Files")',
-                                            data: ({ "type": wf[0], "path": wf[1], "file": wf[2] }),
-                                            success: function(data){
-                                                $(".toast").hide();
-                                                Materialize.toast('Complete', 2500);
-                                                if (n == 0)
-                                                    ld;
-                                                else
-                                                    ldd;
-                                            }
-                                        });
-                                    }
-                                    //Приховання вспливаючого вікна під час копіювання
-                                    function toasthide() {                                        
-                                        $(".toast").hide();
-                                    }
-                                    //Відправлення на сервер команди видалення
-                                    function BDelClick() {
-                                        if (c > 0) {
-                                            var j = 0;
-                                            if(n==0)
-                                                for (i = 0; obj[i]; i++) {
-                                                    var checkbox = document.getElementById(i);
-                                                    if (checkbox.checked) {
-                                                        df[j++] = obj[i].FullName;
-                                                    }
-                                                }
-                                                else
-                                                    for (i = 0; objd[i]; i++) {
-                                                        var checkbox = document.getElementById("d"+i);
-                                                        if (checkbox.checked) {
-                                                            df[j++] = objd[i].FullName;
-                                                        }
-                                                    }
+                                                ldd; (data)
+                                            Materialize.toast('Delete complete', 2500);
                                         }
-                                        $.ajax({
-                                            type: 'GET',
-                                            url: '@Url.Action("Delete", "Files")',
-                                            data: { "str": df[0] },  //df-архів стрінгів з повним шляхом
-                                            success: function () {
-                                                if (n == 0)
-                                                    ld;
-                                                else
-                                                    ldd;
-                                                Materialize.toast('Delete complete', 2500);
+                                    });
+                                }
+                                //пошук по списку
+                                function find() {
+                                    if (n == 0) {
+                                        if (string[count]) {
+                                            stringback[count] = string[count];
+                                            count++;
+                                            var table = document.getElementById("sr");
+                                            var find = document.getElementById('search').value;
+                                            for (var i = table.rows.length - 3; i >= 0; i--) {
+                                                for (j = 0; j < find.length; j++)
+                                                    if (find[j] != obj[i].Name[j]) {
+                                                        table.deleteRow(i + 2);
+                                                        j = obj[i].Name.length;
+                                                    }
                                             }
-                                        });
+                                        }
                                     }
+                                    else {
+                                        if (dstring[dcount]) {
+                                            dstringback[dcount] = dstring[dcount];
+                                            dcount++;
+                                            var table = document.getElementById("sr1");
+                                            var find = document.getElementById('search').value;
+                                            for (var i = table.rows.length - 3; i >= 0; i--) {
+                                                for (j = 0; j < find.length; j++)
+                                                    if (find[j] != objd[i].Name[j]) {
+                                                        table.deleteRow(i + 2);
+                                                        j = objd[i].Name.length;
+                                                    }
+                                            }
+                                        }
+                                    }
+                                    document.getElementById('search').value = '';
+                                }
                                 </script>
-                                <script type="text/javascript">
-                                    //Сортування(не працює)                                    
+                                <script type="text/javascript">        //Сортування(не працює)                                    
                                     var sortAsc = document.createElement("SPAN"),
-                                        sortDesc = document.createElement("SPAN");
+                                    sortDesc = document.createElement("SPAN");
                                     // Значки сортировки для заголовка таблицы:
                                     sortAsc.innerHTML = "&#9660;";
                                     sortDesc.innerHTML = "&#9650;";

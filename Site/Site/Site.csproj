@@ -194,6 +194,7 @@
     <Content Include="icons\file-word.png" />
     <Content Include="icons\file.png" />
     <Content Include="icons\folder.png" />
+    <Content Include="icons\magnify.png" />
     <Content Include="icons\menu.png" />
     <Content Include="icons\read.png" />
     <Content Include="icons\root.png" />
