@@ -6987,7 +6987,7 @@ input[type=checkbox]:not(:disabled) ~ .lever:active:after {
     font-size: 0.8rem; }
 
 select {
-  display: none; }
+  display: block; }
 
 select.browser-default {
   display: block; }
@@ -8416,4 +8416,9 @@ th span {
     height:300px;
     display:block;
     margin-top:0.5rem;
+}
+
+.chartdiv {
+	width	: 100%;
+	height	: 500px;
 }

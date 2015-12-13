@@ -226,6 +226,7 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\themechart.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="d.txt" />
     <Content Include="Web.config" />
@@ -253,8 +254,11 @@
     <Content Include="Views\Account\Manage.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Files\Index.cshtml" />
+    <Content Include="Views\Files\Manager.cshtml" />
     <Content Include="Scripts\PrintDirectory.ps1" />
+    <Content Include="Views\Files\Index.cshtml" />
+    <Content Include="Views\Files\Generalmonitoring.cshtml" />
+    <Content Include="Views\Files\Cron.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

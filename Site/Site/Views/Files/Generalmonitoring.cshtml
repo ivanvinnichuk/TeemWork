@@ -1,0 +1,256 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <link href="/Content/stylematerial.css" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Generalmonitoring</title>
+</head>
+<body>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="http://www.amcharts.com/lib/3/amcharts.js"></script>
+    <script src="http://www.amcharts.com/lib/3/serial.js"></script>
+    <script src="/Scripts/themechart.js"></script>
+    <script src="/Scripts/jsmaterial.js"></script>
+    <script type="text/javascript">
+        var cpudata = [];
+        var ramdata = [];
+        var romdata=[];
+    </script>
+        <header>
+            @*Ліве меню*@
+            <div id="slide-out" class="side-nav fixed">
+                <div class="section blue darken-2"><h5>Diploma</h5></div>
+                <div class="section grey"><h4>Monitoring</h4></div>
+                <div style="position: fixed; width:inherit">
+                    <a href="/Files/Generalmonitoring" class="btn waves-effect waves-light  input-field blue-text text-darken-2 transparent">Monitoring</a>
+                    <a href="/Files/Index" class="btn waves-effect waves-light  input-field transparent">Settings</a>
+                    <a href="/Files/Cron" class="btn waves-effect waves-light  input-field transparent">Task Scheduler</a>
+                    <a href="/Files/Manager" class="btn waves-effect waves-light  input-field transparent">File Manager</a>
+                </div>
+            </div>
+            <nav style="position: fixed; height: 45px; z-index: 900; background-color: #1976D2; ">
+                <div class="nav-wrapper">
+                    <a href="#" data-activates="slide-out" class="button-collapse show-on-large mdi-navigation-menu"><img class="btn-floating" src="../icons/menu.png" /></a>
+                    <i style="margin-left:18%; ">diploma11.cloudapp.net</i>
+                </div>
+            </nav>
+
+            <script type="text/javascript">
+                // Initialize collapse button
+                $(".button-collapse").sideNav();
+                // Initialize collapsible (uncomment the line below if you use the dropdown variation)
+                $('.collapsible').collapsible();
+            </script>
+        </header>
+        <main>
+            <div class="row">
+                <div class="col s12 m12 l10" style="float:right; margin-top:50px;">
+                    <div class="row blue lighten-4">
+                        <div class="col s12 m6 l3"><h5>AC Power</h5></div>
+                        <div class="waves-effect waves-light btn deep-orange" onclick="BOffClick" style="margin:0.5rem; float:right">Power Off</div>
+                        <div class="waves-effect waves-light btn deep-orange" onclick="BRebClick" style="margin:0.5rem; float:right">Reboot</div>
+                        <div class="waves-effect waves-light btn deep-orange" onclick="BHibClick" style="margin:0.5rem; float:right">Hibernate</div>
+                    </div>
+                    <div class="row white">
+                        <div class="col s12 m6 l3"><h5>CPU Usage</h5></div>
+                        <div class="col s12 m6 l2"><label></label></div>
+                        <div class="chartdiv" id="cpudiv"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col s12 m6 l4"><h5>RAM Usage</h5></div>
+                        <div class="col s12 m6 l2"><label></label></div>
+                        <div class="chartdiv" id="ramdiv"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col s12 m6 l4"><h5>ROM Usage</h5></div>
+                        <div class="col s12 m6 l2"><label></label></div>
+                        <div class="chartdiv" id="hdddiv"></div>
+                    </div>
+                    <script type="text/javascript">
+                        var chartData = generateChartData(cpudata,0);
+                        var chart = AmCharts.makeChart("cpudiv", {
+                            "type": "serial",
+                            "theme": "light",
+                            "marginRight": 15,
+                            "dataProvider": chartData,
+                            "valueAxes": [{
+                                "position": "left",
+                                "title": "Load of processor"
+                            }],
+                            "graphs": [{
+                                "id": "g1",
+                                "fillAlphas": 0.4,
+                                "valueField": "visits",
+                                "balloonText": "<div style='margin:5px; font-size:19px;'><b>[[value]]%</b></div>"
+                            }],
+                            "chartScrollbar": {
+                                "graph": "g1",
+                                "scrollbarHeight": 40,
+                                "backgroundAlpha": 0,
+                                "selectedBackgroundAlpha": 0.1,
+                                "selectedBackgroundColor": "#888888",
+                                "graphFillAlpha": 0,
+                                "graphLineAlpha": 0.5,
+                                "selectedGraphFillAlpha": 0,
+                                "selectedGraphLineAlpha": 1,
+                                "autoGridCount": true,
+                                "color": "#AAAAAA"
+                            },
+                            "chartCursor": {
+                                "categoryBalloonDateFormat": "JJ:NN:SS",
+                                "cursorPosition": "mouse"
+                            },
+                            "categoryField": "date",
+                            "categoryAxis": {
+                                "minPeriod": "ss",
+                                "parseDates": true
+                            },
+                            "export": {
+                                "enabled": true
+                            }
+                        });
+
+                        var chartData = generateChartData(ramdata,1);
+                        var chart = AmCharts.makeChart("ramdiv", {
+                            "type": "serial",
+                            "theme": "light",
+                            "marginRight": 15,
+                            "dataProvider": chartData,
+                            "valueAxes": [{
+                                "position": "left",
+                                "title": "Load of ram"
+                            }],
+                            "graphs": [{
+                                "id": "g1",
+                                "fillAlphas": 0.4,
+                                "valueField": "visits",
+                                "balloonText": "<div style='margin:5px; font-size:19px;'><b>[[value]]%</b></div>"
+                            }],
+                            "chartScrollbar": {
+                                "graph": "g1",
+                                "scrollbarHeight": 40,
+                                "backgroundAlpha": 0,
+                                "selectedBackgroundAlpha": 0.1,
+                                "selectedBackgroundColor": "#888888",
+                                "graphFillAlpha": 0,
+                                "graphLineAlpha": 0.5,
+                                "selectedGraphFillAlpha": 0,
+                                "selectedGraphLineAlpha": 1,
+                                "autoGridCount": true,
+                                "color": "#AAAAAA"
+                            },
+                            "chartCursor": {
+                                "categoryBalloonDateFormat": "JJ:NN:SS",
+                                "cursorPosition": "mouse"
+                            },
+                            "categoryField": "date",
+                            "categoryAxis": {
+                                "minPeriod": "ss",
+                                "parseDates": true
+                            },
+                            "export": {
+                                "enabled": true
+                            }
+                        });
+                        var chartData = generateChartData(romdata,2);
+                        var chart = AmCharts.makeChart("hdddiv", {
+                            "type": "serial",
+                            "theme": "light",
+                            "marginRight": 15,
+                            "dataProvider": chartData,
+                            "valueAxes": [{
+                                "position": "left",
+                                "title": "Load of rom"
+                            }],
+                            "graphs": [{
+                                "id": "g1",
+                                "fillAlphas": 0.4,
+                                "valueField": "visits",
+                                "balloonText": "<div style='margin:5px; font-size:19px;'><b>[[value]]%</b></div>"
+                            }],
+                            "chartScrollbar": {
+                                "graph": "g1",
+                                "scrollbarHeight": 40,
+                                "backgroundAlpha": 0,
+                                "selectedBackgroundAlpha": 0.1,
+                                "selectedBackgroundColor": "#888888",
+                                "graphFillAlpha": 0,
+                                "graphLineAlpha": 0.5,
+                                "selectedGraphFillAlpha": 0,
+                                "selectedGraphLineAlpha": 1,
+                                "autoGridCount": true,
+                                "color": "#AAAAAA"
+                            },
+                            "chartCursor": {
+                                "categoryBalloonDateFormat": "JJ:NN:SS",
+                                "cursorPosition": "mouse"
+                            },
+                            "categoryField": "date",
+                            "categoryAxis": {
+                                "minPeriod": "ss",
+                                "parseDates": true
+                            },
+                            "export": {
+                                "enabled": true
+                            }
+                        });
+                        chart.addListener("dataUpdated", zoomChart);
+                        // when we apply theme, the dataUpdated event is fired even before we add listener, so
+                        // we need to call zoomChart here
+                        zoomChart();
+                        // this method is called when chart is first inited as we listen for "dataUpdated" event
+                        function zoomChart() {
+                            // different zoom methods can be used - zoomToIndexes, zoomToDates, zoomToCategoryValues
+                            chart.zoomToIndexes(chartData.length - 250, chartData.length - 100);
+                        }
+
+
+                        // generate some random data, quite different range
+                        function generateChartData(data, type) {
+                            var chartData = [];
+                            var i = 0;
+                            while (data[i])
+                                i++;
+                            // current date
+                            var firstDate = new Date();
+                            firstDate.setSeconds(firstDate.getSeconds() - 100);
+                            for (var j = 0; j < 99; j++) {
+                                if (j < 98 - i) {
+                                    var newDate = new Date(firstDate);                                    
+                                    newDate.setSeconds(newDate.getSeconds() + j);
+                                    var visits = 0;
+                                    chartData.push({
+                                        date: newDate,
+                                        visits: visits
+                                    });
+                                }
+                                else
+                                    for (var c = 0; c < i; c++) {
+                                        chartData[j] = data[c];
+                                    }
+                            }
+                            //firstDate.setMinutes(firstDate.getDate() - 1000);
+                            //for (var i = 98; i < 105; i++) {
+                            var newDate = new Date(firstDate);
+                            newDate.setSeconds(newDate.getSeconds() + 99);
+                            var visits = Math.round(Math.random() * 100);
+                            chartData.push({
+                                date: newDate,
+                                visits: visits
+                            });
+                            //}
+                            return chartData;
+                        }
+                    </script>
+
+                </div>
+            </div>
+        </main>
+</body>
+
+</html>

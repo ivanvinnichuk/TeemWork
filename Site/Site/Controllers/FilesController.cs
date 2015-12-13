@@ -17,6 +17,49 @@ namespace Site.Controllers
         {
             return View();
         }
+        public ActionResult Generalmonitoring()
+        {
+            return View();
+        }
+        public ActionResult Cron()
+        {
+            return View();
+        }
+        public ActionResult Manager()
+        {
+            return View();
+        }
+        public ActionResult Enter(string login, string pass)
+        {
+            if ((login == "admin") && (pass == "1"))
+                return Manager();
+            else 
+                return Content("error");
+        }
+        /////////
+        public string List(string str)
+        {
+            string Result;
+            var shell = PowerShell.Create();
+            shell.Commands.AddScript(" Get-ChildItem '" + str + "' |  Select-Object Name, Mode, LastWriteTime, FullName  | ConvertTo-Json");
+            var results = shell.Invoke();
+            if (results.Count > 0)
+            {
+
+                var builder = new StringBuilder();
+
+                foreach (var psObject in results)
+                {
+                    builder.Append(psObject.ToString() + "\r\n");
+
+                }
+                Result = builder.ToString();
+                return Result;
+            }
+
+            return "Folder is empty!!!";
+        }
+
 
 
         //
@@ -42,11 +85,70 @@ namespace Site.Controllers
                 return Content(Result);
             }
 
-            return Content("Папка пуста!", "text/plain");
+            return Content("Folder is empty!!!", "text/plain");
         }
 
         //[HttpGet]
-        public ActionResult CutCopy(string type, string path, string file)
+
+
+        public void Cut(string path, string file)
+        {
+            var shell = PowerShell.Create();
+            shell.Commands.AddScript(" Move-Item  " + file + "  " + path);
+            var results = shell.Invoke();
+
+            if (System.IO.Directory.Exists(file))
+            {
+
+                string dirName = new DirectoryInfo(@file).Name;
+                string s = path + "\\" + dirName;
+                CopyCutARR(file, s, 2);
+            }
+
+
+        }
+
+
+        public void CopyCutARR(string file, string path, int c)
+        {
+            List<string> ss = new List<string>();
+            var shell = PowerShell.Create();
+            shell.Commands.AddScript(" Get-ChildItem '" + file + "' |  Select-Object  FullName ");
+            var results = shell.Invoke();
+            if (results.Count > 0)
+            {
+                var builder = new StringBuilder();
+                foreach (var Obj in results)
+                {
+                    string qwe = Obj.ToString().Replace("@{FullName=", "").Replace("}", "");
+                    ss.Add(qwe);//.Members["FullName"].Value);
+
+                }
+                if (c == 1)
+                    foreach (string s in ss)
+                        Copy(path, s);
+                if (c == 2)
+                    foreach (string s in ss)
+                        Cut(path, s);
+            }
+        }
+        public void Copy(string path, string file)
+        {
+            var shell = PowerShell.Create();
+            shell.Commands.AddScript(" Copy-Item  " + file + "  " + path);
+            var results = shell.Invoke();
+
+            if (System.IO.Directory.Exists(file))
+            {
+
+                string dirName = new DirectoryInfo(@file).Name;
+                string s = path + "\\" + dirName;
+                CopyCutARR(file, s, 1);
+            }
+
+
+        }
+        public ActionResult CutCopy(string type, string path, string file, int count)
         {
 
             string s = type.ToString();
@@ -54,20 +156,18 @@ namespace Site.Controllers
 
             if (type == "2")
             {
-                var shell = PowerShell.Create();
-                shell.Commands.AddScript(" Copy-Item  " + file + "  " + path);
-                var results = shell.Invoke();
+                Copy(path, file);
             }
             if (type == "1")
             {
-                var shell = PowerShell.Create();
-                shell.Commands.AddScript(" Move-Item  '" + file + "'  '" + path + "'");
-                var results = shell.Invoke();
+                Cut(path, file);
             }
-
-
-            return Content(path);
-
+            if (count == 2)
+            {
+                string res = List(path);
+                return Content(res);
+            }
+            return Content("11", "text/plain");
         }
 
         public ActionResult OpenFile(string str)
@@ -97,27 +197,42 @@ namespace Site.Controllers
         }
         public ActionResult CreateFile(string str)
         {
-            string ss = str;
+            string ff = str;
             var shell = PowerShell.Create();
-            shell.Commands.AddScript(" New-Item " + str + " -type file");
+
+            shell.Commands.AddScript(" New-Item " + str + " -type file ");
             var results = shell.Invoke();
-            return Content("Done", "text/pain");
+            ff = ff.Remove(ff.LastIndexOf(@"\"));
+            string result = List(ff);
+            return Content(result, "text/pain");
         }
         public ActionResult CreateDirectory(string str)
         {
-            string ss = str;
+            string ff = str;
             var shell = PowerShell.Create();
             shell.Commands.AddScript(" New-Item " + str + " -type directory");
             var results = shell.Invoke();
-            return Content("Done", "text/pain");
+            ff = ff.Remove(ff.LastIndexOf(@"\"));
+            string result = List(ff);
+            return Content(result, "text/pain");
         }
-        public ActionResult Delete(string str)
+        public ActionResult Delete(string str, int count)
         {
+
             string ff = str;
             var shell = PowerShell.Create();
-            shell.Commands.AddScript(" Remove-Item  '" + str + "' -recurse");
+
+            shell.Commands.AddScript(" Remove-Item  '" + str + "' -Recurse ");
+
             var results = shell.Invoke();
-            return Content("Done", "text/pain");
+            if (count == 0)
+            {
+                if (ff.Length > 4)
+                    ff = ff.Remove(ff.LastIndexOf(@"\")) + "\\";
+                string result = List(ff);
+                return Content(result, "text/pain");
+            }
+            return Content("12", "text/pain");
         }
 
     }

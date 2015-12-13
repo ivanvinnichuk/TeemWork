@@ -1,0 +1,364 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width" />
+        <link rel="stylesheet" href="/Content/stylematerial.css" type="text/css" />
+        <title>Task Scheduler</title>
+    </head>
+    <body>
+        @*<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>*@
+        <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <script type="text/javascript" src="/Scripts/jsmaterial.js"></script>
+        @*<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+        <script type="text/javascript" src="http://code.jquery.com/jquery-1.4.2.js"></script>*@        
+        <script type="text/javascript">
+            var obj = new Array();
+            var string = [];
+            var stringback = [];
+            var count = 0;
+            var wf = [];
+            var df = [];
+            var delcount;
+            var table;
+            var c = 0;
+            var n = 0;
+            var id = 0;
+            var periodarr = ["On restart", "Hourly", "Dayly", "Monthly"];
+            var commandarr = ["Reboot", "Shut down", "Run script", "Backup"];
+        </script>
+        <script type="text/javascript">
+            //відображення кнопок Delete (Enable, Disable)
+            function enable() {
+                c = 0;
+                for (i = 0; i<id; i++) {
+                    var checkbox = document.getElementById(i);
+                    if (checkbox.checked)
+                        c++;
+                }
+                if (c > 0)
+                    document.getElementById('Del').className = "waves-effect waves-light btn pink darken-2";                
+                else
+                    document.getElementById('Del').className = "btn disabled";
+            }
+        </script>
+        <header>
+            @*Ліве меню*@
+            <div id="slide-out" class="side-nav fixed">
+                <div class="section pink darken-2"><h5>Diploma</h5></div>
+                <div class="section grey"><h4>Scheduler</h4></div>
+                <div style="position: fixed; width:inherit">
+                    <a href="/Files/Generalmonitoring" class="btn waves-effect waves-light  input-field transparent">Monitoring</a>
+                    <a href="/Files/Index" class="btn waves-effect waves-light  input-field transparent">Settings</a>
+                    <a href="/Files/Cron" class="btn waves-effect waves-light  input-field pink-text pink-darken-2 transparent">Task Scheduler</a>
+                    <a href="/Files/Manager" class="btn waves-effect waves-light  input-field transparent">File Manager</a>
+                </div>
+            </div>
+            <nav style="position: fixed; height: 45px; z-index: 900; background-color: #C2185B; ">
+                <div class="nav-wrapper">
+                    <a href="#" data-activates="slide-out" class="button-collapse show-on-large mdi-navigation-menu"><img class="btn-floating" src="../icons/menu.png" /></a>
+                    <i style="margin-left:18%; ">diploma11.cloudapp.net</i>
+                </div>
+            </nav>
+
+            <script type="text/javascript">
+                // Initialize collapse button
+                $(".button-collapse").sideNav();
+                // Initialize collapsible (uncomment the line below if you use the dropdown variation)
+                $('.collapsible').collapsible();
+            </script>
+        </header>
+    <main>
+        @*Основне наповнення сторінки*@
+        <div id="modal1" class="modal" style="width: 320px">
+            @*Вспливаюче вікно для створення завдання*@
+            <div class="modal-content" style="background-color: #FFFFFF; height: 560px; ">
+                <div class="row">
+                    <p>
+                        <input name="group1" type="radio" id="test1" value="1" onclick="showf()"/>
+                        <label style="color:black" for="test1">Fixed time</label>                        
+                    </p>
+                    <p>                   
+                        <input name="group1" type="radio" id="test2" value="2" onclick="showt()" " />
+                        <label style="color:black" for="test2">temp</label>
+                    </p>
+                    <div id="firsttime">First time</div>
+                    <div id="fixed" style="display:inline-flex">
+                        <input id="date1" type="date" class="datepicker" />
+                        <input id="date2" type="time" style="margin-left:10px" />                        
+                    </div>
+                    <div class="input-field col s12" id="usual">
+                        <select id="period" onclick="showtime()">
+                            <option value="" disabled selected>Choose time</option>
+                            <option value="1">On restart</option>
+                            <option value="2">Hourly</option>
+                            <option value="3">Dayly</option>
+                            <option value="4">Monthly</option>
+                        </select>
+                    </div>
+                    <div class="input-field col s12" id="comanddiv">
+                        <select id="commandselect">
+                            <option value="" disabled selected>Choose command</option>
+                            <option value="1">Reboot</option>
+                            <option value="2">Shut down</option>
+                            <option value="3">Run script</option>
+                            <option value="4">Backup</option>
+                        </select>
+                    </div>            
+                    <div class="input-field col s12">
+                        <input id="fnametask" type="text">
+                        <label for="fnametask">Name</label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a id="OK" class=" modal-action modal-close waves-effect waves-green btn-flat teal-text" onclick="newff()">OK</a>
+                <a id="OK1" class=" modal-action modal-close waves-effect waves-green btn-flat teal-text" onclick="chf()">OK</a>
+                <a class="modal-action modal-close waves-effect waves-green btn-flat pink-text">Cancel</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12 m12 l10" style="float: right; margin-top: 50px;">
+                <div style="position: fixed; z-index:900;">
+                    <a class="waves-effect waves-light btn modal-trigger pink darken-2" href="#modal1" onclick="newfilefolder()" style="margin-left:0.5rem">New...</a>
+                    <script type="text/javascript">                        
+                        function showf() {
+                            //document.getElementById("").checked = true;
+                            //$("#test1").attr('checked', 'checked');
+                            $("#usual").hide();
+                            $("#fixed").show();
+                            document.getElementById('date1').value = "";
+                            document.getElementById('date2').value = "00:00";
+                        }
+                        function showt() {
+                            $("#fixed").hide();
+                            $("#usual").show();                            
+                        }
+                        function showtime(){
+                            if ($("#period").val() > 1) {
+                                $("#fixed").show();
+                                $("#firsttime").show();
+                            }
+                            else{
+                                $("#fixed").hide();
+                                $("#firsttime").hide();
+                            }
+                        }
+                        function newfilefolder() {
+                            $("#modal1").openModal();
+                            $("#OK1").hide();
+                            $("#OK").show();
+                            document.getElementById("test1").checked = false;
+                            document.getElementById("test2").checked = false;
+                            document.getElementById('fnametask').value = '';
+                            document.getElementById('commandselect').value = '';
+                                $("#fixed").hide();
+                                $("#usual").hide();
+                            $('.datepicker').pickadate({
+                                selectMonths: true, // Creates a dropdown to control month
+                                selectYears: 15 // Creates a dropdown of 15 years to control year
+                            });
+                        }
+                    </script>
+                    <div id="Del" class="btn disabled" onclick="BDelClick()">Delete</div>
+                </div>
+                <div style="margin-top: 3rem; border: 1px solid #B6B6B6">                
+                    <div style="border: 1px solid #B6B6B6">                    
+                        <div class="row">
+                            <div class="input-field col s12">                                
+                                <table id="sr" class="striped highlight" onclick="clickEvent(event)">
+                                    @*Таблиця з файдовим менеджером*@
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Command</th>
+                                        <th data-field="id">Time</th>
+                                        <th>Period</th>
+                                        <th>Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr></tr>
+                                </tbody>
+                            </table>                           
+                    <script type="text/javascript">
+                    //завантаження сторінки
+                        $(document).ready(function () {
+                            $.ajax({
+                                type: 'GET',
+                                url: '@Url.Action("TaskList", "Home")',
+                                data: { str: string[count] },
+                                success: ld
+                            });                            
+                        });
+
+                        //Завантаження даних в таблицю
+                        function ld(data) {
+                            table = document.getElementById("sr");
+                            for (i = table.rows.length - 1; i > 1 ; i--)
+                                table.deleteRow(i);
+                            obj = JSON.parse(data);
+                            for (id = 0; obj[id]; id++) {
+                                var row = table.insertRow(table.rows.lenght);
+                                var cell0 = row.insertCell(0);
+                                var cell1 = row.insertCell(1);
+                                var cell2 = row.insertCell(2);
+                                var cell3 = row.insertCell(3);
+                                var cell4 = row.insertCell(4);
+                                var cell5 = row.insertCell(5);
+                                cell0.innerHTML = '<input type="checkbox" id="' + id + '"onchange = "enable();"/><label for="' + id + '"></label>';
+                                cell1.innerHTML = obj[id].Name;
+                                cell2.innerHTML = obj[id].Time;
+                                cell3.innerHTML = obj[id].Period;
+                                cell4.innerHTML = obj[id].Description;
+                                cell4.innerHTML = obj[id].id;
+                            }
+                        }
+                    </script>
+                    <script type="text/javascript">
+                        var row;
+                        //Натиснення на елемент таблиці переходимо в редегування
+                        function clickEvent(event) {
+                            var target;
+                            if (!event) {
+                                var event = window.event;
+                            }
+                            if (event.target) {
+                                target = event.target;
+                            } else if (event.srcElement) {
+                                target = event.srcElement;
+                            }
+                            if (target) {
+                                if (target.nodeType == 3) {
+                                    target = target.parentNode;
+                                }
+                                if (target.tagName.toLowerCase() == "td") {
+                                    row = target.parentNode;
+                                    //st = row.getElementsByTagName("td").item(5).innerHTML;                                    
+                                    $("#modal1").openModal();
+                                    $("#OK").hide();
+                                    $("#OK1").show();
+                                    if (row.getElementsByTagName("td").item(3).innerHTML == "No period") {
+                                        document.getElementById("test1").checked = true;
+                                        $("#usual").hide();
+                                        $("#fixed").show();
+                                    }
+                                    else {
+                                        document.getElementById("test2").checked = true;
+                                        $("#usual").show();
+                                        if(row.getElementsByTagName("td").item(3).innerHTML!=periodarr[0])
+                                            $("#fixed").show();
+                                        else
+                                            $("#fixed").hide();
+                                    }
+                                    var i;
+                                    for (i = 0; i < commandarr.length; i++)
+                                        if (commandarr[i] == row.getElementsByTagName("td").item(1).innerHTML)
+                                            break;
+                                    document.getElementById('commandselect').value = i+1;                                    
+                                    document.getElementById('fnametask').value = row.getElementsByTagName("td").item(4).innerHTML;
+                                }                                
+                            }
+                        }
+                        function chf() {
+                            row.getElementsByTagName("td").item(1).innerHTML=commandarr[$("#commandselect").val() - 1];
+                            if (($('input[name="group1"]:checked').val() == 2) && ($("#period").val() == 1))
+                                row.getElementsByTagName("td").item(2).innerHTML=row.getElementsByTagName("td").item(3).innerHTML=periodarr[$("#period").val() - 1];
+                            else
+                                row.getElementsByTagName("td").item(2).innerHTML=document.getElementById("date1").value + " " + document.getElementById("date2").value;
+                            if ($('input[name="group1"]:checked').val() == 2)
+                                row.getElementsByTagName("td").item(3).innerHTML=periodarr[$("#period").val() - 1];
+                            else
+                                row.getElementsByTagName("td").item(3).innerHTML='No period';
+                            row.getElementsByTagName("td").item(4).innerHTML = $("#fnametask").val();
+                            Createtask();
+                        }
+                        //Створення нового завдання
+                        
+                        function newff() {
+                            if (document.getElementById("commandselect").value) {
+                                var table = document.getElementById("sr");
+                                var row = table.insertRow(table.rows.lenght);
+                                var cell0 = row.insertCell(0);
+                                var cell1 = row.insertCell(1);
+                                var cell2 = row.insertCell(2);
+                                var cell3 = row.insertCell(3);
+                                var cell4 = row.insertCell(4);
+                                var cell5 = row.insertCell(5);
+                                var datetime=document.getElementById("date1").value + " " + document.getElementById("date2").value;
+                                cell0.innerHTML = '<input type="checkbox" id="' + id + '"onchange = "enable();"/><label for="' + id++ + '"></label>';
+                                var com = document.getElementById("modal1");
+                                cell1.innerHTML = commandarr[$("#commandselect").val() - 1];
+                                if (($('input[name="group1"]:checked').val() == 2) && ($("#period").val() == 1))
+                                    cell2.innerHTML = cell3.innerHTML = periodarr[$("#period").val() - 1];
+                                else
+                                    cell2.innerHTML = document.getElementById("date1").value + " " + document.getElementById("date2").value;
+                                if ($('input[name="group1"]:checked').val() == 2)
+                                    cell3.innerHTML = periodarr[$("#period").val() - 1];
+                                else
+                                    cell3.innerHTML = 'No period';
+                                cell4.innerHTML = $("#fnametask").val();
+                                Createtask();
+                            }
+                        }
+                        function Createtask() {
+                            $.ajax({
+                                type: 'GET',
+                                url: '@Url.Action("Create", "Home")',
+                                data: {
+                                    "id": id, "command": commandarr[$("#commandselect").val() - 1],
+                                    "datetime": datetime, "period": periodarr[$("#period").val() - 1],
+                                    "description": $("#fnametask").val()
+                                },
+                                success: Materialize.toast('Complete', 2500)
+                            });
+                        }
+                        //Приховання вспливаючого вікна під час копіювання
+                        function toasthide() {
+                            $(".toast").hide();
+                        }
+                        //Відправлення на сервер команди видалення
+                        function BDelClick() {
+                            if (c > 0) {
+                                var j = 0;                                
+                                for (i = 1; obj[i - 1]; i++) {
+                                    var checkbox = document.getElementById(i - 1);
+                                    if (checkbox.checked) {
+                                        df[j++] = obj[i - 1].id;
+                                    }
+                                }
+                            }
+                            table.deleteRow(1);
+                            delcount = df.length - 1;
+                            deletetask();
+                        }
+                        function deletetask() {
+                            var delf = df[delcount];
+                            $.ajax({
+                                type: 'GET',
+                                url: '@Url.Action("Delete", "Files")',
+                                data: { "str": delf },  //df-архів стрінгів з повним шляхом
+                                success: function (data) {
+                                    if (delcount-- > 0)
+                                        deletetask();
+                                    else {
+                                        ld(data);
+                                        Materialize.toast('Delete complete', 2500);
+                                    }
+                                }
+                            });
+                        }
+                    </script>
+                            </div>
+                        </div>
+                    </div>
+                </div>                
+            </div>
+        </div>
+    </main>
+    </body>
+</html>

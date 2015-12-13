@@ -1,0 +1,964 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="/Content/stylematerial.css" type="text/css" />
+    <title>FileManager</title>
+</head>
+<body>
+    <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="/Scripts/jsmaterial.js"></script>
+    @*<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.4.2.js"></script>*@
+    <script type="text/javascript" src="/Scripts/autoresize.jquery.min.js"></script>
+    <script type="text/javascript">
+        var obj = new Array();
+        var objd = new Array();
+        var string = [];
+        var stringback = [];
+        var count = 0;
+        var dstring = [];
+        var dstringback = [];
+        var dcount = 0;
+        var wf=[];
+        var df =[];
+        var head;
+        var headful;
+        var k = 0;
+        var dhead;
+        var dheadful;
+        var dk = 0;
+        var c = 0;
+        var n = 0;
+        var st;
+        var delcount;
+        var copycutcount;
+    </script>
+    <script type="text/javascript">
+        //відображення кнопок Copy, Cut, Delete (Enable, Disable)
+        function enable() {
+            
+            if (n == 0) {
+                c = 0;
+                for (i = 0; obj[i]; i++) {
+                    var checkbox = document.getElementById(i);
+                    if (checkbox.checked)
+                        c++;
+                }
+                if (c > 0) {
+                    document.getElementById('Cpy').className = "waves-effect waves-light btn yellow darken-2";
+                    document.getElementById('Cut').className = "waves-effect waves-light btn yellow darken-2";
+                    document.getElementById('Del').className = "waves-effect waves-light btn yellow darken-2";
+                }
+                else {
+                    document.getElementById('Cpy').className = "btn disabled";
+                    document.getElementById('Cut').className = "btn disabled";
+                    document.getElementById('Del').className = "btn disabled";
+                }
+            }
+            else {
+                c = 0;
+                for (i = 0; objd[i]; i++) {
+                    var checkbox = document.getElementById("d"+i);
+                    if (checkbox.checked)
+                        c++;
+                }
+                if (c > 0) {
+                    document.getElementById('Cpy').className = "waves-effect waves-light btn yellow darken-2";
+                    document.getElementById('Cut').className = "waves-effect waves-light btn yellow darken-2";
+                    document.getElementById('Del').className = "waves-effect waves-light btn yellow darken-2";
+                }
+                else {
+                    document.getElementById('Cpy').className = "btn disabled";
+                    document.getElementById('Cut').className = "btn disabled";
+                    document.getElementById('Del').className = "btn disabled";
+                }
+            }
+        }
+    </script>
+
+    <header>@*Ліве меню*@
+        <div id="slide-out" class="side-nav fixed">
+            <div class="section yellow darken-2"><h5>qwe corp.</h5></div>
+            <div class="section grey"><h4>File Manager</h4></div>
+            <div style="position: fixed; width:inherit">
+                <a href="/Files/Generalmonitoring" class="btn waves-effect waves-light  input-field transparent">General</a>
+                <a href="/Files/Index" class="btn waves-effect waves-light  input-field transparent">Settings</a>
+                <a href="/Files/Cron" class="btn waves-effect waves-light  input-field transparent">Task Scheduler</a>
+                <a href="/Files/Manager" class="btn waves-effect waves-light  input-field yellow-text text-darken-2 transparent">File Manager</a>
+            </div>
+        </div>
+        <nav style="position: fixed; height: 45px; z-index: 900; background-color: #FBC02D;">
+            <div class="nav-wrapper">
+                <a href="#" data-activates="slide-out" class="button-collapse show-on-large mdi-navigation-menu"><img class="btn-floating" src="../icons/menu.png" /></a>
+                <i style="margin-left:18%; ">diploma11.cloudapp.net</i>
+            </div>
+        </nav>
+        
+        <script type="text/javascript">
+            // Initialize collapse button
+            $(".button-collapse").sideNav();
+            // Initialize collapsible (uncomment the line below if you use the dropdown variation)
+            $('.collapsible').collapsible();
+        </script>
+    </header>
+    <main>@*Основне наповнення сторінки*@
+        <div id="modal1" class="modal" style="width:270px; height:295px;">@*Вспливаюче вікно для створення файлу/папки*@
+            <div class="modal-content" style="background-color: #FFEB3B;">
+                <p>
+                    <input name="group1" type="radio" id="test1" value="1" />
+                    <label style="color:black" for="test1">File</label>
+                </p>
+                <p>
+                    <input name="group1" type="radio" id="test2" value="2" />
+                    <label style="color:black" for="test2">Folder</label>
+                </p>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="fname" type="text" class="validate">
+                        <label for="fname">Name</label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a class=" modal-action modal-close waves-effect waves-green btn-flat" onclick="newff()">OK</a>
+                <a class="modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
+            </div>
+        </div>
+        <div id="modal2" class="modal" style="width:400px">
+            @*Вспливаюче вікно для створення файлу/папки*@
+        <div class="modal-content" style="background-color: #FFEB3B;">           
+            <div class="row">
+                <div class="input-field col s12">                    
+                    <label for="fname" style="margin-top:-2.5rem;">Do you realy want to delete these files?</label>
+                </div>
+                <div id="deleteObjects"></div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a class=" modal-action modal-close waves-effect waves-green btn-flat" onclick="BDelClick()">OK</a>
+            <a class="modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
+        </div>
+    </div>
+
+        <div class="row">
+            <div class="col s12 m12 l10" style="float:right">
+                <div style="position: fixed; z-index:900; margin-top:50px;">
+                    <a class="waves-effect waves-light btn modal-trigger yellow darken-2" href="#modal1" onclick="newfilefolder()" style="margin-left:0.5rem">New...</a>
+                    <script type="text/javascript">
+                        function newfilefolder() {
+                            $("#modal1").openModal();
+                            document.getElementById('fname').value='';
+                        }
+                        function Bdelmodal() {
+                            $(".delmodal").remove();
+                            if (c > 0) {
+                                if (n == 0)
+                                    for (i = 0; obj[i]; i++) {
+                                        var checkbox = document.getElementById(i);
+                                        if (checkbox.checked) {
+                                            $('<div class="delmodal">' + obj[i].FullName + '</div>').appendTo('#deleteObjects');
+                                        }
+                                    }
+                                else
+                                    for (i = 0; objd[i]; i++) {
+                                        var checkbox = document.getElementById("d" + i);
+                                        if (checkbox.checked) {
+                                            $('<div class="delmodal">' + objd[i].FullName + '</div>').appendTo('#deleteObjects');
+                                        }
+                                    }
+                                $("#modal2").openModal();
+                            }
+                        }
+                    </script>
+                    <div id="Cpy" class="btn disabled" onclick="BCpyClick()">Copy</div>
+                    <div id="Cut" class="btn disabled" onclick="BCutClick()">Cut</div>
+                    <div id="pst" class="waves-effect waves-light btn  yellow darken-2" onclick="BPstClick()">Paste</div>
+                    <script type="text/javascript">//Відображення кнопки Paste (Enable, Disable)
+                        if (!wf[0])
+                            document.getElementById('pst').className = document.getElementById('pst').className + " disabled";
+                    </script>
+                    <div id="Del" class="btn disabled" onclick="Bdelmodal()">Delete</div>
+                    @*<div class="waves-effect waves-light btn" onclick="BClsClick()" style="margin-right:0.5rem; float:right">Close</div>*@
+                </div>
+                <div style="margin-top: 6rem; border: 1px solid #B6B6B6">
+                    <a class="waves-effect waves-light" style="margin-left:0.5rem" onclick="root()"><img src="../icons/root.png" /></a>
+                    <a class="waves-effect waves-light" onclick="changedir()"><img src="../icons/diskc.png"/></a>
+                    <a class="waves-effect waves-light" onclick="openmanager()"><img src="../icons/diskd.png" /></a>
+                    <div style="border: 1px solid #B6B6B6">
+                        <div class="row">
+                            @*Рядок пошуку*@                            
+                            <div class="input-field col s12" style="display:inline-flex">
+                                <input id="search" type="text" class="validate">
+                                <label for="search">Search</label>
+                                <img src="../icons/magnify.png" style="float:right; height:24px; margin-top:18px" onclick="find()" />
+                            </div>
+                            <div class="input-field col s12">
+                                @*Таблиця з файдовим менеджером*@
+                                <table id="sr" class="striped highlight" onclick="clickEvent(event)">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th data-field="id">Name</th>
+                                            <th>Icon</th>
+                                            <th>Mode</th>
+                                            <th>LastWriteTime</th>
+                                            <th data-field="name">Fullname</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr id="back">
+                                            <td colspan="5" onclick="back()"><strong>Back</strong></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                @*Таблиця з файдовим менеджером*@
+                                <table id="sr1" class="striped highlight" onclick="clickEvent(event)">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th data-field="id">Name</th>
+                                            <th>Icon</th>
+                                            <th>Mode</th>
+                                            <th>LastWriteTime</th>
+                                            <th data-field="name">Fullname</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr id="backd">
+                                            <td colspan="5" onclick="back()">Back</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                @*Вікно перегляду та редагування файлів*@
+                                <div id="div1">
+                                    <script type="text/javascript">$("#div1").hide();</script>
+                                    <div class="waves-effect waves-light btn yellow darken-2" onclick="SvClick()" style="margin-left:0.5rem">Save</div>
+                                    <div class="waves-effect waves-light btn yellow darken-2" onclick="BClseClick()" style="margin-right:0.5rem; float:right">X</div>
+                                    <textarea id="etext"></textarea>
+                                </div>
+                                @*Іконка завантаження*@
+                                <div id="loading" class="preloader-wrapper active">
+                                    <div class="spinner-layer spinner-blue">
+                                        <div class="circle-clipper left">
+                                            <div class="circle"></div>
+                                        </div><div class="gap-patch">
+                                            <div class="circle"></div>
+                                        </div><div class="circle-clipper right">
+                                            <div class="circle"></div>
+                                        </div>
+                                    </div>
+                                    <div class="spinner-layer spinner-red">
+                                        <div class="circle-clipper left">
+                                            <div class="circle"></div>
+                                        </div><div class="gap-patch">
+                                            <div class="circle"></div>
+                                        </div><div class="circle-clipper right">
+                                            <div class="circle"></div>
+                                        </div>
+                                    </div>
+                                    <div class="spinner-layer spinner-yellow">
+                                        <div class="circle-clipper left">
+                                            <div class="circle"></div>
+                                        </div><div class="gap-patch">
+                                            <div class="circle"></div>
+                                        </div><div class="circle-clipper right">
+                                            <div class="circle"></div>
+                                        </div>
+                                    </div>
+                                    <div class="spinner-layer spinner-green">
+                                        <div class="circle-clipper left">
+                                            <div class="circle"></div>
+                                        </div><div class="gap-patch">
+                                            <div class="circle"></div>
+                                        </div><div class="circle-clipper right">
+                                            <div class="circle"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <script type="text/javascript">//завантаження сторінки
+                                    $(document).ready(function () {
+                                        //alert(window.innerWidth);
+                                        $("#loading").hide();
+                                        cellb = document.getElementById('back').insertCell(1);
+                                        celld = document.getElementById('backd').insertCell(1);
+                                        string[count] = 'c:\\';
+                                        dstring[dcount] = 'd:\\';
+                                        $.ajax({
+                                            type: 'GET',
+                                            url: '@Url.Action("ListOfFile", "Files")',
+                                            data: { str: string[count] },
+                                            success: ld
+                                        });
+                                        $.ajax({
+                                            type: 'GET',
+                                            url: '@Url.Action("ListOfFile", "Files")',
+                                            data: { str: dstring[dcount] },
+                                            success: ldd
+                                        });
+                                        $("#sr1").hide();
+                                    });
+
+                                    //Завантаження даних в таблицю
+                                    function ld(data) {
+                                        var m_names = new Array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
+                                        var table = document.getElementById("sr");
+                                        //table.style.maxHeight = "300px";
+                                        for (i = table.rows.length - 1; i > 1 ; i--)
+                                            table.deleteRow(i);
+                                        if (data.length<25){
+                                            var row = table.insertRow(table.rows.lenght);
+                                            row.innerHTML = '<td colspan="6" onclick="back()">' + data + '</td>';
+                                        }
+                                        else {
+                                            test = JSON.parse(data);
+                                            if (test.Name) {
+                                                obj[0].Name = test.Name;
+                                                obj[0].Mode = test.Mode;
+                                                obj[0].LastWriteTime = test.LastWriteTime;
+                                                obj[0].FullName = test.FullName;
+                                                obj[1] = null;
+                                            }
+                                            else
+                                                obj = test;
+                                            for (i = 0; obj[i]; i++) {                                                
+                                                var row = table.insertRow(table.rows.lenght);
+                                                var cell0 = row.insertCell(0);
+                                                var cell1 = row.insertCell(1);
+                                                var cell2 = row.insertCell(2);
+                                                var cell3 = row.insertCell(3);
+                                                var cell4 = row.insertCell(4);
+                                                var cell5 = row.insertCell(5);
+                                                cell0.innerHTML = '<input type="checkbox" id="' + i + '"onchange = "enable();"/><label for="' + i + '"></label>';
+                                                cell1.innerHTML = obj[i].Name;
+                                                if (obj[i].Mode[0] == "d")
+                                                    cell2.innerHTML = '<p><img src="../icons/folder.png" alt="d"/></p>';
+                                                else {
+                                                    /*var stt;
+                                                    for (j = obj[i].Name.lenght - 3; j < obj[i].Name.lenght; j++)
+                                                        stt = stt + obj[i].Name[j];
+                                                    cell2.innerHTML = obj[i].Name;*/
+                                                    if ((obj[i].Name.search(".doc") > 0) || (obj[i].Name.search(".docx") > 0))
+                                                        cell2.innerHTML = '<p><img src="../icons/file-word.png" /></p>';
+                                                    else if ((obj[i].Name.search(".xls") > 0) || (obj[i].Name.search(".xlsx") > 0))
+                                                        cell2.innerHTML = '<p><img src="../icons/file-excel.png" /></p>';
+                                                    else if ((obj[i].Name.search(".ppt") > 0) || (obj[i].Name.search(".pptx") > 0))
+                                                        cell2.innerHTML = '<p><img src="../icons/file-powerpoint.png" /></p>';
+                                                    else if (obj[i].Name.search(".pdf") > 0)
+                                                        cell2.innerHTML = '<p><img src="../icons/file-pdf.png" /></p>';
+                                                    else if (obj[i].Name.search(".txt") > 0)
+                                                        cell2.innerHTML = '<p><img src="../icons/file-document.png" /></p>';
+                                                    else if ((obj[i].Name.search(".jpg") > 0) || (obj[i].Name.search(".jpeg") > 0) || (obj[i].Name.search(".png") > 0) || (obj[i].Name.search(".bmp") > 0) || (obj[i].Name.search(".gif") > 0))
+                                                        cell2.innerHTML = '<p><img src="../icons/file-image.png" /></p>';
+                                                    else cell2.innerHTML = '<p><img src="../icons/file.png" /></p>';
+                                                }
+                                                if (obj[i].Mode[1] == "a")
+                                                    cell3.innerHTML = '<p style="width:82px"><img class="tooltipped" data-position="top" data-delay="50" data-tooltip="I am tooltip" src="../icons/read.png" /><img src="../icons/Write.png" /><img src="../icons/execute.png" /></p>';
+                                                    //cell3.innerHTML = '<p class="waves-effect waves-light btn tooltipped" data-position="bottom" data-delay="5000" data-tooltip="I am tooltip">TOP</p>';
+                                                else {
+                                                    if (obj[i].Mode[2] == "r")
+                                                        cell3.innerHTML = '<p><img src="../icons/file.png" /></p>';
+                                                    if (obj[i].Mode[3] == "w")
+                                                        cell3.innerHTML = '<p><img src="../icons/file-pdf.png" /></p>';
+                                                    if (obj[i].Mode[4] == "e")
+                                                        cell3.innerHTML = '<p><img src="../icons/file-word.png" /></p>';
+                                                    else if (obj[i].Mode[0] == "d")
+                                                        cell3.innerHTML = "Folder";
+                                                }
+                                                var d = new Date(parseInt(obj[i].LastWriteTime.replace('/Date(', '')));
+                                                var curr_date = d.getDate();
+                                                var curr_month = d.getMonth();
+                                                var curr_year = d.getFullYear();
+                                                var curr_hour = d.getHours();
+                                                var curr_min = d.getMinutes();
+                                                if (curr_min < 10)
+                                                    curr_min = "0" + curr_min;
+                                                cell4.innerHTML = curr_date + " " + m_names[curr_month] + " " + curr_year + " " + curr_hour + ":" + curr_min;
+                                                var slesh = 0;
+                                                head = '';
+                                                for (j = 0; j < obj[i].FullName.toString().length; j++) {
+                                                    if (slesh < 3)
+                                                        head = head + obj[i].FullName[j];
+                                                    if (obj[i].FullName[j] == '\\')
+                                                        slesh++;
+                                                }
+                                                if (slesh >= 3) {
+                                                    cellb.innerHTML = head + "...";
+                                                    k = 1;
+                                                    var hl = head.toString().length;
+                                                    headful = '';
+                                                }
+                                                else {
+                                                    cellb.innerHTML = '';
+                                                    k = 0;
+                                                    hl = 0;
+                                                }
+                                                var name = '';
+                                                if (hl != 0) {
+                                                    var hl1 = 0;
+                                                    for (j = obj[i].FullName.toString().length - 1; j > hl - 1; j--)
+                                                        if (obj[i].FullName[j] == "\\") {
+                                                            hl1 = j;
+                                                            break;
+                                                        }
+                                                    for (j = hl1 - 1; j > hl; j--)
+                                                        if (obj[i].FullName[j] == "\\") {
+                                                            hl = j;
+                                                            break;
+                                                        }
+                                                    for (j = 0; j < hl; j++)
+                                                        headful = headful + obj[i].FullName[j];
+                                                }
+                                                for (j = hl; j < obj[i].FullName.toString().length; j++)
+                                                    name = name + obj[i].FullName[j];
+                                                //cellb.innerHTML = headful;
+                                                cell5.innerHTML = name;
+                                            }
+                                        }
+                                        if (k != 1)
+                                            headful = "";
+                                        enable();
+                                    }
+                                    function ldd(data) {
+                                        var m_names = new Array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
+                                        var tabled = document.getElementById("sr1");
+                                        //table.style.maxHeight = "300px";
+                                        for (iid = tabled.rows.length - 1; iid > 1 ; iid--)
+                                            tabled.deleteRow(iid);
+                                        if (data.length<25) {
+                                            var drow = tabled.insertRow(tabled.rows.lenght);                                            
+                                            drow.innerHTML = '<td colspan="6" onclick="back()">'+data+'</td>';
+                                        }
+                                        else {
+                                            test = JSON.parse(data);
+                                            if (test.Name) {
+                                                objd[0].Name = test.Name;
+                                                objd[0].Mode = test.Mode;
+                                                objd[0].LastWriteTime = test.LastWriteTime;
+                                                objd[0].FullName = test.FullName;
+                                                objd[1] = null;
+                                            }
+                                            else
+                                                objd = test;
+                                            for (iid = 0; objd[iid]; iid++) {
+                                                var drow = tabled.insertRow(tabled.rows.lenght);
+                                                var dcell0 = drow.insertCell(0);
+                                                var dcell1 = drow.insertCell(1);
+                                                var dcell2 = drow.insertCell(2);
+                                                var dcell3 = drow.insertCell(3);
+                                                var dcell4 = drow.insertCell(4);
+                                                var dcell5 = drow.insertCell(5);
+                                                dcell0.innerHTML = '<input type="checkbox" id="d' + iid + '"onchange = "enable();"/><label for="d' + iid + '"></label>';
+                                                dcell1.innerHTML = objd[iid].Name;
+                                                if (objd[iid].Mode[0] == "d")
+                                                    dcell2.innerHTML = '<p><img src="../icons/folder.png" alt="d"/></p>';
+                                                else {
+                                                    /*var stt;
+                                                    for (j = obj[i].Name.lenght - 3; j < obj[i].Name.lenght; j++)
+                                                        stt = stt + obj[i].Name[j];
+                                                    cell2.innerHTML = obj[i].Name;*/
+                                                    if ((objd[iid].Name.search(".doc") > 0) || (objd[iid].Name.search(".docx") > 0))
+                                                        dcell2.innerHTML = '<p><img src="../icons/file-word.png" /></p>';
+                                                    else if ((objd[iid].Name.search(".xls") > 0) || (objd[iid].Name.search(".xlsx") > 0))
+                                                        dcell2.innerHTML = '<p><img src="../icons/file-excel.png" /></p>';
+                                                    else if ((objd[iid].Name.search(".ppt") > 0) || (objd[iid].Name.search(".pptx") > 0))
+                                                        dcell2.innerHTML = '<p><img src="../icons/file-powerpoint.png" /></p>';
+                                                    else if (objd[iid].Name.search(".pdf") > 0)
+                                                        dcell2.innerHTML = '<p><img src="../icons/file-pdf.png" /></p>';
+                                                    else if (objd[iid].Name.search(".txt") > 0)
+                                                        dcell2.innerHTML = '<p><img src="../icons/file-document.png" /></p>';
+                                                    else if ((objd[iid].Name.search(".jpg") > 0) || (objd[iid].Name.search(".jpeg") > 0) || (objd[iid].Name.search(".png") > 0) || (objd[iid].Name.search(".bmp") > 0) || (objd[iid].Name.search(".gif") > 0))
+                                                        dcell2.innerHTML = '<p><img src="../icons/file-image.png" /></p>';
+                                                    else dcell2.innerHTML = '<p><img src="../icons/file.png" /></p>';
+                                                }
+                                                if (objd[iid].Mode[1] == "a")
+                                                    dcell3.innerHTML = '<p style="width:82px"><img class="tooltipped" data-position="top" data-delay="50" data-tooltip="I am tooltip" src="../icons/read.png" /><img src="../icons/Write.png" /><img src="../icons/execute.png" /></p>';
+                                                    //cell3.innerHTML = '<p class="waves-effect waves-light btn tooltipped" data-position="bottom" data-delay="5000" data-tooltip="I am tooltip">TOP</p>';
+                                                else {
+                                                    if (objd[iid].Mode[2] == "r")
+                                                        dcell3.innerHTML = '<p><img src="../icons/file.png" /></p>';
+                                                    if (objd[iid].Mode[3] == "w")
+                                                        dcell3.innerHTML = '<p><img src="../icons/file-pdf.png" /></p>';
+                                                    if (objd[iid].Mode[4] == "e")
+                                                        dcell3.innerHTML = '<p><img src="../icons/file-word.png" /></p>';
+                                                    else
+                                                        dcell3.innerHTML = "NOT";
+                                                }
+                                                var d = new Date(parseInt(objd[iid].LastWriteTime.replace('/Date(', '')));
+                                                var curr_date = d.getDate();
+                                                var curr_month = d.getMonth();
+                                                var curr_year = d.getFullYear();
+                                                var curr_hour = d.getHours();
+                                                var curr_min = d.getMinutes();
+                                                if (curr_min < 10)
+                                                    curr_min = "0" + curr_min;
+                                                dcell4.innerHTML = curr_date + " " + m_names[curr_month] + " " + curr_year + " " + curr_hour + ":" + curr_min;
+                                                var dslesh = 0;
+                                                dhead = '';
+                                                for (j = 0; j < objd[iid].FullName.toString().length; j++) {
+                                                    if (dslesh < 3)
+                                                        dhead = dhead + objd[iid].FullName[j];
+                                                    if (objd[iid].FullName[j] == '\\')
+                                                        dslesh++;
+                                                }
+                                                if (dslesh >= 3) {
+                                                    celld.innerHTML = dhead + "...";
+                                                    dk = 1;
+                                                    var dhl = dhead.toString().length;
+                                                    dheadful = '';
+                                                }
+                                                else {
+                                                    celld.innerHTML = '';
+                                                    dk = 0;
+                                                    dhl = 0;
+                                                }
+                                                var dname = '';
+                                                if (dhl != 0) {
+                                                    var dhl1 = 0;
+                                                    for (j = objd[iid].FullName.toString().length - 1; j > dhl - 1; j--)
+                                                        if (objd[iid].FullName[j] == "\\") {
+                                                            dhl1 = j;
+                                                            break;
+                                                        }
+                                                    for (j = dhl1 - 1; j > dhl; j--)
+                                                        if (objd[iid].FullName[j] == "\\") {
+                                                            dhl = j;
+                                                            break;
+                                                        }
+                                                    for (j = 0; j < dhl; j++)
+                                                        dheadful = dheadful + objd[iid].FullName[j];
+                                                }
+                                                for (j = dhl; j < objd[iid].FullName.toString().length; j++)
+                                                    dname = dname + objd[iid].FullName[j];
+                                                //celld.innerHTML = dheadful;
+                                                dcell5.innerHTML = dname;
+                                            }
+                                        }
+                                        if (dk != 1)
+                                            dheadful = "";
+                                        enable();
+                                    }
+                                </script>
+                                <script type="text/javascript">
+                                //Натиснення на елемент таблиці код переходить в файл для редегування або змінює директорію
+                                function clickEvent(event) {
+                                    var target;
+                                    if (!event) {
+                                        var event = window.event;
+                                    }
+                                    if (event.target) {
+                                        target = event.target;
+                                    } else if (event.srcElement) {
+                                        target = event.srcElement;
+                                    }
+                                    if (target) {
+                                        if (target.nodeType == 3) {
+                                            target = target.parentNode;
+                                        }
+                                        if (target.tagName.toLowerCase() == "td") {
+                                            var row = target.parentNode;
+                                            st = row.getElementsByTagName("td").item(5).innerHTML;
+                                            if ((st.search(".txt") != -1) || (st.search(".bat") != -1) || (st.search(".html") != -1)) {
+                                                if (n == 0) {
+                                                    var path = headful + st;
+                                                    $("#sr").hide();
+                                                }
+                                                else {
+                                                    var path = dheadful + st;
+                                                    $("#sr1").hide();
+                                                }
+                                                $("#div1").show();
+                                                var div1 = document.getElementById('div1');
+                                                $.ajax({
+                                                    url: '@Url.Action("OpenFile", "Files")',
+                                                    data: { "str": path },
+                                                    success: function (data) {
+                                                        $("#etext").val(data);
+                                                    }
+                                                });
+                                            }
+                                            else if ((st[st.toString().length - 4] != ".") && (st[st.toString().length - 5] != ".")) {
+                                                if (n == 0)
+                                                    $("#sr").hide();
+                                                else
+                                                    $("#sr1").hide();
+                                                $("#loading").show();
+                                                if (n == 0) {
+                                                    stringback[count] = string[count];
+                                                    count++;
+                                                    string[count] = headful + st;
+                                                    $.ajax({
+                                                        type: 'GET',
+                                                        url: '@Url.Action("ListOfFile", "Files")',
+                                                        data: { str: string[count] },
+                                                        success: ld
+                                                    });
+                                                }
+                                                else {
+                                                    dstringback[dcount] = dstring[dcount];
+                                                    dcount++;
+                                                    dstring[dcount] = dheadful + st;
+                                                    $.ajax({
+                                                        type: 'GET',
+                                                        url: '@Url.Action("ListOfFile", "Files")',
+                                                        data: { str: dstring[dcount] },
+                                                        success: ldd
+                                                    });
+                                                }
+                                                $("#loading").hide();
+                                                if (n == 0)
+                                                    $("#sr").show();
+                                                else
+                                                    $("#sr1").show();
+                                                df = [];
+                                                if (!wf[0])
+                                                    wf = [];
+                                            }
+                                            jQuery(function () {
+                                                jQuery('#etext').autoResize();
+                                            });
+                                        }
+                                    }
+                                }
+                                //Створення нового файлу/папки
+                                function newff() {
+                                    if (document.getElementById("fname").value)
+                                        if (n == 0) {
+                                            if ($('input[name="group1"]:checked').val() == 1)
+                                                $.ajax({
+                                                    type: 'GET',
+                                                    url: '@Url.Action("CreateFile", "Files")',
+                                                    data: { "str": string[count] + "\\" + document.getElementById("fname").value },
+                                                    success: ld
+                                                });
+                                            else if ($('input[name="group1"]:checked').val() == 2)
+                                                $.ajax({
+                                                    type: 'GET',
+                                                    url: '@Url.Action("CreateDirectory", "Files")',
+                                                    data: { "str": string[count] + "\\" + document.getElementById("fname").value },
+                                                    success: ld
+                                                });
+                                        }
+                                        else {
+                                            if ($('input[name="group1"]:checked').val() == 1)
+                                                $.ajax({
+                                                    type: 'GET',
+                                                    url: '@Url.Action("CreateFile", "Files")',
+                                                    data: { "str": dstring[dcount] + "\\" + document.getElementById("fname").value },
+                                                    success: ldd
+                                                });
+                                            else if ($('input[name="group1"]:checked').val() == 2)
+                                                $.ajax({
+                                                    type: 'GET',
+                                                    url: '@Url.Action("CreateDirectory", "Files")',
+                                                    data: { "str": dstring[dcount] + "\\" + document.getElementById("fname").value },
+                                                    success: ldd
+                                                });
+                                        }
+                                }
+                                //Повернення в корінь папки
+                                function back() {
+                                    if (n == 0) {
+                                        if (count < 1)
+                                            return;
+                                        if (!stringback[count - 1])
+                                            count--;
+                                        $.ajax({
+                                            type: 'GET',
+                                            url: '@Url.Action("ListOfFile", "Files")',
+                                            data: { str: stringback[count - 1] },
+                                            success: ld
+                                        });
+                                        if (count > 1)
+                                            string[count] = stringback[count - 2];
+                                        else
+                                            string[count] = stringback[0];
+                                        count--;
+                                    }
+                                    else {
+                                        if (dcount < 1)
+                                            return;
+                                        if (!dstringback[dcount - 1])
+                                            dcount--;
+                                        $.ajax({
+                                            type: 'GET',
+                                            url: '@Url.Action("ListOfFile", "Files")',
+                                            data: { str: dstringback[dcount - 1] },
+                                            success: ldd
+                                        });
+                                        if (dcount > 1)
+                                            dstring[dcount] = dstringback[dcount - 2];
+                                        else
+                                            dstring[dcount] = dstringback[0];
+                                        dcount--;
+                                    }
+                                    df = [];
+                                    if (!wf[0])
+                                        wf = [];
+                                }
+                                //Зберігання змін в файлі
+                                function SvClick() {
+                                    var string1 = $('textarea[id=etext]').val();
+                                    if (n == 0)
+                                        var pathsv = headful + st;
+                                    else
+                                        var pathsv = dheadful + st;
+                                    $.ajax({
+                                        type: 'GET',
+                                        url: '@Url.Action("RewriteToFile", "Files")',
+                                        data: ({ "path": pathsv, "str": string1 }),
+                                        success: Materialize.toast('Complete', 2500)
+                                    });
+                                }
+                                //Закриття режиму редагування файлу
+                                function BClseClick() {
+                                    $("#div1").hide();
+                                    if (n == 0)
+                                        $("#sr").show();
+                                    else
+                                        $("#sr1").show();
+                                }
+                                //Повернення в корінь диску
+                                function root() {
+                                    if (n == 0) {
+                                        count = 0;
+                                        $.ajax({
+                                            type: 'GET',
+                                            url: '@Url.Action("ListOfFile", "Files")',
+                                            data: { str: string[count] },
+                                            success: ld
+                                        });
+                                    }
+                                    else {
+                                        dcount = 0;
+                                        $.ajax({
+                                            type: 'GET',
+                                            url: '@Url.Action("ListOfFile", "Files")',
+                                            data: { str: dstring[dcount] },
+                                            success: ldd
+                                        });
+                                    }
+
+                                }
+                                //Перехід на диск D
+                                function openmanager() {
+                                    n = 1;
+                                    $("#sr").hide();
+                                    $("#div1").hide();
+                                    $("#sr1").show();
+                                    enable();
+                                }
+                                //Перехід на диск C
+                                function changedir() {
+                                    n = 0;
+                                    $("#sr1").hide();
+                                    $("#div1").hide();
+                                    $("#sr").show();
+                                    enable();
+                                }
+                                /*function BClsClick() {
+                                    if (n == 0)
+                                        {
+                                            $("#sr").hide();
+                                            $("#sr1").show();
+                                            n = 1;
+                                        }
+                                        else {
+                                            $("#sr1").hide();
+                                            $("#sr").show();
+                                            n = 0;
+                                        }
+                                }*/
+                                //Заповнення масиву з файлами для переміщення
+                                function BCutClick() {
+                                    wf[0] = "1";
+                                    var j = 2;
+                                    if (n == 0)
+                                        for (i = 0; obj[i]; i++) {
+                                            var checkbox = document.getElementById(i);
+                                            if (checkbox.checked) {
+                                                wf[j++] = obj[i].FullName;
+                                                document.getElementById('pst').className = "waves-effect waves-light btn yellow darken-2";
+                                            }
+                                        }
+                                    else
+                                        for (i = 0; objd[i]; i++) {
+                                            var checkbox = document.getElementById("d" + i);
+                                            if (checkbox.checked) {
+                                                wf[j++] = objd[i].FullName;
+                                                document.getElementById('pst').className = "waves-effect waves-light btn yellow darken-2";
+                                            }
+                                        }
+                                }
+                                //Заповнення масиву з файлами для копіювання
+                                function BCpyClick() {
+                                    wf[0] = "2";
+                                    var j = 2;
+                                    if (n == 0)
+                                        for (i = 0; obj[i]; i++) {
+                                            var checkbox = document.getElementById(i);
+                                            if (checkbox.checked) {
+                                                wf[j++] = obj[i].FullName;
+                                                document.getElementById('pst').className = "waves-effect waves-light btn yellow darken-2";
+                                            }
+                                        }
+                                    else
+                                        for (i = 0; objd[i]; i++) {
+                                            var checkbox = document.getElementById("d" + i);
+                                            if (checkbox.checked) {
+                                                wf[j++] = objd[i].FullName;
+                                                document.getElementById('pst').className = "waves-effect waves-light btn yellow darken-2";
+                                            }
+                                        }
+                                    if (!wf[3])
+                                        var $toastContent = $('<div>File ' + wf[2] + ' in Bufer</div>');
+                                    else 
+                                        var $toastContent = $('<div>' + (wf.length - 2) + ' files in Bufer</div>');
+                                    Materialize.toast($toastContent,2500);
+                                }
+                                //Відправлення на сервер команди копіювання/переміщення
+                                function BPstClick() {
+                                    if (n == 0)
+                                        wf[1] = string[count];
+                                    else
+                                        wf[1] = dstring[dcount];
+                                    if (!wf[3])
+                                        if (wf[0] == 2)
+                                            var $toastContent = $('<div>' + wf[2] + ' is copying<img src="../icons/close.png" style="cursor:pointer" onclick="toasthide()"/></div>');
+                                        else
+                                            var $toastContent = $('<div>' + wf[2] + ' is replasing<img src="../icons/close.png" style="cursor:pointer" onclick="toasthide()"/></div>');
+                                    else if (wf[0] == 2)
+                                        var $toastContent = $('<div>' + (wf.length - 2) + ' files are copying<img src="../icons/close.png" style="cursor:pointer" onclick="toasthide()"/></div>');
+                                    else
+                                        var $toastContent = $('<div>' + (wf.length - 2) + ' files are replacing<img src="../icons/close.png" style="cursor:pointer" onclick="toasthide()"/></div>');
+                                    Materialize.toast($toastContent);
+                                    copycutcount = wf.length - 1;
+                                    copycutarr();
+                                }
+                                function copycutarr() {
+                                    var copycutf = wf[copycutcount];
+                                    $.ajax({
+                                        type: 'GET',
+                                        url: '@Url.Action("CutCopy", "Files")',
+                                        data: ({ "type": wf[0], "path": wf[1], "file": copycutf, "count": copycutcount }),
+                                        success: function (data) {
+                                            if (copycutcount-- > 2)
+                                                copycutarr();
+                                            else {
+                                                $(".toast").hide();
+                                                Materialize.toast('Complete', 2500);
+                                                if (n == 0)
+                                                    ld(data);
+                                                else
+                                                    ldd(data);
+                                            }
+                                        }
+                                    });
+                                }
+                                
+                                //Приховання вспливаючого вікна під час копіювання
+                                function toasthide() {
+                                    $(".toast").hide();
+                                }
+                                //Відправлення на сервер команди видалення
+                                function BDelClick() {
+                                    if (c > 0) {
+                                        var j = 0;
+                                        if (n == 0)
+                                            for (i = 0; obj[i]; i++) {
+                                                var checkbox = document.getElementById(i);
+                                                if (checkbox.checked) {
+                                                    df[j++] = obj[i].FullName;
+                                                }
+                                            }
+                                        else
+                                            for (i = 0; objd[i]; i++) {
+                                                var checkbox = document.getElementById("d" + i);
+                                                if (checkbox.checked) {
+                                                    df[j++] = objd[i].FullName;
+                                                }
+                                            }
+                                    }
+                                    delcount = df.length - 1;
+                                    delarr();
+                                }
+                                function delarr() {
+                                    var delf = df[delcount];
+                                    $.ajax({
+                                        type: 'GET',
+                                        url: '@Url.Action("Delete", "Files")',
+                                        data: { "str": delf, "count": delcount },
+                                        success: function (data) {
+                                            if (delcount-- > 0)
+                                                delarr();
+                                            else {
+                                                if (n == 0)
+                                                    ld(data);
+                                                else
+                                                    ldd(data);
+                                                Materialize.toast('Delete complete', 2500);
+                                            }
+                                        }
+                                    });
+                                }
+                                //пошук по списку
+                                function find() {
+                                    if (n == 0) {
+                                        if (string[count]) {
+                                            stringback[count] = string[count];
+                                            count++;
+                                            var table = document.getElementById("sr");
+                                            var find = document.getElementById('search').value;
+                                            for (var i = table.rows.length - 3; i >= 0; i--) {
+                                                for (j = 0; j < find.length; j++)
+                                                    if (find[j] != obj[i].Name[j]) {
+                                                        table.deleteRow(i + 2);
+                                                        j = obj[i].Name.length;
+                                                    }
+                                            }
+                                        }
+                                    }
+                                    else {
+                                        if (dstring[dcount]) {
+                                            dstringback[dcount] = dstring[dcount];
+                                            dcount++;
+                                            var table = document.getElementById("sr1");
+                                            var find = document.getElementById('search').value;
+                                            for (var i = table.rows.length - 3; i >= 0; i--) {
+                                                for (j = 0; j < find.length; j++)
+                                                    if (find[j] != objd[i].Name[j]) {
+                                                        table.deleteRow(i + 2);
+                                                        j = objd[i].Name.length;
+                                                    }
+                                            }
+                                        }
+                                    }
+                                    document.getElementById('search').value = '';
+                                }
+                                </script>
+                                <script type="text/javascript">        //Сортування(не працює)                                    
+                                    var sortAsc = document.createElement("SPAN"),
+                                    sortDesc = document.createElement("SPAN");
+                                    // Значки сортировки для заголовка таблицы:
+                                    sortAsc.innerHTML = "&#9660;";
+                                    sortDesc.innerHTML = "&#9650;";
+                                    // Вешаем сортировку на таблицу:
+                                    sortTable(document.getElementById("sr"), sortAsc, sortDesc);
+                                </script>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+</body>
+</html>
