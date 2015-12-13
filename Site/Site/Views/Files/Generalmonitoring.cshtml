@@ -6,6 +6,7 @@
 
 <html>
 <head>
+    <link rel="shortcut icon" href="/icons/logo.png" type="image/png">
     <link href="/Content/stylematerial.css" rel="stylesheet" />
     <meta name="viewport" content="width=device-width" />
     <title>Generalmonitoring</title>
@@ -24,7 +25,7 @@
         <header>
             @*Ліве меню*@
             <div id="slide-out" class="side-nav fixed">
-                <div class="section blue darken-2"><h5>Diploma</h5></div>
+                <div class="section white"><img src="/icons/main_logo.png" style="height: 75px" /></div>
                 <div class="section grey"><h4>Monitoring</h4></div>
                 <div style="position: fixed; width:inherit">
                     <a href="/Files/Generalmonitoring" class="btn waves-effect waves-light  input-field blue-text text-darken-2 transparent">Monitoring</a>
@@ -35,7 +36,7 @@
             </div>
             <nav style="position: fixed; height: 45px; z-index: 900; background-color: #1976D2; ">
                 <div class="nav-wrapper">
-                    <a href="#" data-activates="slide-out" class="button-collapse show-on-large mdi-navigation-menu"><img class="btn-floating" src="../icons/menu.png" /></a>
+                    <a href="#" data-activates="slide-out" class="button-collapse show-on-large mdi-navigation-menu"><img class="btn-floating blue darken-2" src="../icons/menu.png" /></a>
                     <i style="margin-left:18%; ">diploma11.cloudapp.net</i>
                 </div>
             </nav>
@@ -51,10 +52,10 @@
             <div class="row">
                 <div class="col s12 m12 l10" style="float:right; margin-top:50px;">
                     <div class="row blue lighten-4">
-                        <div class="col s12 m6 l3"><h5>AC Power</h5></div>
-                        <div class="waves-effect waves-light btn deep-orange" onclick="BOffClick" style="margin:0.5rem; float:right">Power Off</div>
-                        <div class="waves-effect waves-light btn deep-orange" onclick="BRebClick" style="margin:0.5rem; float:right">Reboot</div>
-                        <div class="waves-effect waves-light btn deep-orange" onclick="BHibClick" style="margin:0.5rem; float:right">Hibernate</div>
+                        <div class="col s12 m3 l2"><h5>AC Power</h5></div>
+                        <div class="col s11 m2 l2 waves-effect waves-light btn deep-orange" onclick="BOffClick" style="margin: 0.5rem 1rem; float: right">Power Off</div>
+                        <div class="col s11 m2 l2 waves-effect waves-light btn deep-orange" onclick="BRebClick" style="margin: 0.5rem 1rem; float: right">Reboot</div>
+                        <div class="col s11 m2 l2 waves-effect waves-light btn deep-orange" onclick="BHibClick" style="margin: 0.5rem 1rem; float: right">Hibernate</div>
                     </div>
                     <div class="row white">
                         <div class="col s12 m6 l3"><h5>CPU Usage</h5></div>
