@@ -6,6 +6,8 @@ using System.Web.Mvc;
 using System.Text;
 using System.Management.Automation;
 using System.IO;
+using System.Data.SqlClient;
+using System.Web.Script.Serialization;
 
 namespace Site.Controllers
 {
@@ -233,6 +235,39 @@ namespace Site.Controllers
                 return Content(result, "text/pain");
             }
             return Content("12", "text/pain");
+        }
+        public class Lad
+        {
+            public string RAM { get; set; }
+            public string CPU { get; set; }
+        }
+        public ActionResult Monitoring(int id)
+        {
+            string cpu, ram;
+            string con = @"Server=tcp:diplom.database.windows.net,1433;Database=diploma;User ID=ivan@diplom;Password=Balonka1;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+            using (SqlConnection myConnection = new SqlConnection(con))
+            {
+                myConnection.Open();
+                string oString1 = "SELECT [CPUValue]  FROM [dbo].[CPU] WHERE [CPUCounterID]=" + id;
+                string oString2 = "SELECT [RAMValue]  FROM [dbo].[RAM] WHERE [RAMCounterID]=" + id;
+
+                SqlCommand oCmd1 = new SqlCommand(oString1, myConnection);
+                SqlCommand oCmd2 = new SqlCommand(oString2, myConnection);
+                cpu = oCmd1.ExecuteScalar().ToString();
+                ram = oCmd2.ExecuteScalar().ToString();
+                myConnection.Close();
+                myConnection.Dispose();
+            }
+
+
+            var obj = new Lad
+            {
+                CPU = cpu,
+                RAM = ram,
+            };
+            var json = new JavaScriptSerializer().Serialize(obj);
+
+            return Content(json);
         }
 
     }

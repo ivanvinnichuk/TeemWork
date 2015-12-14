@@ -20,7 +20,8 @@
     <script type="text/javascript">
         var cpudata = [];
         var ramdata = [];
-        var romdata=[];
+        var romdata = [];
+        var id = 1;
     </script>
         <header>
             @*Ліве меню*@
@@ -73,133 +74,151 @@
                         <div class="chartdiv" id="hdddiv"></div>
                     </div>
                     <script type="text/javascript">
-                        var chartData = generateChartData(cpudata,0);
-                        var chart = AmCharts.makeChart("cpudiv", {
-                            "type": "serial",
-                            "theme": "light",
-                            "marginRight": 15,
-                            "dataProvider": chartData,
-                            "valueAxes": [{
-                                "position": "left",
-                                "title": "Load of processor"
-                            }],
-                            "graphs": [{
-                                "id": "g1",
-                                "fillAlphas": 0.4,
-                                "valueField": "visits",
-                                "balloonText": "<div style='margin:5px; font-size:19px;'><b>[[value]]%</b></div>"
-                            }],
-                            "chartScrollbar": {
-                                "graph": "g1",
-                                "scrollbarHeight": 40,
-                                "backgroundAlpha": 0,
-                                "selectedBackgroundAlpha": 0.1,
-                                "selectedBackgroundColor": "#888888",
-                                "graphFillAlpha": 0,
-                                "graphLineAlpha": 0.5,
-                                "selectedGraphFillAlpha": 0,
-                                "selectedGraphLineAlpha": 1,
-                                "autoGridCount": true,
-                                "color": "#AAAAAA"
-                            },
-                            "chartCursor": {
-                                "categoryBalloonDateFormat": "JJ:NN:SS",
-                                "cursorPosition": "mouse"
-                            },
-                            "categoryField": "date",
-                            "categoryAxis": {
-                                "minPeriod": "ss",
-                                "parseDates": true
-                            },
-                            "export": {
-                                "enabled": true
-                            }
+                        var temp = [];
+                        function show() {
+                            $.ajax({
+                                url: '@Url.Action("Monitoring", "Files")',
+                                data: { "id": id++ },
+                                success: function (data) {
+                                    temp = data;
+                                    draw();
+                                }
+                            });
+                        }
+                        $(document).ready(function () {
+                            show();
+                            setInterval('show()', 1000);
                         });
+                        draw();
+                        function draw() {
+                            var chartData = generateChartData(cpudata, 0);
+                            var chart = AmCharts.makeChart("cpudiv", {
+                                "type": "serial",
+                                "theme": "light",
+                                "marginRight": 15,
+                                "dataProvider": chartData,
+                                "valueAxes": [{
+                                    "position": "left",
+                                    "title": "Load of processor"
+                                }],
+                                "graphs": [{
+                                    "id": "g1",
+                                    "fillAlphas": 0.4,
+                                    "valueField": "visits",
+                                    "balloonText": "<div style='margin:5px; font-size:19px;'><b>[[value]]%</b></div>"
+                                }],
+                                "chartScrollbar": {
+                                    "graph": "g1",
+                                    "scrollbarHeight": 40,
+                                    "backgroundAlpha": 0,
+                                    "selectedBackgroundAlpha": 0.1,
+                                    "selectedBackgroundColor": "#888888",
+                                    "graphFillAlpha": 0,
+                                    "graphLineAlpha": 0.5,
+                                    "selectedGraphFillAlpha": 0,
+                                    "selectedGraphLineAlpha": 1,
+                                    "autoGridCount": true,
+                                    "color": "#AAAAAA"
+                                },
+                                "chartCursor": {
+                                    "categoryBalloonDateFormat": "JJ:NN:SS",
+                                    "cursorPosition": "mouse"
+                                },
+                                "categoryField": "date",
+                                "categoryAxis": {
+                                    "minPeriod": "ss",
+                                    "parseDates": true
+                                },
+                                "export": {
+                                    "enabled": true
+                                }
+                            });
 
-                        var chartData = generateChartData(ramdata,1);
-                        var chart = AmCharts.makeChart("ramdiv", {
-                            "type": "serial",
-                            "theme": "light",
-                            "marginRight": 15,
-                            "dataProvider": chartData,
-                            "valueAxes": [{
-                                "position": "left",
-                                "title": "Load of ram"
-                            }],
-                            "graphs": [{
-                                "id": "g1",
-                                "fillAlphas": 0.4,
-                                "valueField": "visits",
-                                "balloonText": "<div style='margin:5px; font-size:19px;'><b>[[value]]%</b></div>"
-                            }],
-                            "chartScrollbar": {
-                                "graph": "g1",
-                                "scrollbarHeight": 40,
-                                "backgroundAlpha": 0,
-                                "selectedBackgroundAlpha": 0.1,
-                                "selectedBackgroundColor": "#888888",
-                                "graphFillAlpha": 0,
-                                "graphLineAlpha": 0.5,
-                                "selectedGraphFillAlpha": 0,
-                                "selectedGraphLineAlpha": 1,
-                                "autoGridCount": true,
-                                "color": "#AAAAAA"
-                            },
-                            "chartCursor": {
-                                "categoryBalloonDateFormat": "JJ:NN:SS",
-                                "cursorPosition": "mouse"
-                            },
-                            "categoryField": "date",
-                            "categoryAxis": {
-                                "minPeriod": "ss",
-                                "parseDates": true
-                            },
-                            "export": {
-                                "enabled": true
-                            }
-                        });
-                        var chartData = generateChartData(romdata,2);
-                        var chart = AmCharts.makeChart("hdddiv", {
-                            "type": "serial",
-                            "theme": "light",
-                            "marginRight": 15,
-                            "dataProvider": chartData,
-                            "valueAxes": [{
-                                "position": "left",
-                                "title": "Load of rom"
-                            }],
-                            "graphs": [{
-                                "id": "g1",
-                                "fillAlphas": 0.4,
-                                "valueField": "visits",
-                                "balloonText": "<div style='margin:5px; font-size:19px;'><b>[[value]]%</b></div>"
-                            }],
-                            "chartScrollbar": {
-                                "graph": "g1",
-                                "scrollbarHeight": 40,
-                                "backgroundAlpha": 0,
-                                "selectedBackgroundAlpha": 0.1,
-                                "selectedBackgroundColor": "#888888",
-                                "graphFillAlpha": 0,
-                                "graphLineAlpha": 0.5,
-                                "selectedGraphFillAlpha": 0,
-                                "selectedGraphLineAlpha": 1,
-                                "autoGridCount": true,
-                                "color": "#AAAAAA"
-                            },
-                            "chartCursor": {
-                                "categoryBalloonDateFormat": "JJ:NN:SS",
-                                "cursorPosition": "mouse"
-                            },
-                            "categoryField": "date",
-                            "categoryAxis": {
-                                "minPeriod": "ss",
-                                "parseDates": true
-                            },
-                            "export": {
-                                "enabled": true
-                            }
-                        });
+                            var chartData = generateChartData(ramdata, 1);
+                            var chart = AmCharts.makeChart("ramdiv", {
+                                "type": "serial",
+                                "theme": "light",
+                                "marginRight": 15,
+                                "dataProvider": chartData,
+                                "valueAxes": [{
+                                    "position": "left",
+                                    "title": "Load of ram"
+                                }],
+                                "graphs": [{
+                                    "id": "g1",
+                                    "fillAlphas": 0.4,
+                                    "valueField": "visits",
+                                    "balloonText": "<div style='margin:5px; font-size:19px;'><b>[[value]]MB</b></div>"
+                                }],
+                                "chartScrollbar": {
+                                    "graph": "g1",
+                                    "scrollbarHeight": 40,
+                                    "backgroundAlpha": 0,
+                                    "selectedBackgroundAlpha": 0.1,
+                                    "selectedBackgroundColor": "#888888",
+                                    "graphFillAlpha": 0,
+                                    "graphLineAlpha": 0.5,
+                                    "selectedGraphFillAlpha": 0,
+                                    "selectedGraphLineAlpha": 1,
+                                    "autoGridCount": true,
+                                    "color": "#AAAAAA"
+                                },
+                                "chartCursor": {
+                                    "categoryBalloonDateFormat": "JJ:NN:SS",
+                                    "cursorPosition": "mouse"
+                                },
+                                "categoryField": "date",
+                                "categoryAxis": {
+                                    "minPeriod": "ss",
+                                    "parseDates": true
+                                },
+                                "export": {
+                                    "enabled": true
+                                }
+                            });
+                            var chartData = generateChartData(romdata, 2);
+                            var chart = AmCharts.makeChart("hdddiv", {
+                                "type": "serial",
+                                "theme": "light",
+                                "marginRight": 15,
+                                "dataProvider": chartData,
+                                "valueAxes": [{
+                                    "position": "left",
+                                    "title": "Load of rom"
+                                }],
+                                "graphs": [{
+                                    "id": "g1",
+                                    "fillAlphas": 0.4,
+                                    "valueField": "visits",
+                                    "balloonText": "<div style='margin:5px; font-size:19px;'><b>[[value]]%</b></div>"
+                                }],
+                                "chartScrollbar": {
+                                    "graph": "g1",
+                                    "scrollbarHeight": 40,
+                                    "backgroundAlpha": 0,
+                                    "selectedBackgroundAlpha": 0.1,
+                                    "selectedBackgroundColor": "#888888",
+                                    "graphFillAlpha": 0,
+                                    "graphLineAlpha": 0.5,
+                                    "selectedGraphFillAlpha": 0,
+                                    "selectedGraphLineAlpha": 1,
+                                    "autoGridCount": true,
+                                    "color": "#AAAAAA"
+                                },
+                                "chartCursor": {
+                                    "categoryBalloonDateFormat": "JJ:NN:SS",
+                                    "cursorPosition": "mouse"
+                                },
+                                "categoryField": "date",
+                                "categoryAxis": {
+                                    "minPeriod": "ss",
+                                    "parseDates": true
+                                },
+                                "export": {
+                                    "enabled": true
+                                }
+                            });
+                        }
                         chart.addListener("dataUpdated", zoomChart);
                         // when we apply theme, the dataUpdated event is fired even before we add listener, so
                         // we need to call zoomChart here
@@ -213,39 +232,57 @@
 
                         // generate some random data, quite different range
                         function generateChartData(data, type) {
+                            var test = JSON.parse(temp);
                             var chartData = [];
                             var i = 0;
                             while (data[i])
                                 i++;
                             // current date
                             var firstDate = new Date();
-                            firstDate.setSeconds(firstDate.getSeconds() - 100);
+                            firstDate.setSeconds(firstDate.getSeconds() - 99);
                             for (var j = 0; j < 99; j++) {
-                                if (j < 98 - i) {
-                                    var newDate = new Date(firstDate);                                    
+                                if (j < 99 - i) {
+                                    var newDate = new Date(firstDate);
                                     newDate.setSeconds(newDate.getSeconds() + j);
                                     var visits = 0;
                                     chartData.push({
                                         date: newDate,
-                                        visits: visits
-                                    });
+                                        visits: visits,
+                                    });                                    
                                 }
                                 else
                                     for (var c = 0; c < i; c++) {
-                                        chartData[j] = data[c];
+                                        chartData.push({
+                                            date: data[c].date,
+                                            visits: data[c].visits,
+                                        });                                            
                                     }
                             }
-                            //firstDate.setMinutes(firstDate.getDate() - 1000);
-                            //for (var i = 98; i < 105; i++) {
+                            //data = [];
+                            
+                            
+                            //for (var i = 0; i < 99; i++) {
                             var newDate = new Date(firstDate);
                             newDate.setSeconds(newDate.getSeconds() + 99);
-                            var visits = Math.round(Math.random() * 100);
+                            if (type == 0)
+                                var visits = parseInt(test.CPU,10);
+                            else if (type == 1)
+                                var visits = parseInt(test.RAM/2,10);
+                            else
+                                var visits = Math.random() * 2 + 30;
+                            data.push({
+                                date: newDate,
+                                visits: visits
+                            });
                             chartData.push({
                                 date: newDate,
                                 visits: visits
                             });
                             //}
-                            return chartData;
+                            if (chartData[98].visits != 0)
+                                return chartData;
+                            else
+                                show();
                         }
                     </script>
 
