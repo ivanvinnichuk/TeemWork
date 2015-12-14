@@ -252,14 +252,10 @@
                                 }
                                 else
                                     for (var c = 0; c < i; c++) {
-                                        chartData.push({
-                                            date: data[c].date,
-                                            visits: data[c].visits,
-                                        });                                            
+                                        chartData[j++]=data[c];                                                                                
                                     }
                             }
-                            //data = [];
-                            
+                            //data = [];                            
                             
                             //for (var i = 0; i < 99; i++) {
                             var newDate = new Date(firstDate);
@@ -278,11 +274,8 @@
                                 date: newDate,
                                 visits: visits
                             });
-                            //}
-                            if (chartData[98].visits != 0)
-                                return chartData;
-                            else
-                                show();
+                            //}                            
+                                return chartData;                            
                         }
                     </script>
 
