@@ -18,7 +18,7 @@
 "FullName": "C:\\Users\\MediaAdmin$" 
 }, 
 { 
-"Name": "Public", 
+"Name": "Publtrdfhic", 
 "Mode": "d-r--", 
 "LastWriteTime": "\/Date(1377185972838)\/", 
 "FullName": "C:\\Users\\Public" 
@@ -27,6 +27,6 @@
 "Name": "с.txt", 
 "Mode": "d-r--", 
 "LastWriteTime": "\/Date(1377185972839)\/", 
-"FullName": "C:\\c.txt" 
+"FullName": "C:\\cdfdf.txt" 
 }
 ]
